@@ -1,0 +1,116 @@
+export const ADMIN_NAV = [
+  {
+    title: 'Báo cáo thống kê',
+    key: 'dashboard',
+    icon: '/icons/i-dashboard.svg',
+    iconActive: '/icons/i-dashboard-active.svg',
+    permissionKey: 'dashboard_management',
+    to: '/dashboard',
+  },
+  {
+    title: 'Danh sách hồ sơ',
+    key: 'patients',
+    icon: '/icons/i-testee.svg',
+    iconActive: '/icons/i-testee-active.svg',
+    permissionKey: 'view_patient',
+    to: '/patients',
+  },
+  {
+    title: 'Phiếu xét nghiệm',
+    key: 'test-reports',
+    icon: '/icons/i-test-report.svg',
+    iconActive: '/icons/i-test-report-active.svg',
+    permissionKey: 'view_test_type',
+    to: '/test-reports',
+  },
+  {
+    title: 'Quản lý nhân viên',
+    key: 'employee',
+    icon: '/icons/i-employee.svg',
+    iconActive: '/icons/i-employee-active.svg',
+    sub: [
+      {
+        title: 'Danh sách nhân viên',
+        key: 'employee-list',
+        permissionKey: 'view_admin',
+        to: '/employee/list',
+      },
+      {
+        title: 'Chức vụ',
+        key: 'employee-roles',
+        permissionKey: 'view_role',
+        to: '/employee/roles',
+      },
+      {
+        title: 'KPI',
+        key: 'employee-kpi',
+        permissionKey: 'view_kpi',
+        to: '/employee/kpi',
+      },
+    ],
+  },
+  {
+    title: 'Quản lý bán hàng',
+    key: 'sale',
+    icon: '/icons/i-sale.svg',
+    iconActive: '/icons/i-sale-active.svg',
+    sub: [
+      {
+        title: 'Đơn hàng',
+        key: 'sale-orders',
+        permissionKey: 'view_order',
+        to: '/sale/orders',
+      },
+      {
+        title: 'Danh sách khách hàng',
+        key: 'sale-customers',
+        permissionKey: 'view_customer',
+        to: '/sale/customers',
+      },
+    ],
+  },
+  {
+    title: 'Cài đặt',
+    key: 'settings',
+    icon: '/icons/i-settings.svg',
+    iconActive: '/icons/i-settings-active.svg',
+    sub: [
+      {
+        title: 'Hóa chất',
+        key: 'settings-chemicals',
+        permissionKey: 'view_chemical',
+        to: '/settings/chemicals',
+      },
+      {
+        title: 'Loại xét nghiệm',
+        key: 'settings-test-types',
+        permissionKey: 'view_test_type',
+        to: '/settings/test-types',
+      },
+      {
+        title: 'Mẫu bệnh phẩm',
+        key: 'settings-specimens',
+        permissionKey: 'view_specimen',
+        to: '/settings/specimens',
+      },
+      {
+        title: 'Đơn vị',
+        key: 'settings-units',
+        permissionKey: 'view_unit',
+        to: '/settings/units',
+      },
+      {
+        title: 'Phòng ban',
+        key: 'settings-departments',
+        permissionKey: 'view_department',
+        to: '/settings/departments',
+      },
+      {
+        title: 'Quy trình',
+        key: 'settings-processes',
+        permissionKey: 'view_process',
+        to: '/settings/processes',
+      },
+    ],
+  },
+]

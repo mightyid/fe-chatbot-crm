@@ -1,0 +1,396 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+  --gray-color-20: #eeeef0;
+  --black-color-10: #f4f4f4;
+  --black-color-30: #8a8a8a;
+  --black-color-40: #e1e1e1;
+  --black-color-60: #8a8a8a;
+  --black-color-90: #313131;
+  --ck-color-base-border: #e9e9e9 !important;
+  --p-badge-danger-background: #ff4a4a !important;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  font-size: 16px;
+  // overflow: hidden;
+}
+
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  margin: 0;
+}
+
+button:not(.p-button) {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  & {
+    background-color: transparent;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+input {
+  &::placeholder {
+    color: #c2c2c2;
+  }
+}
+
+img {
+  vertical-align: middle;
+}
+
+.clear-sticky {
+  * {
+    position: unset !important;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  &-lg {
+    width: 32px;
+    height: 32px;
+  }
+  &-xl {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.p-error {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.page-content {
+  padding: 16px 24px;
+}
+
+.page-heading {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+  color: #313131;
+}
+
+.section-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: #2187ff;
+}
+
+.paragraph {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #313131;
+}
+
+.box {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+// Table
+table {
+  &.table-base {
+    table-layout: fixed;
+    border-collapse: collapse;
+    th,
+    td {
+      border: 1px solid #e1e1e1;
+      border-collapse: collapse;
+    }
+  }
+
+  &.table-custom-layout {
+    // table-layout: fixed;
+    // border-collapse: collapse;
+    border-collapse: separate; /* Don't collapse */
+    border-spacing: 0;
+
+    // thead {
+    //   tr {
+    //     box-shadow: 0 5px 10px #e1e5ee;
+    //   }
+    // }
+
+    th {
+      position: sticky;
+      top: 0;
+      font-weight: 700;
+      /* Apply both top and bottom borders to the <th> */
+      border-top: 1px solid #e1e1e1;
+      border-bottom: 1px solid #e1e1e1;
+      border-right: 1px solid #e1e1e1;
+      z-index: 10;
+    }
+
+    td {
+      // height: 65px;
+      /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+      border-bottom: 1px solid #e1e1e1;
+      border-right: 1px solid #e1e1e1;
+    }
+  }
+
+  &.table-show-separate {
+    tr {
+      &:nth-child(2n) {
+        td {
+          background-color: var(--black-color-10);
+        }
+      }
+    }
+  }
+
+  &.table-base,
+  &.table-custom-layout {
+    th {
+      background-color: #f4f4f4;
+    }
+  }
+
+  th,
+  td {
+    padding: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #313131;
+
+    // border: 1px solid #e1e1e1;
+    background-color: #ffffff;
+  }
+}
+
+// Ck editor
+.ck-content {
+  * {
+    all: revert;
+    margin-top: 0;
+    color: #313131;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+// Button primevue
+.p-button-label {
+  line-height: 24px;
+}
+
+.p-button-secondary {
+  background: transparent !important;
+  color: #313131 !important;
+  border: 1px solid #e9e9e9 !important;
+
+  &:hover {
+    background-color: #f5f5f5 !important;
+    color: #313131 !important;
+  }
+}
+
+.p-button-danger {
+  background: #fff0f0 !important;
+  color: #ff4a4a !important;
+  border: 1px solid #fff0f0 !important;
+
+  &:hover {
+    background-color: #fff0f0 !important;
+    color: #ff4a4a !important;
+    opacity: 0.6;
+  }
+}
+
+.p-button-success {
+  background: #e7fee9 !important;
+  color: #66b975 !important;
+  border: 1px solid #e7fee9 !important;
+
+  &:hover {
+    background-color: #e7fee9 !important;
+    color: #66b975 !important;
+    opacity: 0.6;
+  }
+}
+
+// Table primevue
+.p-column-header-content {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #313131;
+}
+
+.p-datatable {
+  .p-datatable-thead {
+    th {
+      padding: 8px 16px;
+      background-color: #f4f4f4;
+      border-width: 1px 0 1px 0;
+      &:first-child {
+        border-top-left-radius: 4px;
+        border-width: 1px 0 1px 1px;
+      }
+      &:last-child {
+        border-top-right-radius: 4px;
+        border-width: 1px 1px 1px 0;
+      }
+    }
+  }
+
+  .p-datatable-tbody {
+    tr {
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 4px;
+          }
+          &:last-child {
+            border-bottom-right-radius: 4px;
+          }
+        }
+      }
+    }
+    td {
+      padding: 8px 16px;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      color: #313131;
+      &:first-child {
+        border-width: 0 0 1px 1px;
+      }
+      &:last-child {
+        border-width: 0 1px 1px 0;
+      }
+    }
+  }
+}
+
+// Paginator
+.p-datatable-paginator-bottom {
+  border: none !important;
+}
+.p-paginator {
+  margin-top: 12px;
+  justify-content: end !important;
+  font-size: 16px;
+  button {
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .p-paginator-pages {
+    .p-paginator-page.p-paginator-page-selected {
+      background: #002997;
+      color: white;
+      font-size: 16px;
+    }
+  }
+}
+.p-paginator-element {
+  margin: 0 2px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #8e8e93;
+  background-color: #ffffff;
+  border-radius: 4px;
+  transition: all ease 0.3s;
+  &:hover {
+    background-color: var(--gray-color-20);
+  }
+  &.p-highlight {
+    color: #ffffff;
+    background-color: var(--primary-color);
+  }
+}
+
+// Overlay panel primevue
+.p-overlaypanel {
+  // border: 1px solid #ffffff;
+  border: none;
+  box-shadow: 0px 1px 12px 0px #00000014;
+
+  &::before,
+  &::after {
+    border-bottom-color: #ffffff;
+  }
+}
+
+// Dialog primevue
+.p-dialog.p-component.p-confirm-dialog {
+  min-width: 450px;
+}
+
+// Tab primevue
+.p-tabview-header {
+  .p-tabview-nav-link {
+    padding: 8px 32px;
+    background-color: #ffffff;
+    border-color: #efefef;
+    transition: all ease 0.3s;
+    .p-tabview-title {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      color: #8a8a8a;
+      transition: all ease 0.3s;
+    }
+  }
+  &.p-highlight {
+    .p-tabview-nav-link {
+      background-color: var(--primary-color);
+      .p-tabview-title {
+        color: #ffffff;
+      }
+    }
+  }
+}
+.p-tabview-ink-bar {
+  display: none;
+}
+
+.p-tablist-tab-list {
+  .p-tab {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #8a8a8a;
+  }
+  .p-tab-active {
+    font-weight: 700;
+    color: #002997;
+  }
+}
+
+.p-toast {
+  width: 22rem !important;
+}
+.p-inputtext:disabled,
+.p-select.p-disabled {
+  background: #f4f4f4 !important;
+  color: #8a8a8a !important;
+}
