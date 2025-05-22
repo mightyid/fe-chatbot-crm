@@ -19,7 +19,8 @@
     "pinia": "^3.0.2",
     "sass-embedded": "^1.88.0",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "xlsx-js-style": "^1.2.0"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "devDependencies": {

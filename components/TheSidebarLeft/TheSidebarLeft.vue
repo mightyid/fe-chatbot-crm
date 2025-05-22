@@ -21,8 +21,8 @@ const toggleShow = () => {
   >
     <div class="py-[24px] h-[104px] flex items-center justify-center">
       <nuxt-link to="/">
-        <img src="~/assets/images/logo.svg" alt="Logo" v-if="isExpand" />
-        <img src="~/assets/images/logo-icon.svg" alt="Logo Short" v-else />
+        <img src="~/assets/images/logo.svg" alt="Logo" v-if="isExpand" class="h-[64px]" />
+        <img src="~/assets/images/logo-icon.svg" alt="Logo Short" v-else class="h-[56px]" />
       </nuxt-link>
     </div>
 

@@ -17,6 +17,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
+const { t } = useI18n()
+
 const timer = ref<any>(undefined)
 
 const changeValue = (e: Event) => {
@@ -39,11 +41,11 @@ const changeValue = (e: Event) => {
     autocomplete="off"
     @submit.prevent=""
   >
-    <img class="icon" src="/icons/i-search.svg" alt="" />
+    <img class="icon" src="~/assets/icons/i-search.svg" alt="" />
     <input
       class="flex-1 p-0 text-base font-normal c-gray-50 border-none outline-none bg-transparent"
       type="text"
-      :placeholder="placeholder || 'Tìm kiếm'"
+      :placeholder="placeholder ? placeholder : t('common.search')"
       :value="modelValue"
       @input="changeValue"
     />

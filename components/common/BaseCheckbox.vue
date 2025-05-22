@@ -15,7 +15,10 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-
+  placeholder: {
+    type: String,
+    default: '',
+  },
   label: {
     type: String,
   },
@@ -35,6 +38,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
+const { t } = useI18n()
+
 const { value, errorMessage } = useField(() => props.name, props.rules, {
   type: 'checkbox',
   // checkedValue: props.modelValue as Boolean,
@@ -50,6 +55,7 @@ const { value, errorMessage } = useField(() => props.name, props.rules, {
         :inputId="props.name"
         :class="[classInput, errorMessage ? 'p-invalid' : '']"
         :style="inputStyle"
+        :placeholder="placeholder ? placeholder : t('common.enter')"
         :binary="true"
         v-model="value"
         :disabled="props.disabled"

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { avatarDefault } from '~/assets/images'
+
 type TypeAvatar = 'circle' | 'square' | null
 
 defineProps({
@@ -28,7 +30,7 @@ defineProps({
       borderRadius: type === 'square' ? '4px' : '50%',
       aspectRatio: aspect,
     }"
-    :src="typeof url === 'string' && url ? url : '/images/avatar-default.svg'"
+    :src="typeof url === 'string' && url ? url : avatarDefault"
     alt=""
   />
 </template>

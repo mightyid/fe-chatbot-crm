@@ -42,7 +42,7 @@ const closeDialog = () => {
     @update:visible="closeDialog"
   >
     <button class="p-0 absolute top-[16px] right-[16px]" type="button" @click="closeDialog" v-if="showIconClose">
-      <img src="/icons/i-close-gray.svg" alt="" />
+      <img src="~/assets/icons/i-close-gray.svg" alt="" />
     </button>
     <h3 class="mt-0 mb-3 text-2xl font-bold c-black-90 text-center" v-if="title">
       {{ title }}

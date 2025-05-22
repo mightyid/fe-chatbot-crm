@@ -36,15 +36,12 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const mediaService = useMediaService()
+const { t } = useI18n()
+const mediaServices = useMedia()
 
 class MyUploadAdapter {
   public loader
@@ -61,7 +58,7 @@ class MyUploadAdapter {
     formData.append('acl', true as any) //public file
 
     return new Promise(async (resolve, reject) => {
-      const result = await mediaService.uploadMedia(formData)
+      const result = await mediaServices.uploadMedia(formData)
 
       if (result?._id) {
         resolve({ default: result?.url })
@@ -111,15 +108,12 @@ const changeValue = (value: any) => {
       :style="styleInput"
       :editor="(EditorCustomBuild as any)"
       :config="config"
-      :placeholder="placeholder || 'Enter'"
-      :disabled="disabled"
+      :placeholder="placeholder ? placeholder : t('common.enter')"
       :modelValue="(modelValue as string)"
       @update:modelValue="changeValue"
       @blur="handleBlur($event, true)"
     />
-    <Message severity="error" size="small" variant="simple" v-if="errorMessage">
-      {{ errorMessage }}
-    </Message>
+    <small class="p-error" v-show="errorMessage">{{ errorMessage || '&nbsp' }}</small>
   </div>
 </template>
 

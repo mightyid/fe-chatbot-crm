@@ -8,7 +8,7 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: [String, null] as PropType<String | null>,
+    type: Array as PropType<any[]>,
     required: true,
   },
   placeholder: {
@@ -34,51 +34,49 @@ const props = defineProps({
     type: Boolean,
     required: false,
   },
-  tooltip: {
+  separator: {
     type: String,
-    default: '',
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'onChange'])
 
 const { t } = useI18n()
 
 const rules = computed(() => props.rules)
 
 const { value, errorMessage, handleBlur } = useField(() => props.name, rules, {
-  initialValue: props.modelValue as string,
+  initialValue: props.modelValue as any[],
   syncVModel: true,
 })
+
+const handleChange = (e: any) => {
+  const array = e?.value || []
+  emit('onChange', array)
+}
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex items-center justify-between gap-[16px]">
-      <label class="flex items-center gap-4 text-base font-normal c-black-90" :for="props.name" v-if="label">
-        <span>
-          {{ label }}
-          <span class="c-danger" v-if="rules.required">*</span>
-        </span>
-        <img src="~/assets/icons/i-tooltip.svg" alt="" v-tooltip.top="tooltip" v-if="tooltip" />
-      </label>
-
-      <slot name="labelRight"></slot>
-    </div>
+    <label class="text-base font-normal c-black-90" :for="props.name" v-if="label">
+      {{ label }}
+      <span class="c-danger" v-if="rules.required">*</span>
+    </label>
 
     <div class="flex flex-col">
-      <Password
-        :inputId="props.name"
-        class="[&>.p-inputtext]:w-full"
+      <Chips
+        class="flex-1"
+        :id="props.name"
         :class="[classInput, errorMessage ? 'p-invalid' : '']"
         :style="inputStyle"
         :placeholder="placeholder ? placeholder : t('common.enter')"
-        toggleMask
-        :feedback="false"
         :disabled="disabled"
+        :separator="separator"
         v-model="value"
         @blur="handleBlur($event, true)"
+        @add="handleChange"
       />
+
       <small class="p-error" v-show="errorMessage">{{ errorMessage || '&nbsp;' }}</small>
     </div>
   </div>

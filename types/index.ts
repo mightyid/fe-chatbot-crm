@@ -1,40 +1,45 @@
-import type { GENDER_OPTIONS } from '~/constant'
+type LocaleType = 'en' | 'vi'
 
-export type LocaleType = 'vi' | 'en'
-
-export type ParamsGetListType = {
+type ParamsGetListType = {
   page?: number
   limit?: number | string
   search?: string
 }
 
-export type PaginationType = {
+type PaginationType = {
   current_page: number
   limit: number
   total: number
   total_page: number
 }
 
-export type ResponseType<T = Record<string, any>> = {
+type ResponseType<T = Record<string, any>> = {
   statusCode: number
   result: T
 }
 
-export type ResponseTypeList<T = Record<string, any>> = {
-  statusCode: number
-  result: T
-  page: number
-  total: number
-}
-
-export type ResponseTypeListWithTotalMoney<T> = ResponseTypeList<T> & { total_money: number }
-
-export type ResponseDataType<T = Record<string, any>> = {
+type ResponseDataType<T = Record<string, any>> = {
   statusCode: number
   data: T
 }
 
-export type MediaType = {
+type listResponseType<K extends string, T> = {
+  statusCode: number
+  result: {
+    current_page: number
+    limit: number
+    total: number
+    total_page: number
+  } & { [key in K]: T }
+}
+type listResponseTypeAll = {
+  statusCode: number
+  total: number
+  total_page: number
+  result: any[] | object
+}
+
+type MediaType = {
   author: string
   created_at: string
   file_name: string
@@ -46,52 +51,13 @@ export type MediaType = {
   _id: string
 }
 
-export type NavItemType = {
-  title: string
-  key: string
-  permissionKey?: string
-  icon: string
-  iconActive: string
-  isCollapse?: boolean
-  sub?: SubItemType[]
-  to?: string
+export type {
+  LocaleType,
+  PaginationType,
+  ParamsGetListType,
+  ResponseType,
+  listResponseType,
+  ResponseDataType,
+  MediaType,
+  listResponseTypeAll,
 }
-
-export type SubItemType = {
-  title: string
-  key: string
-  permissionKey?: string
-  to: string
-}
-
-export type RefreshTokenResponseType = {
-  result: { access_token: string; refresh_token: string }
-}
-
-export type Error = {
-  code?: number
-  message?: string
-  key?: string
-}
-
-export type CountryType = {
-  _id: string
-  name: string
-}
-
-export type ProvinceType = {
-  _id: string
-  name: string
-}
-
-export type DistrictType = {
-  _id: string
-  name: string
-}
-
-export type TownshipType = {
-  _id: string
-  name: string
-}
-
-export type GenderType = null | (typeof GENDER_OPTIONS)[number]['value']
