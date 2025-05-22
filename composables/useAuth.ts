@@ -19,7 +19,7 @@ type BodyUpdateUser = {
 }
 
 export default function useAuth() {
-  const URL = `/admin/auth`
+  const URL = `/user`
 
   const { $api } = useNuxtApp()
   const appStore = useAppStore()
@@ -29,7 +29,7 @@ export default function useAuth() {
   const refreshToken = computed(() => appStore.refreshToken || '')
 
   async function login(body: { email: string; password: string }) {
-    return $api<RefreshTokenResponseType>(`${URL}/login`, {
+    return $api<RefreshTokenResponseType>(`${URL}/auth/login`, {
       method: 'POST',
       body,
     })

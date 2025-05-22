@@ -7,6 +7,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   ssr: false,
+  components: [
+    {
+      path: '~/components/common',
+      pathPrefix: false,
+    },
+  ],
   runtimeConfig: {
     public: {
       baseURL: configByEnv.BASE_URL,
@@ -15,7 +21,15 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/styles/scss/styles.scss'],
 
-  modules: ['dayjs-nuxt', '@vueuse/nuxt', '@unocss/nuxt', '@vee-validate/nuxt', '@primevue/nuxt-module', '@pinia/nuxt'],
+  modules: [
+    'dayjs-nuxt',
+    '@vueuse/nuxt',
+    '@unocss/nuxt',
+    '@vee-validate/nuxt',
+    '@primevue/nuxt-module',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+  ],
   primevue: {
     importTheme: { from: '~/assets/themes/mytheme.js' },
     components: {
@@ -53,7 +67,10 @@ export default defineNuxtConfig({
       ],
     },
   },
-
+  i18n: {
+    vueI18n: '~/utils/i18n.config.ts',
+    strategy: 'no_prefix',
+  },
   veeValidate: {
     typedSchemaPackage: 'none',
   },

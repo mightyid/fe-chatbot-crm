@@ -13,6 +13,8 @@ export const useAppStore = defineStore('app', {
     token: useLocalStorage('access_token', ''),
     refreshToken: useLocalStorage('refresh_token', ''),
     socketConnected: false,
+    error: '' as any,
+    locale: (localStorage.getItem('locale') || 'vi') as any,
   }),
   getters: {},
   actions: {
