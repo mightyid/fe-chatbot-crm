@@ -36,3 +36,5 @@ export { default as iOrganizationalChart } from './assets/icons/i-organizational
 export { default as iOrganizationalChartActive } from './assets/icons/i-organizational-chart-active.svg'
 export { default as iInfo } from './assets/icons/i-info.svg'
 export { default as iUserShare } from './assets/icons/i-user-share.svg'
+export { default as iCrm } from './assets/icons/i-crm.svg'
+export { default as iCrmActive } from './assets/icons/i-crm-active.svg'

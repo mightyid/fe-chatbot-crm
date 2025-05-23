@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useField } from 'vee-validate'
 // @ts-ignore
-import EditorCustomBuild from 'ckeditor5-custom-build/build/ckeditor'
+// import EditorCustomBuild from 'ckeditor5-custom-build/build/ckeditor'
 
 const props = defineProps({
   name: {
@@ -102,7 +102,7 @@ const changeValue = (value: any) => {
     <label class="text-base font-normal c-black-90" :for="props.name" v-if="label">
       {{ label }} <span class="c-danger" v-if="rules.required">*</span>
     </label>
-    <ckeditor
+    <!-- <ckeditor
       :id="props.name"
       :class="[classInput, errorMessage ? 'p-invalid' : '']"
       :style="styleInput"
@@ -112,7 +112,7 @@ const changeValue = (value: any) => {
       :modelValue="(modelValue as string)"
       @update:modelValue="changeValue"
       @blur="handleBlur($event, true)"
-    />
+    /> -->
     <small class="p-error" v-show="errorMessage">{{ errorMessage || '&nbsp' }}</small>
   </div>
 </template>

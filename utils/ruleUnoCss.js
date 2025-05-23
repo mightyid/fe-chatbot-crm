@@ -167,7 +167,7 @@ const colors = [
   ['bg-primary', { 'background-color': '#3ABFF8' }],
   ['bg-primary-0', { 'background-color': '#E0E5F2' }],
   ['bg-primary-10', { 'background-color': '#E3F0FF' }],
-  ['bg-primary-20', { 'background-color': '#D2C8F9' }],
+  ['bg-primary-20', { 'background-color': '#E3F0FF' }],
   ['bg-primary-80', { 'background-color': '#C4EBFE' }],
   ['bg-green-f2', { 'background-color': '#F2FFF5' }],
   ['bg-green-43', { 'background-color': '#43A856' }],

@@ -21,12 +21,12 @@ const hidePanel = () => {
 
 <template>
   <Button
-    class="gap-2 bg-primary-10 border-transparent overflow-visible"
+    class="group gap-2 bg-primary-10 border-transparent overflow-visible"
     v-badge.info="numberBadge > 0 ? numberBadge.toString() : undefined"
     @click="togglePanel"
   >
-    <img src="~/assets/icons/i-filter-secondary.svg" alt="" />
-    <span class="text-base font-normal c-primary"> {{ t('button.filter') }} </span>
+    <img src="~/assets/icons/i-filter-secondary.svg" class="h-[20px] w-[20px]" alt="" />
+    <span class="text-base font-normal c-primary !group-hover:c-white"> {{ t('button.filter') }} </span>
   </Button>
 
   <OverlayPanel ref="overlayPanel">

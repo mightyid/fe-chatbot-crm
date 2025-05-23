@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { iEmployee, iEmployeeActive, iSetting, iSettingActive, iUser, iUserActive } from '~/assets/icons'
+import {
+  iCrm,
+  iCrmActive,
+  iEmployee,
+  iEmployeeActive,
+  iSetting,
+  iSettingActive,
+  iUser,
+  iUserActive,
+} from '~/assets/icons'
 // import { cloneDeep } from 'lodash'
 import { PATH_EMPLOYEES_LIST, PATH_POSITION_LIST, PATH_ROLE_LIST } from '~/constant/routerPath'
 
@@ -44,6 +53,13 @@ const DEFAULT_NAV = [
     name: 'common.menu',
     menuKey: 'menu',
     menus: [
+      {
+        title: 'CRM',
+        key: 'crm',
+        icon: iCrm,
+        iconActive: iCrmActive,
+        to: '/crm',
+      },
       {
         title: 'common.employee',
         key: 'menu-employees',

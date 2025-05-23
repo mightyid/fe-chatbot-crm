@@ -37,13 +37,13 @@ const changeValue = (e: Event) => {
 
 <template>
   <form
-    class="py-[8px] px-[16px] flex items-center gap-[8px] bg-white border-1 border-black-20 border-solid rounded transition-all focus-within:border-primary"
+    class="py-[8px] px-[18px] flex items-center gap-[8px] bg-white border-1 border-black-20 border-solid rounded transition-all focus-within:border-primary"
     autocomplete="off"
     @submit.prevent=""
   >
     <img class="icon" src="~/assets/icons/i-search.svg" alt="" />
     <input
-      class="flex-1 p-0 text-base font-normal c-gray-50 border-none outline-none bg-transparent"
+      class="flex-1 p-0 !px-2 text-base font-normal c-gray-50 border-none outline-none bg-transparent"
       type="text"
       :placeholder="placeholder ? placeholder : t('common.search')"
       :value="modelValue"
