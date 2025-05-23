@@ -12,13 +12,6 @@ import DialogExcelImport from '~/components/DialogExcelImport.vue'
 import type { BodyEmployeeType, EmployeeType } from '~/types/employee'
 import findNameOfOptionsByValue from '~/utils/findNameOfOptionsByValue'
 import { GENDER_OPTIONS } from '~/constant/gender'
-import {
-  CONTRACT_TYPE_OPTIONS,
-  EDU_LEVEL_OPTIONS,
-  EMPLOYMENT_STATUS_OPTIONS,
-  HEALTH_STATUS_OPTIONS,
-  MARITAL_STATUS_OPTIONS,
-} from '~/constant/employee'
 
 definePageMeta({
   titleBreadCrumb: 'common.employees',
@@ -219,14 +212,6 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column :header="t('common.employee_code')" style="min-width: 150px">
-          <template #body="slotProps">
-            <p class="m-0 whitespace-nowrap">
-              {{ slotProps?.data?.code }}
-            </p>
-          </template>
-        </Column>
-
         <Column :header="t('common.full_name')" style="min-width: 200px" frozen>
           <template #body="slotProps">
             <p class="m-0 whitespace-nowrap">
@@ -235,37 +220,10 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column :header="t('common.branch')" style="min-width: 200px">
+        <Column :header="t('common.email')" style="min-width: 200px">
           <template #body="slotProps">
             <p class="m-0 whitespace-nowrap">
-              {{ slotProps?.data?.branch?.name }}
-            </p>
-          </template>
-        </Column>
-
-        <Column :header="t('common.department')" style="min-width: 200px">
-          <template #body="slotProps">
-            <p class="m-0 whitespace-nowrap">
-              {{ slotProps?.data?.department?.name }}
-            </p>
-          </template>
-        </Column>
-
-        <Column :header="t('common.position')" style="min-width: 200px">
-          <template #body="slotProps">
-            <p class="m-0 whitespace-nowrap">
-              {{ slotProps?.data?.position?.name }}
-            </p>
-          </template>
-        </Column>
-
-        <Column :header="t('common.seniority')" style="min-width: 150px">
-          <template #body="slotProps">
-            <p class="m-0 whitespace-nowrap" v-if="selectLang === 'vi'">
-              {{ slotProps?.data?.seniority }}
-            </p>
-            <p class="m-0 whitespace-nowrap" v-else-if="selectLang === 'en'">
-              {{ slotProps?.data?.seniority_en }}
+              {{ slotProps?.data?.email }}
             </p>
           </template>
         </Column>

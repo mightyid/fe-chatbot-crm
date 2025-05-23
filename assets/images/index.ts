@@ -1,6 +1,1 @@
 export { default as avatarDefault } from './avatar-default.svg'
-export { default as iconOverview } from './home/feature-icon-1.svg'
-export { default as iconHr } from './home/feature-icon-2.svg'
-export { default as iconTimekeeping } from './home/feature-icon-3.svg'
-export { default as iconSchedule } from './home/feature-icon-4.svg'
-export { default as iconFolder } from './home/feature-icon-5.svg'

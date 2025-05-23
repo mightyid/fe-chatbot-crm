@@ -45,35 +45,21 @@ const DEFAULT_NAV = [
     menuKey: 'menu',
     menus: [
       {
-        title: 'common.employees',
-        key: 'employees',
+        title: 'common.employee',
+        key: 'menu-employees',
         icon: iEmployee,
         iconActive: iEmployeeActive,
-        permissionKey: 'view_employee',
-        to: PATH_EMPLOYEES_LIST,
-      },
-    ],
-  },
-  {
-    name: 'common.setting',
-    menuKey: 'menu-setting',
-    menus: [
-      {
-        title: 'common.general_setting',
-        key: 'settings',
-        icon: iSetting,
-        iconActive: iSettingActive,
         sub: [
           {
-            title: 'common.position',
-            key: 'settings-position',
-            permissionKey: 'view_position',
-            to: PATH_POSITION_LIST,
+            title: 'common.employees',
+            key: 'employees',
+            permissionKey: 'view_employee',
+            to: PATH_EMPLOYEES_LIST,
           },
           {
             title: 'common.role',
-            key: 'settings-role',
-            permissionKey: 'view_role',
+            key: 'roles',
+            permissionKey: 'view_roles',
             to: PATH_ROLE_LIST,
           },
         ],
