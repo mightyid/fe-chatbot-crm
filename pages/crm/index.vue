@@ -288,7 +288,7 @@ watchDebounced(
 <template>
   <div class="page">
     <div class="page-content">
-      <div class="mb-3 flex items-center justify-between gap-4">
+      <div class="flex items-center justify-between gap-4">
         <h1 class="page-heading m-0">Leads CRM</h1>
         <div class="flex-1 flex items-center justify-end gap-4">
           <InputSearch class="w-[300px]" v-model="query.search" />
@@ -462,7 +462,7 @@ watchDebounced(
           <NoData />
         </template>
       </DataTable>
-      <div class="flex jc-c ai-c" v-else>
+      <div class="flex jc-c ai-c mt-4" v-else>
         <Button
           label="Use Default Lead CRM"
           severity="primary"

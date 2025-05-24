@@ -61,6 +61,13 @@ const DEFAULT_NAV = [
         to: '/crm',
       },
       {
+        title: 'Chatbot',
+        key: 'chatbot',
+        icon: iEmployee,
+        iconActive: iEmployeeActive,
+        to: '/chatbot',
+      },
+      {
         title: 'common.employee',
         key: 'menu-employees',
         icon: iEmployee,

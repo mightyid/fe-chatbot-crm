@@ -84,7 +84,7 @@ const redirectToRoleList = () => {
 <template>
   <div class="page">
     <div class="page-content">
-      <BreadCrumb />
+      <BreadCrumbLinks />
 
       <div class="box p-4">
         <div class="my-6 text-center" v-if="isLoading">

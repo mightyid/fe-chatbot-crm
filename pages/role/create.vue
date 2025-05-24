@@ -53,7 +53,7 @@ const redirectToRoleList = () => {
 <template>
   <div class="page">
     <div class="page-content">
-      <BreadCrumb />
+      <BreadCrumbLinks />
 
       <div class="box p-4">
         <RoleForm

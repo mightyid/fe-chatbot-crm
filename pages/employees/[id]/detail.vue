@@ -66,7 +66,7 @@ watch(
 <template>
   <div class="page">
     <div class="page-content p-4">
-      <BreadCrumb class="mb-4" />
+      <BreadCrumbLinks class="mb-4" />
 
       <div class="box p-4">
         <div class="my-6 text-center" v-if="isLoading">

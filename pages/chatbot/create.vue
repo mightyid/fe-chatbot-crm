@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FormLeadCRM from '~/components/crm/FormLeadCRM.vue'
+import FormChatbot from '~/components/chatbot/FormChatbot.vue'
 definePageMeta({
   //   permission: 'create_leadCRM',
 })
@@ -8,23 +8,23 @@ const toast = useToast()
 const { $api } = useNuxtApp()
 const links = ref([
   {
-    title: 'Lead CRM',
-    to: '/crm',
+    title: 'Chatbot',
+    to: '/chatbot',
   },
   {
     title: 'Create',
-    to: `/crm/create`,
+    to: `/chatbot/create`,
   },
 ])
 
 const createLeadCRM = async (form: any) => {
-  const { statusCode }: any = await $api('lead', {
+  const { statusCode }: any = await $api('chat-bot', {
     method: 'POST',
     body: form,
   })
 
   if (statusCode === 200) {
-    router.push('/crm')
+    router.push('/chatbot')
     toast.add({ severity: 'success', summary: 'Successfully', detail: 'Created', life: 3000 })
   }
 }
@@ -37,7 +37,8 @@ const createLeadCRM = async (form: any) => {
 
       <div class="box">
         <div class="page-heading mb-4">Create</div>
-        <FormLeadCRM @onSubmit="createLeadCRM" @onCancel="router.push('/crm')" />
+
+        <FormChatbot @onSubmit="createLeadCRM" @onCancel="router.push('/crm')" />
       </div>
     </div>
   </div>

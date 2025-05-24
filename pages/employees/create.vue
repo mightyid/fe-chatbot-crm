@@ -56,7 +56,7 @@ const backToEmployeeInfo = () => {
 <template>
   <div class="page">
     <div ref="headEl" class="page-content">
-      <BreadCrumb />
+      <BreadCrumbLinks />
       <div class="box">
         <h1 class="page-heading m-0 mb-6">
           {{ isPageEdit ? `${t('common.update_employee')}` : t('common.add_employee') }}

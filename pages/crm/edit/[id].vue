@@ -56,10 +56,10 @@ getData()
 <template>
   <div class="page">
     <div class="page-content">
-      <BreadCrumb :links="links" />
+      <BreadCrumbLinks :links="links" />
 
       <div class="box">
-        <h2 class="name-page mb-4">Edit Lead CRM</h2>
+        <div class="page-heading mb-4">Edit Lead CRM</div>
 
         <FormLeadCRM
           @onEdit="editLeadCRM"
