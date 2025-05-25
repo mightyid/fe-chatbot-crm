@@ -20,12 +20,7 @@ const form = ref<any>({
   name: '',
   avatar: '',
   message: 'Xin chào',
-  form: [
-    {
-      key: '',
-      label: '',
-    },
-  ],
+  form: [],
   position: 'right',
   color: '',
   scripts: [],
@@ -87,9 +82,10 @@ watch(
         :options="['left', 'right']"
         option-label=""
         option-value=""
-        :rules="{ required: true }"
+        :rules="{ required: false }"
         v-model="form.position"
       />
+      <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
     </div>
     <div class="my-4 text-lg c-primary font-bold">Config ChatGPT</div>
     <div class="grid grid-cols-2 gap-6">

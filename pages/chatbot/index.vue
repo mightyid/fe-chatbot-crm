@@ -58,6 +58,16 @@ const confirmDelete = (record: any) => {
     },
   })
 }
+const changeStatus = (val: any) => {
+  console.log(val)
+  $api(`chat-bot/change-status`, {
+    method: 'PUT',
+    body: {
+      bot_id: val._id,
+      is_active: val.is_active,
+    },
+  })
+}
 watchDebounced(
   () => query.value.search,
   (newValue) => {
@@ -128,6 +138,11 @@ watchDebounced(
           <Column style="min-width: 200px" field="created_at" header="Created at">
             <template #body="slotProps">
               {{ useMoment(slotProps.data.created_at) }}
+            </template>
+          </Column>
+          <Column field="status" header="Status">
+            <template #body="slotProps">
+              <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="changeStatus(slotProps.data)" />
             </template>
           </Column>
 
