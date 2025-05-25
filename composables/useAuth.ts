@@ -20,16 +20,16 @@ type BodyUpdateUser = {
 
 export default function useAuth() {
   const URL = `/user`
-
   const { $api } = useNuxtApp()
   const appStore = useAppStore()
+  const isUser = appStore.strategyAuth == 'user' ? true : false
 
   const user = computed(() => appStore.user || {})
   const token = computed(() => appStore.token || '')
   const refreshToken = computed(() => appStore.refreshToken || '')
 
   async function login(body: { email: string; password: string }) {
-    return $api<RefreshTokenResponseType>(`${URL}/auth/login`, {
+    return $api<RefreshTokenResponseType>(isUser ? `user/auth/login` : `admin/auth/login`, {
       method: 'POST',
       body,
     })
@@ -46,7 +46,7 @@ export default function useAuth() {
 
   async function getUserInfo() {
     try {
-      const { result } = await $api<any>(`${URL}/info`, { method: 'GET' })
+      const { result } = await $api<any>(isUser ? `user/info` : `admin/auth/info`, { method: 'GET' })
       appStore.updateUser({
         ...result,
         isLoggedIn: true,

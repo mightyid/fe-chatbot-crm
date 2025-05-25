@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { RefreshTokenResponseType } from '~/types'
-
 definePageMeta({
   auth: 'guest',
   layout: 'auth',
@@ -12,17 +10,16 @@ const { handleSubmit } = useForm()
 const { login, setToken, setRefreshToken, getUserInfo } = useAuth()
 const { showToastError } = useShowToast()
 const redirectBack = useRedirectBack()
-
+const appStore = useAppStore()
 const form = ref({
   email: '',
   password: '',
 })
 const isLoading = ref(false)
-
 const onSubmit = handleSubmit(async () => {
   try {
     isLoading.value = true
-
+    appStore.strategyAuth = 'user'
     const body = {
       email: form.value.email,
       password: form.value.password,

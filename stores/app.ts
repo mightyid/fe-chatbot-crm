@@ -15,6 +15,7 @@ export const useAppStore = defineStore('app', {
     socketConnected: false,
     error: '' as any,
     locale: (localStorage.getItem('locale') || 'vi') as any,
+    strategyAuth: useLocalStorage('strategyAuth', 'user'),
   }),
   getters: {},
   actions: {
