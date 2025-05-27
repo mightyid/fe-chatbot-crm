@@ -406,3 +406,50 @@ table {
 a {
   text-decoration: none !important;
 }
+
+.call-animation {
+  // background: #fff;
+  aspect-ratio: 1/1;
+  position: relative;
+  width: max-content;
+  border-radius: 100%;
+  //   border: solid 5px #fff;
+  background: transparent;
+}
+.call-animation:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: play 1s linear infinite;
+  backface-visibility: hidden;
+  border-radius: 50%;
+}
+@keyframes play {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    box-shadow: 0 0 0 5px rgba(#c4ebfe, 0.4);
+  }
+  25% {
+    box-shadow: 0 0 0 10px rgba(#c4ebfe, 0.4), 0 0 0 20px rgba(#c4ebfe, 0.2);
+  }
+  25% {
+    box-shadow: 0 0 0 15px rgba(#c4ebfe, 0.4), 0 0 0 30px rgba(#c4ebfe, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 25px rgba(#c4ebfe, 0.4), 0 0 0 50px rgba(#c4ebfe, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 25px rgba(#c4ebfe, 0.4), 0 0 0 50px rgba(#c4ebfe, 0.2);
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+.markdown-body {
+  background: none !important;
+}

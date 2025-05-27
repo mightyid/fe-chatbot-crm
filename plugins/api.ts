@@ -46,12 +46,15 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const api = $fetch.create({
     baseURL: config.public.apiBase as string,
+    headers: {
+      Authorization: token.value ? `Bearer ${token.value}` : '',
+    },
 
     onRequest({ request, options, error }) {
-      if (token.value) {
-        // note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
-        options.headers.set('Authorization', `Bearer ${token.value}`)
-      }
+      // if (token.value) {
+      //   // note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
+      //   options.headers.set('Authorization', `Bearer ${token.value}`)
+      // }
     },
 
     async onResponse({ request, response, options }) {},

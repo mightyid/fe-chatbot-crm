@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import BoxChat from '~/components/BoxChat.vue'
+import ChatTyping from '~/components/ChatTyping.vue'
 
 definePageMeta({
   auth: false,
@@ -7,31 +8,160 @@ definePageMeta({
 })
 const { $api } = useNuxtApp()
 const route = useRoute()
+const appStore = useAppStore()
 const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
-const token = ref('')
+const token = ref(appStore.tokenBot || '')
+const socket = useSocket()
+const listMessage = ref<any>([])
+const isLoading = ref(false)
+const groupInfo = ref<any>({})
+const isTyping = ref(false)
+const isScrollToBottom = ref<any>('')
 const boxStyle = ref({
-  width: '300px',
-  height: '300px',
-  overflow: 'auto',
+  width: '500px',
+  height: '700px',
+  overflow: 'hidden',
 })
 const getData = async () => {
   const { result }: any = await $api(`incognito/${route.params.id}`)
-  console.log(result, 'result')
   info.value = result
+  console.log(token.value, 'token2222')
+  if (token.value) {
+    console.log('if')
+    getInfoGroup()
+  }
+}
+const getInfoGroup = async () => {
+  const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
+  groupInfo.value = result
+  nextTick(() => {
+    getMessage()
+    licenseSocket()
+  })
 }
 const startChat = async () => {
   const { result }: any = await $api(`incognito/${route.params.id}/start`, {
     method: 'POST',
     body: {
-      form: [],
+      form: {},
     },
   })
-  console.log(result, 'result')
-  token.value = result
+  token.value = result.access_token
+  appStore.tokenBot = result.access_token
+  groupInfo.value = result
+  // groupInfo.value = {
+  //   company: '682e8b849baa77491a3848d3',
+  //   bot: '683192974f489de4e675d620',
+  //   name: 'incognito',
+  //   avatar: '',
+  //   label: null,
+  //   message: '683534b85831d29999a9c2a2',
+  //   stop_bot: false,
+  //   _id: '683534b8d0e5b3ac3d85200d',
+  //   notes: [],
+  //   created_at: '2025-05-27T03:42:48.630Z',
+  //   updated_at: '2025-05-27T03:42:48.630Z',
+  //   access_token:
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55X2lkIjoiNjgyZThiODQ5YmFhNzc0OTFhMzg0OGQzIiwic2NvcGUiOiJsZWFkIiwiX2lkIjoiNjgzNTM0YjhkMGU1YjNhYzNkODUyMDBkIiwiaWF0IjoxNzQ4MzE3MzY4LCJleHAiOjE3Nzk4NTMzNjh9.QKteyelrGvnzvOFp5r2-Cp6k2Que3I2FMrNb4Z8w7Dc',
+  // }
+  nextTick(() => {
+    getMessage()
+    licenseSocket()
+  })
+}
+
+const getMessage = async () => {
+  const { result }: any = await $api(`incognito/${route.params.id}/message`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
+  console.log(result, 'result listMessage')
+  listMessage.value = result
+  isScrollToBottom.value = new Date().getTime()
+}
+const sendMessage = async () => {
+  isLoading.value = true
+
+  const { result }: any = await $api(`incognito/${route.params.id}/send`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+      // Authorization: `11232131`,
+    },
+    body: {
+      message: message.value,
+      hash: new Date().getTime(),
+    },
+  })
+  console.log(result, 'result message')
+  message.value = ''
+  isLoading.value = false
+
+  isScrollToBottom.value = new Date().getTime()
+
+  getMessage()
 }
 getData()
+const licenseSocket = () => {
+  socket.emit('JOIN_LEAD', { lead_id: groupInfo.value._id })
+  socket.on('JOIN_LEAD', (res: any) => {
+    console.log(res, 'JOIN_LEAD')
+  })
+  socket.on('SEND_MESSAGE', (res: any) => {
+    console.log(res, 'SEND_MESSAGE')
+    if (res?.lead._id === groupInfo.value._id) {
+      const newMessage = {
+        ...res,
+        message: res?.message.message || '',
+      }
+      listMessage.value = [newMessage, ...listMessage.value]
+      isScrollToBottom.value = new Date().getTime()
+    }
+  })
+  socket.on('TYPING', (res: any) => {
+    if (res?.lead_id === groupInfo.value._id) {
+      isScrollToBottom.value = new Date().getTime()
+      isTyping.value = true
+    }
+  })
+  socket.on('STOP_TYPING', (res: any) => {
+    console.log(res, 'STOP_TYPING')
+    isScrollToBottom.value = new Date().getTime()
+
+    if (res?.lead_id === groupInfo.value._id) {
+      isTyping.value = false
+    }
+  })
+}
+
+const startTyping = () => {
+  socket.emit('TYPING')
+}
+const stopTyping = () => {
+  socket.emit('STOP_TYPING')
+}
+onMounted(() => {})
+
+onUnmounted(() => {
+  // socket.off('WORKSPACE_UPDATE')
+})
+watch(
+  () => message.value,
+  (newValue) => {
+    // if (newValue && newValue.length > 0) {
+    //   startTyping()
+    // } else stopTyping()
+  },
+)
 </script>
 
 <template>
@@ -59,15 +189,21 @@ getData()
           <Button @click="startChat">Start</Button>
         </div>
         <div class="fc" :style="boxStyle" v-else>
-          <BoxChat :style="boxStyle" />
+          <BoxChat
+            :listMessage="listMessage"
+            :groupInfo="groupInfo"
+            :isTyping="isTyping"
+            :isScrollToBottom="isScrollToBottom"
+          />
           <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]">
             <input
               type="text"
               placeholder="Type a message"
               v-model="message"
+              @keyup.enter="sendMessage"
               class="w-full text-base placeholder:font-normal outline-none focus:outline-none border-none px-3 py-2"
             />
-            <Button severity="primary" class="rounded-0">
+            <Button severity="primary" class="rounded-0" @click="sendMessage" :loading="isLoading">
               <img src="~/assets/icons/i-send-white.svg" alt="" />
             </Button>
           </div>
@@ -76,7 +212,7 @@ getData()
       <div
         class="relative fr justify-end cursor-pointer"
         :class="{ 'call-animation': !isShowBoxChat }"
-        @click="isShowBoxChat = !isShowBoxChat"
+        @click=";(isShowBoxChat = !isShowBoxChat), (isScrollToBottom = new Date().getTime())"
       >
         <img :src="info.avatar" class="h-[56px] h-[56px] rounded-full object-cover" alt="" v-if="info.avatar" />
         <img src="~/assets/images/logo-icon.svg" class="h-[56px] h-[56px] rounded-full object-cover" alt="" v-else />
@@ -84,47 +220,4 @@ getData()
     </div>
   </div>
 </template>
-<style scoped lang="scss">
-.call-animation {
-  // background: #fff;
-  aspect-ratio: 1/1;
-  position: relative;
-  width: max-content;
-  border-radius: 100%;
-  //   border: solid 5px #fff;
-  background: transparent;
-}
-.call-animation:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  animation: play 1s linear infinite;
-  backface-visibility: hidden;
-  border-radius: 50%;
-}
-@keyframes play {
-  0% {
-    transform: scale(1);
-  }
-  15% {
-    box-shadow: 0 0 0 5px rgba(#c4ebfe, 0.4);
-  }
-  25% {
-    box-shadow: 0 0 0 10px rgba(#c4ebfe, 0.4), 0 0 0 20px rgba(#c4ebfe, 0.2);
-  }
-  25% {
-    box-shadow: 0 0 0 15px rgba(#c4ebfe, 0.4), 0 0 0 30px rgba(#c4ebfe, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 0 25px rgba(#c4ebfe, 0.4), 0 0 0 50px rgba(#c4ebfe, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 0 25px rgba(#c4ebfe, 0.4), 0 0 0 50px rgba(#c4ebfe, 0.2);
-    transform: scale(1.1);
-    opacity: 0;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

@@ -60,12 +60,8 @@ const confirmDelete = (record: any) => {
 }
 const changeStatus = (val: any) => {
   console.log(val)
-  $api(`chat-bot/change-status`, {
+  $api(`chat-bot/${val._id}/change-status`, {
     method: 'PUT',
-    body: {
-      bot_id: val._id,
-      is_active: val.is_active,
-    },
   })
 }
 watchDebounced(

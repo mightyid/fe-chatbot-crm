@@ -14,8 +14,9 @@ export const useAppStore = defineStore('app', {
     refreshToken: useLocalStorage('refresh_token', ''),
     socketConnected: false,
     error: '' as any,
-    locale: (localStorage.getItem('locale') || 'vi') as any,
+    locale: useLocalStorage('locale', 'vi'),
     strategyAuth: useLocalStorage('strategyAuth', 'user'),
+    tokenBot: useLocalStorage('tokenBot', ''),
   }),
   getters: {},
   actions: {
