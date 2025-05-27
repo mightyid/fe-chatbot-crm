@@ -104,7 +104,7 @@ const getIframe = (obj: any) => {
 const getData = async () => {
   isLoading.value = true
 
-  const { loading, result, total_pages, total }: any = await $api('lead/all', {
+  const { loading, result, total_pages, total }: any = await $api('lead', {
     method: 'GET',
     params: {
       ...query.value,
