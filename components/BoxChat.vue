@@ -54,8 +54,8 @@ watch(
         :class="item?.user ? 'items-start' : 'items-end'"
       >
         <div
-          class="w-fit max-w-[80%] bg-red px-2 py-1 rounded-xl"
-          :class="item?.user ? 'bg-gray-1 rounded-bl-0' : 'bg-primary-20 rounded-br-0'"
+          class="w-fit max-w-[80%] px-[16px] py-[6px] rounded-[18px]"
+          :class="item?.user ? 'bg-[#F6F6F7] rounded-bl-0' : 'bg-[#E5F6FF] rounded-br-0'"
         >
           <!-- {{ index }} -->
           <VMarkdownView :content="item.message"></VMarkdownView>

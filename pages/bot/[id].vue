@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import BoxChat from '~/components/BoxChat.vue'
 import ChatTyping from '~/components/ChatTyping.vue'
+import { io } from 'socket.io-client'
 
 definePageMeta({
   auth: false,
@@ -13,7 +14,7 @@ const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
 const token = ref(appStore.tokenBot || '')
-const socket = useSocket()
+const socket = ref()
 const listMessage = ref<any>([])
 const isLoading = ref(false)
 const groupInfo = ref<any>({})
@@ -29,7 +30,6 @@ const getData = async () => {
   info.value = result
   console.log(token.value, 'token2222')
   if (token.value) {
-    console.log('if')
     getInfoGroup()
   }
 }
@@ -56,21 +56,6 @@ const startChat = async () => {
   token.value = result.access_token
   appStore.tokenBot = result.access_token
   groupInfo.value = result
-  // groupInfo.value = {
-  //   company: '682e8b849baa77491a3848d3',
-  //   bot: '683192974f489de4e675d620',
-  //   name: 'incognito',
-  //   avatar: '',
-  //   label: null,
-  //   message: '683534b85831d29999a9c2a2',
-  //   stop_bot: false,
-  //   _id: '683534b8d0e5b3ac3d85200d',
-  //   notes: [],
-  //   created_at: '2025-05-27T03:42:48.630Z',
-  //   updated_at: '2025-05-27T03:42:48.630Z',
-  //   access_token:
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55X2lkIjoiNjgyZThiODQ5YmFhNzc0OTFhMzg0OGQzIiwic2NvcGUiOiJsZWFkIiwiX2lkIjoiNjgzNTM0YjhkMGU1YjNhYzNkODUyMDBkIiwiaWF0IjoxNzQ4MzE3MzY4LCJleHAiOjE3Nzk4NTMzNjh9.QKteyelrGvnzvOFp5r2-Cp6k2Que3I2FMrNb4Z8w7Dc',
-  // }
   nextTick(() => {
     getMessage()
     licenseSocket()
@@ -112,11 +97,21 @@ const sendMessage = async () => {
 }
 getData()
 const licenseSocket = () => {
-  socket.emit('JOIN_LEAD', { lead_id: groupInfo.value._id })
-  socket.on('JOIN_LEAD', (res: any) => {
+  const url = useRuntimeConfig().public.baseURL
+  //@ts-ignore
+  socket.value = io.connect(url, {
+    transports: ['websocket'],
+    query: {
+      token: token.value,
+    },
+    reconnection: true,
+    reconnectionDelay: 5000,
+  })
+  socket.value.emit('JOIN_LEAD', { lead_id: groupInfo.value._id })
+  socket.value.on('JOIN_LEAD', (res: any) => {
     console.log(res, 'JOIN_LEAD')
   })
-  socket.on('SEND_MESSAGE', (res: any) => {
+  socket.value.on('SEND_MESSAGE', (res: any) => {
     console.log(res, 'SEND_MESSAGE')
     if (res?.lead._id === groupInfo.value._id) {
       const newMessage = {
@@ -127,13 +122,13 @@ const licenseSocket = () => {
       isScrollToBottom.value = new Date().getTime()
     }
   })
-  socket.on('TYPING', (res: any) => {
+  socket.value.on('TYPING', (res: any) => {
     if (res?.lead_id === groupInfo.value._id) {
       isScrollToBottom.value = new Date().getTime()
       isTyping.value = true
     }
   })
-  socket.on('STOP_TYPING', (res: any) => {
+  socket.value.on('STOP_TYPING', (res: any) => {
     console.log(res, 'STOP_TYPING')
     isScrollToBottom.value = new Date().getTime()
 
@@ -147,12 +142,15 @@ const closeChatbot = () => {
   var parentOrigin = window.location.ancestorOrigins
   window.parent.postMessage(message, parentOrigin[0])
 }
-const startTyping = () => {
-  socket.emit('TYPING')
-}
-const stopTyping = () => {
-  socket.emit('STOP_TYPING')
-}
+// const startTyping = () => {
+//   socket.emit('TYPING')
+// }
+// const stopTyping = () => {
+//   socket.emit('STOP_TYPING')
+// }
+const debounceSend = useDebounceFn(() => {
+  sendMessage()
+}, 200)
 onMounted(() => {})
 
 onUnmounted(() => {
@@ -172,21 +170,24 @@ watch(
   <div class="fixed bottom-24px right-24px" v-if="info?._id">
     <div class="flex flex-col items-end justify-end">
       <div
-        class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-lg"
+        class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
       >
-        <div class="fr justify-between p-2 py-1">
+        <div class="fr justify-between p-2 py-2 bg-primary">
           <div class="fr items-center gap-2">
-            <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
-            <img
-              src="~/assets/images/logo-icon.svg"
-              class="w-[32px] h-[32px] rounded-full object-cover"
-              alt=""
-              v-else
-            />
-            <div class="text-md font-semibold">{{ info?.name }}</div>
+            <div class="fc w-[32px] aspect-square rounded-full overflow-hidden bg-white">
+              <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
+              <img
+                src="~/assets/images/logo-icon.svg"
+                class="w-[32px] h-[32px] rounded-full object-cover"
+                alt=""
+                v-else
+              />
+            </div>
+
+            <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
           </div>
-          <img src="~/assets/icons/i-close-gray.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+          <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
         </div>
         <div class="fc justify-center items-center" v-if="!token" :style="boxStyle">
           <div class=""> </div>
@@ -199,17 +200,29 @@ watch(
             :isTyping="isTyping"
             :isScrollToBottom="isScrollToBottom"
           />
-          <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]">
-            <input
-              type="text"
-              placeholder="Type a message"
-              v-model="message"
-              @keyup.enter="sendMessage"
-              class="w-full text-base placeholder:font-normal outline-none focus:outline-none border-none px-3 py-2"
-            />
-            <Button severity="primary" class="rounded-0" @click="sendMessage" :loading="isLoading">
-              <img src="~/assets/icons/i-send-white.svg" alt="" />
-            </Button>
+          <div class="fc w-full p-2 gap-1">
+            <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->
+            <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1">
+              <input
+                type="text"
+                placeholder="Enter a message"
+                v-model="message"
+                @keyup.enter="debounceSend"
+                class="w-full text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"
+              />
+              <div
+                class="rounded-full h-[32px] w-[32px] min-w-[32px] flex items-center justify-center p-0 m-0 bg-primary cursor-pointer"
+                @click="debounceSend"
+                :style="{
+                  cursor: message.length > 0 || !isLoading ? 'pointer' : 'not-allowed',
+                }"
+              >
+                <img src="~/assets/icons/i-send-white.svg" class="w-20px h-20px" alt="" />
+              </div>
+            </div>
+            <div class="fr items-center justify-center text-xs text-[#7E7E80] gap-1">
+              Powered by <a href="https://mightyid.ca" class="c-primary" target="_blank">MightyID</a></div
+            >
           </div>
         </div>
       </div>
@@ -218,8 +231,8 @@ watch(
         :class="{ 'call-animation': !isShowBoxChat }"
         @click=";(isShowBoxChat = !isShowBoxChat), (isScrollToBottom = new Date().getTime())"
       >
-        <img :src="info.avatar" class="h-[56px] h-[56px] rounded-full object-cover" alt="" v-if="info.avatar" />
-        <img src="~/assets/images/logo-icon.svg" class="h-[56px] h-[56px] rounded-full object-cover" alt="" v-else />
+        <img :src="info.avatar" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-if="info.avatar" />
+        <img src="~/assets/images/logo-icon.svg" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-else />
       </div>
     </div>
   </div>
