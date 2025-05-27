@@ -58,11 +58,35 @@ const confirmDelete = (record: any) => {
     },
   })
 }
-const changeStatus = (val: any) => {
-  console.log(val)
-  $api(`chat-bot/${val._id}/change-status`, {
+const changeStatus = (id: any) => {
+  $api(`chat-bot/${id}/change-status`, {
     method: 'PUT',
   })
+}
+const copyCodeIframe = (val: any) => {
+  const url = `${window.location.origin}/bot/${val}`
+  const position = 'right: 16px;'
+  const iframe =
+    '<script>' +
+    `
+      const iframe = document.createElement('iframe');
+      iframe.id = 'iframe_mightyid';
+      iframe.setAttribute('style', 'position: fixed; ${position}; bottom: 16px; width: 402px; height: 498px; background: transparent; border: none; z-index: 100000000;');
+      iframe.setAttribute('src', '${url}');
+      document.body.appendChild(iframe);
+      window.addEventListener("message", receiveMessage, false);
+      function receiveMessage(event) {
+        const newIf = document.querySelector("#iframe_mightyid")
+        if(newIf && event.data.isClose) {
+          newIf.remove()
+        }
+      }
+       ` +
+    '<' +
+    '/' +
+    'script>'
+  navigator.clipboard.writeText(iframe)
+  toast.add({ severity: 'success', summary: 'Notifications', detail: 'Copied', life: 3000 })
 }
 watchDebounced(
   () => query.value.search,
@@ -145,6 +169,14 @@ watchDebounced(
           <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
+                <button @click="copyCodeIframe(slotProps.data._id)">
+                  <img
+                    class="icon-lg"
+                    src="~/assets/icons/i-eye-secondary-circle.svg"
+                    alt=""
+                    v-tooltip.top="'Copy code iframe'"
+                  />
+                </button>
                 <nuxt-link :to="`/chatbot/edit/${slotProps.data._id}`">
                   <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
                 </nuxt-link>

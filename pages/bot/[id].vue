@@ -20,8 +20,8 @@ const groupInfo = ref<any>({})
 const isTyping = ref(false)
 const isScrollToBottom = ref<any>('')
 const boxStyle = ref({
-  width: '500px',
-  height: '700px',
+  width: '368px',
+  height: '375px',
   overflow: 'hidden',
 })
 const getData = async () => {
@@ -142,7 +142,11 @@ const licenseSocket = () => {
     }
   })
 }
-
+const closeChatbot = () => {
+  isShowBoxChat.value = false
+  var parentOrigin = window.location.ancestorOrigins
+  window.parent.postMessage(message, parentOrigin[0])
+}
 const startTyping = () => {
   socket.emit('TYPING')
 }
@@ -168,21 +172,21 @@ watch(
   <div class="fixed bottom-24px right-24px" v-if="info?._id">
     <div class="flex flex-col items-end justify-end">
       <div
-        class="fc border-1 border-gray-20 border-solid rounded overflow-hidden rounded-lg overflow-hidden"
+        class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-lg"
         v-show="isShowBoxChat"
       >
         <div class="fr justify-between p-2 py-1">
           <div class="fr items-center gap-2">
-            <img :src="info.avatar" class="h-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
+            <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
             <img
               src="~/assets/images/logo-icon.svg"
-              class="h-[32px] h-[32px] rounded-full object-cover"
+              class="w-[32px] h-[32px] rounded-full object-cover"
               alt=""
               v-else
             />
             <div class="text-md font-semibold">{{ info?.name }}</div>
           </div>
-          <img src="~/assets/icons/i-close-gray.svg" class="cursor-pointer" @click="isShowBoxChat = false" alt="" />
+          <img src="~/assets/icons/i-close-gray.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
         </div>
         <div class="fc justify-center items-center" v-if="!token" :style="boxStyle">
           <div class=""> </div>
