@@ -21,11 +21,22 @@ const props = defineProps({
   },
 })
 const scrollContainer = ref<any>(null)
-const mode = ref('light')
+const emits = defineEmits(['loadMore'])
 
 const scrollToBottom = () => {
   if (scrollContainer.value) {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight + 100000
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight + 100000000
+  }
+}
+
+const getDebounce = useDebounceFn(() => {
+  emits('loadMore')
+}, 1000)
+
+const visibilityChanged = (isVisible: any, entry: any) => {
+  if (isVisible) {
+    console.log('isVisible')
+    getDebounce()
   }
 }
 onMounted(() => {
@@ -52,6 +63,12 @@ watch(
         v-for="(item, index) in listMessage"
         :key="item._id"
         :class="item?.user ? 'items-start' : 'items-end'"
+        v-observe-visibility="{
+          callback: index === listMessage.length - 1 ? visibilityChanged : () => {},
+          intersection: {
+            threshold: 0.1,
+          },
+        }"
       >
         <div
           class="w-fit max-w-[80%] px-[16px] py-[6px] rounded-[18px]"

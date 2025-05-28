@@ -45,7 +45,7 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { statusCode }: any = await $api(`chat-bot?bot_id=${record._id}`, {
+      const { statusCode }: any = await $api(`chat-bot/${record._id}`, {
         method: 'DELETE',
       })
       if (statusCode === 200) {

@@ -14,19 +14,15 @@ const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
 const token = ref(appStore.tokenBot || '')
-// const token = ref('')
 const socket = ref()
 const listMessage = ref<any>([])
 const isLoading = ref(false)
 const groupInfo = ref<any>({})
 const isTyping = ref(false)
 const isScrollToBottom = ref<any>('')
-const isLoadMore = ref(true)
-const lastMessageId = ref()
-const form = ref<any>([])
 const boxStyle = ref({
-  width: '368px',
-  height: '375px',
+  width: '100%',
+  height: '100%',
   overflow: 'hidden',
 })
 const getData = async () => {
@@ -35,9 +31,6 @@ const getData = async () => {
   console.log(token.value, 'token2222')
   if (token.value) {
     getInfoGroup()
-  }
-  if (result.form) {
-    form.value = result.form
   }
 }
 const getInfoGroup = async () => {
@@ -54,15 +47,10 @@ const getInfoGroup = async () => {
   })
 }
 const startChat = async () => {
-  const newForm = {}
-  form.value.forEach((item: any) => {
-    //@ts-ignore
-    newForm[item.key] = item.value
-  })
   const { result }: any = await $api(`incognito/${route.params.id}/start`, {
     method: 'POST',
     body: {
-      form: newForm,
+      form: {},
     },
   })
   token.value = result.access_token
@@ -75,25 +63,15 @@ const startChat = async () => {
 }
 
 const getMessage = async () => {
-  if (isLoadMore.value) {
-    const { result }: any = await $api(`incognito/${route.params.id}/message`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-      params: {
-        last_message_id: lastMessageId.value,
-      },
-    })
-    listMessage.value = [...listMessage.value, ...result]
-    if (result.length < 20) {
-      isLoadMore.value = false
-    }
-    if (!lastMessageId.value) {
-      isScrollToBottom.value = new Date().getTime()
-    }
-    lastMessageId.value = result[result.length - 1]?._id
-  }
+  const { result }: any = await $api(`incognito/${route.params.id}/message`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
+  console.log(result, 'result listMessage')
+  listMessage.value = result
+  isScrollToBottom.value = new Date().getTime()
 }
 const sendMessage = async () => {
   isLoading.value = true
@@ -122,19 +100,6 @@ const sendMessage = async () => {
 
   // getMessage()
 }
-const checkDisabled = computed(() => {
-  if (info.value.form && info.value.form[0].key) {
-    let isDisabled = false
-    info.value.form.forEach((item: any) => {
-      if (!item.value) {
-        isDisabled = true
-      }
-    })
-    return isDisabled
-  } else {
-    return false
-  }
-})
 getData()
 const licenseSocket = () => {
   const url = useRuntimeConfig().public.baseURL
@@ -189,7 +154,9 @@ const closeChatbot = () => {
 //   socket.emit('STOP_TYPING')
 // }
 const debounceSend = useDebounceFn(() => {
-  sendMessage()
+  if (message.value) {
+    sendMessage()
+  }
 }, 200)
 onMounted(() => {})
 
@@ -207,52 +174,22 @@ watch(
 </script>
 
 <template>
-  <div class="fixed bottom-24px right-24px" v-if="info?._id">
+  <div class="max-w-800px mx-a flex-1" v-if="info?._id">
     <div class="flex flex-col items-end justify-end">
       <div
-        class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
+        class="fc border-1 !bg-white border-gray-20 border-solid h-screen rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
       >
-        <div class="fr justify-between p-2 py-2 bg-primary">
-          <div class="fr items-center gap-2">
-            <div class="fc w-[32px] aspect-square rounded-full overflow-hidden bg-white">
-              <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
-              <img
-                src="~/assets/images/logo-icon.svg"
-                class="w-[32px] h-[32px] rounded-full object-cover"
-                alt=""
-                v-else
-              />
-            </div>
-
-            <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
-          </div>
-          <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+        <div class="fc justify-center items-center" v-if="!token">
+          <div class=""> </div>
+          <Button @click="startChat">Start</Button>
         </div>
-        <div class="fc !overflow-auto gap-4" v-if="!token || !groupInfo" :style="boxStyle">
-          <div class="fc flex-1 justify-center gap-4 p-4">
-            <div class="fc justify-center gap-4" v-if="info.form && info.form[0].key">
-              <BaseInputText
-                v-for="(item, index) in info.form"
-                class="flex-1"
-                v-model="form[index].value"
-                :name="item.label"
-                type="text"
-                :label="item.label"
-                placeholder="Enter "
-              />
-            </div>
-
-            <Button class="w-full" @click="startChat" :disabled="checkDisabled">Start</Button>
-          </div>
-        </div>
-        <div class="fc" :style="boxStyle" v-else>
+        <div class="fc h-full" v-else>
           <BoxChat
             :listMessage="listMessage"
             :groupInfo="groupInfo"
             :isTyping="isTyping"
             :isScrollToBottom="isScrollToBottom"
-            @loadMore="getMessage"
           />
           <div class="fc w-full p-2 gap-1">
             <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->
@@ -279,14 +216,6 @@ watch(
             >
           </div>
         </div>
-      </div>
-      <div
-        class="relative fr justify-end cursor-pointer"
-        :class="{ 'call-animation': !isShowBoxChat }"
-        @click=";(isShowBoxChat = !isShowBoxChat), (isScrollToBottom = new Date().getTime())"
-      >
-        <img :src="info.avatar" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-if="info.avatar" />
-        <img src="~/assets/images/logo-icon.svg" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-else />
       </div>
     </div>
   </div>

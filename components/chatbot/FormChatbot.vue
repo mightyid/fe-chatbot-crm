@@ -28,12 +28,18 @@ const form = ref<any>({
   api_key: '',
   organization: '',
 })
-
+const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
+  const newForm = form.value.form.map((item: any) => {
+    return {
+      key: item.key,
+      label: formOptions.value.find((x: any) => x.key === item.key)?.label,
+    }
+  })
   if (!props.isEdit) {
-    emit('onSubmit', { ...toRaw(form.value) })
+    emit('onSubmit', { ...toRaw(form.value), form: newForm })
   } else {
-    emit('onEdit', { ...toRaw(form.value), _id: props.data?._id })
+    emit('onEdit', { ...toRaw(form.value), _id: props.data?._id, form: newForm })
   }
   resetForm({
     values: {
@@ -44,6 +50,12 @@ const onSubmit = handleSubmit(() => {
 const onUpload = (obj: any) => {
   form.value.avatar = obj.url
 }
+const getFormOptions = async () => {
+  const { result }: any = await $api('crm-field')
+  console.log(result, 'result')
+  formOptions.value = result || []
+}
+getFormOptions()
 
 watch(
   () => props.data,
@@ -111,6 +123,29 @@ watch(
         v-model="form.organization"
       />
     </div>
+    <div class="my-4 text-lg c-primary font-bold">
+      Form Request
+      <img
+        src="~/assets/icons/i-add-primary.svg"
+        alt=""
+        class="cursor-pointer"
+        @click="form.form.push({ key: '', label: '' })"
+      />
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="relative flex-1 fr" v-for="(item, index) in form.form" :key="item.key">
+        <Select
+          class="flex-1"
+          v-model="form.form[index].key"
+          :options="formOptions"
+          optionLabel="label"
+          optionValue="key"
+          placeholder="Select"
+        />
+        <img src="~/assets/icons/i-close-gray.svg" class="cursor-pointer" @click="form.form.splice(index, 1)" alt="" />
+      </div>
+    </div>
+
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"

@@ -34,7 +34,9 @@ document.documentElement.classList.toggle('light')
       <TheSidebarLeft />
       <div class="flex-1 flex flex-col bg-[#F7F8FA] overflow-hidden">
         <TheHeader />
-        <slot></slot>
+        <div class="flex-1 overflow-auto">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </div>
