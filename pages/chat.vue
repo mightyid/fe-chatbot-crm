@@ -42,8 +42,10 @@ const visibilityChanged = (isVisible: any, entry: any) => {
 </script>
 
 <template>
-  <div class="flex-1 w-full h-full grid grid-cols-4 overflow-hidden">
-    <div class="col-span-1 flex-1 overflow-auto">
+  <div class="flex-1 w-full h-full grid grid-cols-5 overflow-hidden">
+    <div
+      class="col-span-1 flex-1 overflow-auto bg-white border-l-[1px] border-l-solid border-l-[#E1E1E1] hide-scrollbar"
+    >
       <NavChatItem
         :groups="listGroup"
         v-for="(item, index) in listGroup"
@@ -57,6 +59,6 @@ const visibilityChanged = (isVisible: any, entry: any) => {
         }"
       />
     </div>
-    <div class="col-span-3 bg-white flex-1 bg-red overflow-hidden"> <NuxtPage /> </div>
+    <div class="col-span-4 bg-white flex-1 bg-red overflow-hidden"> <NuxtPage /> </div>
   </div>
 </template>

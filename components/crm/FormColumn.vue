@@ -87,10 +87,10 @@ watch(
   <form autocomplete="off" @submit.prevent="onSubmit">
     <div class="text-2xl font-bold text-center">{{ isEdit ? 'Edit Column' : 'Create Field' }}</div>
     <div class="grid grid-cols-1 gap-6">
-      <BaseInputText class="flex-1" name="label" label="Field name" :rules="{ required: true }" v-model="form.label" />
-      <BaseInputText class="flex-1" name="key" label="Field key" :rules="{ required: true }" v-model="form.key" />
+      <BaseInputText class="flex-1" name="label" label="Name" :rules="{ required: true }" v-model="form.label" />
+      <BaseInputText class="flex-1" name="key" label="Key" :rules="{ required: true }" v-model="form.key" />
       <BaseInputNumber class="flex-1" name="width" label="Width" :rules="{ required: true }" v-model="form.width" />
-      <BaseInputSelect
+      <!-- <BaseInputSelect
         class="flex-1"
         :options="fields"
         name="field_profile"
@@ -99,7 +99,7 @@ watch(
         option-value="value"
         :rules="{ required: false }"
         v-model="form.field_profile"
-      />
+      /> -->
       <!-- <BaseInputText
         class="flex-1"
         name="field_profile"

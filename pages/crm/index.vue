@@ -170,7 +170,7 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { data }: any = await $api(`crm-lead/${record._id}`, {
+      const { data }: any = await $api(`lead/${record._id}`, {
         method: 'DELETE',
       })
       if (data.value.statusCode === 200) {
@@ -376,9 +376,11 @@ watchDebounced(
         </Column>
         <Column header="Name" :frozen="true" alignFrozen="left">
           <template #body="slotProps">
-            <span class="fr ai-c gap-2">
-              {{ slotProps.data.name }}
-            </span>
+            <nuxt-link :to="`/crm/${slotProps.data._id}`" class="flex items-center gap-1 cursor-pointer">
+              <span class="text-base font-normal c-primary whitespace-nowrap">
+                {{ slotProps.data.name }}
+              </span>
+            </nuxt-link>
           </template>
         </Column>
 
@@ -390,24 +392,7 @@ watchDebounced(
           :key="column._id"
         >
           <template #body="slotProps">
-            <nuxt-link
-              :to="`/crm/${slotProps.data._id}`"
-              class="flex items-center gap-1 cursor-pointer"
-              :style="{
-                minWidth: `${column.width}px`,
-              }"
-              v-if="index == 0"
-            >
-              <span class="text-base font-normal c-primary whitespace-nowrap">
-                {{
-                  slotProps.data?.data && slotProps.data?.data[column.key]
-                    ? slotProps.data?.data[column.key]?.value
-                    : ''
-                }}
-              </span>
-            </nuxt-link>
             <div
-              v-else
               class="flex items-center gap-1 cursor-pointer"
               :style="{
                 minWidth: `${column.width}px`,
@@ -426,7 +411,7 @@ watchDebounced(
         </Column>
         <Column style="min-width: 200px" field="created_at" header="Created at">
           <template #body="slotProps">
-            <!-- {{ useMoment(slotProps.data.created_at) }} -->
+            {{ useMoment(slotProps.data.created_at) }}
           </template>
         </Column>
 

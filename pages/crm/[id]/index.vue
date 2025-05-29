@@ -22,9 +22,8 @@ getDataColumn()
       <div class="c-black-60"> Name </div>
       <div class="c-black-90">{{ data.name }}</div>
     </div>
-    <div class="fc" v-for="(item, index) in (Object.values(data?.data) as any)" :key="item.value">
+    <div class="fc min-h-70vh" v-for="(item, index) in (Object.values(data?.data) as any)" :key="item.value">
       <div class="c-black-60">
-        Field
         {{
           columns.find((i: any) => i._id === Object.keys(data?.data)[index])
             ? columns.find((i: any) => i._id === Object.keys(data?.data)[index]).label

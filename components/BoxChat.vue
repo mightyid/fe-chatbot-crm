@@ -17,7 +17,11 @@ const props = defineProps({
   },
   isScrollToBottom: {
     type: Number as any,
-    default: '',
+    default: new Date().getTime(),
+  },
+  isMain: {
+    type: Boolean,
+    default: false,
   },
 })
 const scrollContainer = ref<any>(null)
@@ -35,8 +39,16 @@ const getDebounce = useDebounceFn(() => {
 
 const visibilityChanged = (isVisible: any, entry: any) => {
   if (isVisible) {
-    console.log('isVisible')
     getDebounce()
+  }
+}
+const checkPositionRight = (item: any) => {
+  if (props.isMain) {
+    if (item.user) return true
+    return false
+  } else {
+    if (item.user) return false
+    return true
   }
 }
 onMounted(() => {
@@ -47,7 +59,6 @@ onMounted(() => {
 watch(
   () => props.isScrollToBottom,
   () => {
-    console.log('scroll')
     setTimeout(() => {
       scrollToBottom()
     }, 100)
@@ -56,13 +67,13 @@ watch(
 </script>
 
 <template>
-  <div class="flex-1 h-full overflow-y-auto pb-2 px-2" ref="scrollContainer">
+  <div class="flex-1 h-full overflow-y-auto pb-2 px-2 hide-scrollbar" ref="scrollContainer">
     <div class="flex flex-col-reverse justify-end gap-2">
       <div
         class="flex flex-col"
         v-for="(item, index) in listMessage"
         :key="item._id"
-        :class="item?.user ? 'items-start' : 'items-end'"
+        :class="checkPositionRight(item) ? 'items-end' : 'items-start'"
         v-observe-visibility="{
           callback: index === listMessage.length - 1 ? visibilityChanged : () => {},
           intersection: {
@@ -72,13 +83,13 @@ watch(
       >
         <div
           class="w-fit max-w-[80%] px-[16px] py-[6px] rounded-[18px]"
-          :class="item?.user ? 'bg-[#F6F6F7] rounded-bl-0' : 'bg-[#E5F6FF] rounded-br-0'"
+          :class="checkPositionRight(item) ? 'bg-[#E5F6FF] rounded-br-0' : 'bg-[#F6F6F7] rounded-bl-0'"
         >
           <!-- {{ index }} -->
           <VMarkdownView :content="item.message"></VMarkdownView>
         </div>
       </div>
     </div>
-    <ChatTyping v-if="isTyping" />
+    <ChatTyping v-if="isTyping" class="mt-2" />
   </div>
 </template>

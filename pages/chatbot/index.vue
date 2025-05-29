@@ -146,7 +146,7 @@ watchDebounced(
             </template>
           </Column>
 
-          <Column style="min-width: 200px" field="config_gpt" header="Config ChatGPT">
+          <Column style="min-width: 200px" field="config_gpt" header="Config">
             <template #body="slotProps">
               <img
                 src="~/assets/icons/i-tick-primary.svg"

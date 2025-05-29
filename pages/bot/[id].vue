@@ -109,16 +109,17 @@ const sendMessage = async () => {
       hash: new Date().getTime(),
     },
   })
-  console.log(result, 'result message')
   message.value = ''
   isLoading.value = false
-
-  const newMessage = {
-    ...result,
-    message: result?.message.message || '',
+  const id = listMessage.value.findIndex((item: any) => item?.hash === result?.hash)
+  if (id == -1) {
+    const newMessage = {
+      ...result,
+      message: result?.message.message || '',
+    }
+    listMessage.value = [newMessage, ...listMessage.value]
+    isScrollToBottom.value = new Date().getTime()
   }
-  listMessage.value = [newMessage, ...listMessage.value]
-  isScrollToBottom.value = new Date().getTime()
 
   // getMessage()
 }
@@ -152,14 +153,16 @@ const licenseSocket = () => {
     console.log(res, 'JOIN_LEAD')
   })
   socket.value.on('SEND_MESSAGE', (res: any) => {
-    console.log(res, 'SEND_MESSAGE')
     if (res?.lead._id === groupInfo.value._id) {
-      const newMessage = {
-        ...res,
-        message: res?.message.message || '',
+      const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
+      if (id == -1) {
+        const newMessage = {
+          ...res,
+          message: res?.message.message || '',
+        }
+        listMessage.value = [newMessage, ...listMessage.value]
+        isScrollToBottom.value = new Date().getTime()
       }
-      listMessage.value = [newMessage, ...listMessage.value]
-      isScrollToBottom.value = new Date().getTime()
     }
   })
   socket.value.on('TYPING', (res: any) => {
