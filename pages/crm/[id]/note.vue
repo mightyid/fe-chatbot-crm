@@ -40,7 +40,7 @@ const formNote = ref({
   content: '',
 })
 const createNote = async () => {
-  const { data, error } = await $api<any>(`crm-lead/${route.params.id}/note`, {
+  const { data, error } = await $api<any>(`lead/${route.params.id}/note`, {
     method: 'POST',
     body: {
       note: formNote.value.content,

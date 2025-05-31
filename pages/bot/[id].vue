@@ -153,6 +153,7 @@ const licenseSocket = () => {
     console.log(res, 'JOIN_LEAD')
   })
   socket.value.on('SEND_MESSAGE', (res: any) => {
+    console.log(res, 'SEND_MESSAGE')
     if (res?.lead._id === groupInfo.value._id) {
       const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
       if (id == -1) {
@@ -162,6 +163,8 @@ const licenseSocket = () => {
         }
         listMessage.value = [newMessage, ...listMessage.value]
         isScrollToBottom.value = new Date().getTime()
+      } else {
+        listMessage.value[id].message = res?.message.message || ''
       }
     }
   })
@@ -259,13 +262,14 @@ watch(
           />
           <div class="fc w-full p-2 gap-1">
             <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->
-            <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1">
-              <input
+            <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1 ai-c">
+              <textarea
                 type="text"
+                rows="1"
                 placeholder="Enter a message"
                 v-model="message"
-                @keyup.enter="debounceSend"
-                class="w-full text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"
+                @keypress.enter="debounceSend"
+                class="w-full h-auto text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"
               />
               <div
                 class="rounded-full h-[32px] w-[32px] min-w-[32px] flex items-center justify-center p-0 m-0 bg-primary cursor-pointer"
@@ -294,4 +298,8 @@ watch(
     </div>
   </div>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+textarea {
+  resize: none;
+}
+</style>

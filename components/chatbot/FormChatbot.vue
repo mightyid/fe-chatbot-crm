@@ -27,6 +27,7 @@ const form = ref<any>({
   assistant_id: '',
   api_key: '',
   organization: '',
+  webhook: '',
 })
 const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
@@ -121,6 +122,13 @@ watch(
         label="Organization"
         :rules="{ required: false }"
         v-model="form.organization"
+      />
+      <BaseInputText
+        class="flex-1"
+        name="webhook"
+        label="Webhook"
+        :rules="{ required: false }"
+        v-model="form.webhook"
       />
     </div>
     <div class="my-4 text-lg c-primary font-bold">

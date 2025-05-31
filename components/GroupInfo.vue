@@ -31,6 +31,18 @@ const updateStopBot = async () => {
       <BaseAvatar :size="64" :url="info?.bot?.avatar" />
       <div class="text-lg font-semibold c-black-90 capitalize">{{ info?.name }}</div>
     </div>
-    <BaseSwitch label="Stop bot " name="stop_bot" v-model="info.stop_bot" @update:model-value="updateStopBot" />
+    <div class="fc py-4" v-if="info?.data">
+      <div class="fr gap-4" v-for="item in Object.values(info?.data)">
+        <div class="text-base" v-if="item?.label"> {{ item?.label }}:</div>
+        <div class="text-base font-bold"> {{ item.value }}</div>
+      </div>
+    </div>
+    <BaseSwitch
+      label="Stop bot "
+      class="mt-4"
+      name="stop_bot"
+      v-model="info.stop_bot"
+      @update:model-value="updateStopBot"
+    />
   </div>
 </template>

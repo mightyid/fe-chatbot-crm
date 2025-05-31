@@ -204,7 +204,7 @@ const closeNote = () => {
 }
 
 const editNoteById = async () => {
-  const { data, error } = await $api<any>(`crm-lead/${formNote.value._id}/note`, {
+  const { data, error } = await $api<any>(`lead/${formNote.value._id}/note`, {
     method: 'POST',
     body: {
       note: formNote.value.content,
