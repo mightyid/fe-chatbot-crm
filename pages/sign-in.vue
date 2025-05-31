@@ -31,7 +31,8 @@ const onSubmit = handleSubmit(async () => {
     setRefreshToken(result?.refresh_token)
     await getUserInfo()
 
-    redirectBack('/')
+    // redirectBack('/')
+    window.location.reload()
   } catch (error: any) {
     console.log({ error })
 

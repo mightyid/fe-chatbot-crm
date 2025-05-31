@@ -74,26 +74,26 @@ const DEFAULT_NAV = [
         iconActive: iEmployeeActive,
         to: '/chatbot',
       },
-      {
-        title: 'common.employee',
-        key: 'menu-employees',
-        icon: iEmployee,
-        iconActive: iEmployeeActive,
-        sub: [
-          {
-            title: 'common.employees',
-            key: 'employees',
-            permissionKey: 'view_employee',
-            to: PATH_EMPLOYEES_LIST,
-          },
-          {
-            title: 'common.role',
-            key: 'roles',
-            permissionKey: 'view_roles',
-            to: PATH_ROLE_LIST,
-          },
-        ],
-      },
+      // {
+      //   title: 'common.employee',
+      //   key: 'menu-employees',
+      //   icon: iEmployee,
+      //   iconActive: iEmployeeActive,
+      //   sub: [
+      //     {
+      //       title: 'common.employees',
+      //       key: 'employees',
+      //       permissionKey: 'view_employee',
+      //       to: PATH_EMPLOYEES_LIST,
+      //     },
+      //     {
+      //       title: 'common.role',
+      //       key: 'roles',
+      //       permissionKey: 'view_roles',
+      //       to: PATH_ROLE_LIST,
+      //     },
+      //   ],
+      // },
     ],
   },
 ] as MenuType[]

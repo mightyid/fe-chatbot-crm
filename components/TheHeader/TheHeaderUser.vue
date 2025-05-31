@@ -7,22 +7,22 @@ const router = useRouter()
 
 const overPanel = ref()
 const actions = ref([
-  {
-    icon: iProfile,
-    name: 'common.personal_information',
-    action() {
-      router.push('/profile/personal-information')
-      hidePanel()
-    },
-  },
-  {
-    icon: iUpdateInformation,
-    name: 'common.update_information',
-    action() {
-      router.push('/profile/update-information')
-      hidePanel()
-    },
-  },
+  // {
+  //   icon: iProfile,
+  //   name: 'common.personal_information',
+  //   action() {
+  //     router.push('/profile/personal-information')
+  //     hidePanel()
+  //   },
+  // },
+  // {
+  //   icon: iUpdateInformation,
+  //   name: 'common.update_information',
+  //   action() {
+  //     router.push('/profile/update-information')
+  //     hidePanel()
+  //   },
+  // },
   // {
   //   icon: iSetting,
   //   name: 'Setting',

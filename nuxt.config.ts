@@ -7,6 +7,26 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   ssr: false,
+  app: {
+    head: {
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+      title: 'MightyChatbot',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1,maximum-scale=1,user-scalable=0' },
+        {
+          name: 'description',
+          content: 'MightyChatbot',
+        },
+        { property: 'og:image', content: '/favicon.svg' },
+        { property: 'og:title', content: 'MightyChatbot' },
+        {
+          property: 'og:description',
+          content: 'MightyChatbot',
+        },
+      ],
+    },
+  },
   components: [
     {
       path: '~/components/common',
