@@ -82,6 +82,7 @@ watch(
         }"
       >
         <div
+          v-if="item.message"
           class="w-fit max-w-[80%] px-[16px] py-[6px] rounded-[18px]"
           :class="checkPositionRight(item) ? 'bg-[#E5F6FF] rounded-br-0' : 'bg-[#F6F6F7] rounded-bl-0'"
         >

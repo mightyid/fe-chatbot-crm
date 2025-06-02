@@ -233,7 +233,12 @@ watch(
 
             <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
           </div>
-          <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+          <div class="fr ai-c gap-2">
+            <nuxt-link :to="`/bot-full/${info?._id}`" target="_blank">
+              <img src="~/assets/icons/i-zoom.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+            </nuxt-link>
+            <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+          </div>
         </div>
         <div class="fc !overflow-auto gap-4" v-if="!token || !groupInfo" :style="boxStyle">
           <div class="fc flex-1 justify-center gap-4 p-4">
@@ -263,7 +268,7 @@ watch(
           <div class="fc w-full p-2 gap-1">
             <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->
             <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1 ai-c">
-              <textarea
+              <input
                 type="text"
                 rows="1"
                 placeholder="Enter a message"

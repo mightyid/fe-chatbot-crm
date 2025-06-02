@@ -14,12 +14,16 @@ const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
 const token = ref(appStore.tokenBot || '')
+// const token = ref('')
 const socket = ref()
 const listMessage = ref<any>([])
 const isLoading = ref(false)
 const groupInfo = ref<any>({})
 const isTyping = ref(false)
 const isScrollToBottom = ref<any>('')
+const isLoadMore = ref(true)
+const lastMessageId = ref()
+const form = ref<any>([])
 const boxStyle = ref({
   width: '100%',
   height: '100%',
@@ -31,6 +35,9 @@ const getData = async () => {
   console.log(token.value, 'token2222')
   if (token.value) {
     getInfoGroup()
+  }
+  if (result.form) {
+    form.value = result.form
   }
 }
 const getInfoGroup = async () => {
@@ -47,10 +54,15 @@ const getInfoGroup = async () => {
   })
 }
 const startChat = async () => {
+  const newForm = {}
+  form.value.forEach((item: any) => {
+    //@ts-ignore
+    newForm[item.key] = item.value
+  })
   const { result }: any = await $api(`incognito/${route.params.id}/start`, {
     method: 'POST',
     body: {
-      form: {},
+      form: newForm,
     },
   })
   token.value = result.access_token
@@ -63,15 +75,25 @@ const startChat = async () => {
 }
 
 const getMessage = async () => {
-  const { result }: any = await $api(`incognito/${route.params.id}/message`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-  })
-  console.log(result, 'result listMessage')
-  listMessage.value = result
-  isScrollToBottom.value = new Date().getTime()
+  if (isLoadMore.value) {
+    const { result }: any = await $api(`incognito/${route.params.id}/message`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      params: {
+        last_message_id: lastMessageId.value,
+      },
+    })
+    listMessage.value = [...listMessage.value, ...result]
+    if (result.length < 20) {
+      isLoadMore.value = false
+    }
+    if (!lastMessageId.value) {
+      isScrollToBottom.value = new Date().getTime()
+    }
+    lastMessageId.value = result[result.length - 1]?._id
+  }
 }
 const sendMessage = async () => {
   isLoading.value = true
@@ -87,19 +109,33 @@ const sendMessage = async () => {
       hash: new Date().getTime(),
     },
   })
-  console.log(result, 'result message')
   message.value = ''
   isLoading.value = false
-
-  const newMessage = {
-    ...result,
-    message: result?.message.message || '',
+  const id = listMessage.value.findIndex((item: any) => item?.hash === result?.hash)
+  if (id == -1) {
+    const newMessage = {
+      ...result,
+      message: result?.message.message || '',
+    }
+    listMessage.value = [newMessage, ...listMessage.value]
+    isScrollToBottom.value = new Date().getTime()
   }
-  listMessage.value = [newMessage, ...listMessage.value]
-  isScrollToBottom.value = new Date().getTime()
 
   // getMessage()
 }
+const checkDisabled = computed(() => {
+  if (info.value.form && info.value.form[0].key) {
+    let isDisabled = false
+    info.value.form.forEach((item: any) => {
+      if (!item.value) {
+        isDisabled = true
+      }
+    })
+    return isDisabled
+  } else {
+    return false
+  }
+})
 getData()
 const licenseSocket = () => {
   const url = useRuntimeConfig().public.baseURL
@@ -119,12 +155,17 @@ const licenseSocket = () => {
   socket.value.on('SEND_MESSAGE', (res: any) => {
     console.log(res, 'SEND_MESSAGE')
     if (res?.lead._id === groupInfo.value._id) {
-      const newMessage = {
-        ...res,
-        message: res?.message.message || '',
+      const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
+      if (id == -1) {
+        const newMessage = {
+          ...res,
+          message: res?.message.message || '',
+        }
+        listMessage.value = [newMessage, ...listMessage.value]
+        isScrollToBottom.value = new Date().getTime()
+      } else {
+        listMessage.value[id].message = res?.message.message || ''
       }
-      listMessage.value = [newMessage, ...listMessage.value]
-      isScrollToBottom.value = new Date().getTime()
     }
   })
   socket.value.on('TYPING', (res: any) => {
@@ -154,9 +195,7 @@ const closeChatbot = () => {
 //   socket.emit('STOP_TYPING')
 // }
 const debounceSend = useDebounceFn(() => {
-  if (message.value) {
-    sendMessage()
-  }
+  sendMessage()
 }, 200)
 onMounted(() => {})
 
@@ -174,32 +213,68 @@ watch(
 </script>
 
 <template>
-  <div class="max-w-800px mx-a flex-1" v-if="info?._id">
-    <div class="flex flex-col items-end justify-end">
+  <div class="w-full h-screen max-w-1000px mx-a" v-if="info?._id">
+    <div class="flex flex-col items-end justify-end h-full">
       <div
-        class="fc border-1 !bg-white border-gray-20 border-solid h-screen rounded overflow-hidden rounded-[16px]"
+        class="fc border-1 h-full w-full !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
       >
-        <div class="fc justify-center items-center" v-if="!token">
-          <div class=""> </div>
-          <Button @click="startChat">Start</Button>
+        <div class="fr justify-between p-2 py-2 bg-primary">
+          <div class="fr items-center gap-2">
+            <div class="fc w-[32px] aspect-square rounded-full overflow-hidden bg-white">
+              <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
+              <img
+                src="~/assets/images/logo-icon.svg"
+                class="w-[32px] h-[32px] rounded-full object-cover"
+                alt=""
+                v-else
+              />
+            </div>
+
+            <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
+          </div>
+          <div class="fr ai-c gap-4">
+            <!-- <nuxt-link :to="`/bot-full/${info?._id}`" target="_blank">
+              <img src="~/assets/icons/i-zoom.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
+            </nuxt-link>
+            <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" /> -->
+          </div>
         </div>
-        <div class="fc h-full" v-else>
+        <div class="fc w-full !overflow-auto gap-4" v-if="!token || !groupInfo" :style="boxStyle">
+          <div class="fc flex-1 justify-center gap-4 p-4">
+            <div class="fc justify-center gap-4" v-if="info.form && info.form[0].key">
+              <BaseInputText
+                v-for="(item, index) in info.form"
+                class="flex-1"
+                v-model="form[index].value"
+                :name="item.label"
+                type="text"
+                :label="item.label"
+                placeholder="Enter "
+              />
+            </div>
+
+            <Button class="w-full" @click="startChat" :disabled="checkDisabled">Start</Button>
+          </div>
+        </div>
+        <div class="fc" :style="boxStyle" v-else>
           <BoxChat
             :listMessage="listMessage"
             :groupInfo="groupInfo"
             :isTyping="isTyping"
             :isScrollToBottom="isScrollToBottom"
+            @loadMore="getMessage"
           />
           <div class="fc w-full p-2 gap-1">
             <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->
-            <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1">
+            <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1 ai-c">
               <input
                 type="text"
+                rows="1"
                 placeholder="Enter a message"
                 v-model="message"
-                @keyup.enter="debounceSend"
-                class="w-full text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"
+                @keypress.enter="debounceSend"
+                class="w-full h-auto text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"
               />
               <div
                 class="rounded-full h-[32px] w-[32px] min-w-[32px] flex items-center justify-center p-0 m-0 bg-primary cursor-pointer"
@@ -220,4 +295,8 @@ watch(
     </div>
   </div>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+textarea {
+  resize: none;
+}
+</style>

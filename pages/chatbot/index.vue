@@ -88,6 +88,11 @@ const copyCodeIframe = (val: any) => {
   navigator.clipboard.writeText(iframe)
   toast.add({ severity: 'success', summary: 'Notifications', detail: 'Copied', life: 3000 })
 }
+const copyBot = (val: any) => {
+  const url = `${window.location.origin}/bot/${val}`
+  navigator.clipboard.writeText(url)
+  toast.add({ severity: 'success', summary: 'Notifications', detail: 'Copied', life: 3000 })
+}
 watchDebounced(
   () => query.value.search,
   (newValue) => {
@@ -169,6 +174,14 @@ watchDebounced(
           <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
+                <button @click="copyBot(slotProps.data._id)">
+                  <img
+                    class="icon-lg"
+                    src="~/assets/icons/i-eye-secondary-circle.svg"
+                    alt=""
+                    v-tooltip.top="'Copy bot'"
+                  />
+                </button>
                 <button @click="copyCodeIframe(slotProps.data._id)">
                   <img
                     class="icon-lg"
