@@ -124,7 +124,7 @@ const sendMessage = async () => {
   // getMessage()
 }
 const checkDisabled = computed(() => {
-  if (info.value.form && info.value.form[0].key) {
+  if (info.value.form && info.value.form.length > 0 && info.value.form[0].key) {
     let isDisabled = false
     info.value.form.forEach((item: any) => {
       if (!item.value) {
@@ -153,7 +153,6 @@ const licenseSocket = () => {
     console.log(res, 'JOIN_LEAD')
   })
   socket.value.on('SEND_MESSAGE', (res: any) => {
-    console.log(res, 'SEND_MESSAGE')
     if (res?.lead._id === groupInfo.value._id) {
       const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
       if (id == -1) {
@@ -242,7 +241,7 @@ watch(
         </div>
         <div class="fc !overflow-auto gap-4" v-if="!token || !groupInfo" :style="boxStyle">
           <div class="fc flex-1 justify-center gap-4 p-4">
-            <div class="fc justify-center gap-4" v-if="info.form && info.form[0].key">
+            <div class="fc justify-center gap-4" v-if="info.form && info.form.length > 0 && info.form[0].key">
               <BaseInputText
                 v-for="(item, index) in info.form"
                 class="flex-1"

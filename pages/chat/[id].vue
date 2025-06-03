@@ -11,7 +11,18 @@ const isLoadMore = ref(true)
 const lastMessageId = ref()
 const socket = useSocket()
 const isTyping = ref(false)
+const info = ref<any>({})
 
+const getDataInfo = async () => {
+  const { result }: any = await $api(`/lead/${route.params.id}`, {
+    method: 'GET',
+    params: {
+      message: 1,
+    },
+  })
+  info.value = result
+}
+getDataInfo()
 const getMessages = async () => {
   if (isLoadMore.value) {
     const { result }: any = await $api(`message`, {
@@ -69,14 +80,16 @@ const licenseSocket = () => {
     console.log(res, 'JOIN_LEAD')
   })
   socket.on('SEND_MESSAGE', (res: any) => {
-    const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
-    if (id == -1) {
-      const newMessage = {
-        ...res,
-        message: res?.message.message || '',
+    if (res?.lead._id === info.value._id) {
+      const id = listMessage.value.findIndex((item: any) => item?.hash === res?.hash)
+      if (id == -1) {
+        const newMessage = {
+          ...res,
+          message: res?.message.message || '',
+        }
+        listMessage.value = [newMessage, ...listMessage.value]
+        isScrollToBottom.value = new Date().getTime()
       }
-      listMessage.value = [newMessage, ...listMessage.value]
-      isScrollToBottom.value = new Date().getTime()
     }
   })
   socket.on('TYPING', (res: any) => {
@@ -140,7 +153,7 @@ getMessages()
       </div>
     </div>
     <div class="grid col-span-2">
-      <GroupInfo />
+      <GroupInfo :info="info" />
     </div>
   </div>
 </template>

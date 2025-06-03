@@ -1,27 +1,22 @@
 <script lang="ts" setup>
 const { $api } = useNuxtApp()
 const route = useRoute()
-const info = ref<any>({})
-const getData = async () => {
-  const { result }: any = await $api(`/lead/${route.params.id}`, {
-    method: 'GET',
-    params: {
-      message: 1,
-    },
-  })
-  console.log(result, 'result')
-  info.value = result
-}
-getData()
+// const info = ref<any>({})
+const props = defineProps({
+  info: {
+    type: Object,
+    default: {},
+  },
+})
+
 const updateStopBot = async () => {
   const { result }: any = await $api(`message/stop-start-bot`, {
     method: 'POST',
     body: {
       lead_id: route.params.id,
-      stop_bot: info.value.stop_bot,
+      stop_bot: props.info.stop_bot,
     },
   })
-  console.log(result, 'result')
 }
 </script>
 

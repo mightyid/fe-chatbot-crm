@@ -8,7 +8,6 @@ export const useSocket = () => {
   if (!socket) {
     //@ts-ignore
     const token = appStore.token
-    console.log(token, 'token')
     //@ts-ignore
     socket = io.connect(url, {
       transports: ['websocket'],

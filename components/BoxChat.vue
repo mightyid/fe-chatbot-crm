@@ -51,6 +51,13 @@ const checkPositionRight = (item: any) => {
     return true
   }
 }
+const removeSourceTags = (text: string) => {
+  // return text.trim()
+  return text
+    .replace(/【\d+(?::\d+)?†source】/g, '')
+    .replace(/【[^【】†]+†[^【】]+】/g, '')
+    .trim()
+}
 onMounted(() => {
   setTimeout(() => {
     scrollToBottom()
@@ -87,7 +94,7 @@ watch(
           :class="checkPositionRight(item) ? 'bg-[#E5F6FF] rounded-br-0' : 'bg-[#F6F6F7] rounded-bl-0'"
         >
           <!-- {{ index }} -->
-          <VMarkdownView :content="item.message"></VMarkdownView>
+          <VMarkdownView :content="removeSourceTags(item.message)" v-if="item.message"></VMarkdownView>
         </div>
       </div>
     </div>
