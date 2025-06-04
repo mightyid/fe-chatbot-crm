@@ -28,7 +28,7 @@ const is_active = ref(true)
 const name = ref('')
 const { $api } = useNuxtApp()
 const getIframe = async () => {
-  const { data }: any = await $api('crm-lead/iframe', {
+  const { data }: any = await $api('lead/iframe', {
     method: 'GET',
   })
   is_active.value = data.value?.result.is_active || false
@@ -47,7 +47,7 @@ const getIframe = async () => {
 const updateIframe = async () => {
   const ids = newColumns.value.filter((el: any) => el.is_active)
 
-  const { data }: any = await $api('crm-lead/iframe', {
+  const { data }: any = await $api('lead/iframe', {
     method: 'PUT',
     body: {
       label_id: label_id.value || undefined,

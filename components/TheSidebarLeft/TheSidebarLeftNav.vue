@@ -67,13 +67,13 @@ const DEFAULT_NAV = [
         iconActive: iEmployeeActive,
         to: '/chat',
       },
-      {
-        title: 'Chatbot',
-        key: 'chatbot',
-        icon: iEmployee,
-        iconActive: iEmployeeActive,
-        to: '/chatbot',
-      },
+      // {
+      //   title: 'Chatbot',
+      //   key: 'chatbot',
+      //   icon: iEmployee,
+      //   iconActive: iEmployeeActive,
+      //   to: '/chatbot',
+      // },
       // {
       //   title: 'common.employee',
       //   key: 'menu-employees',

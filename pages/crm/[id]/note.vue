@@ -40,14 +40,14 @@ const formNote = ref({
   content: '',
 })
 const createNote = async () => {
-  const { data, error } = await $api<any>(`lead/${route.params.id}/note`, {
+  const { result }: any = await $api<any>(`lead/${route.params.id}/note`, {
     method: 'POST',
     body: {
       note: formNote.value.content,
     },
   })
 
-  if (data.value.result) {
+  if (result) {
     toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
     emit('onGetData')
     // const index = applications.value.findIndex((item: any) => item?._id === formNote.value?._id)
@@ -62,7 +62,7 @@ const createNote = async () => {
 </script>
 
 <template>
-  <div class="fc">
+  <div class="fc min-h-80vh">
     <BaseEditor class="mb-3" :editorConfig="editorNoteConfig" v-model="formNote.content" />
 
     <div class="flex justify-end gap-4">
@@ -81,12 +81,12 @@ const createNote = async () => {
         v-for="(item, index) in data.notes?.sort((a: any, b: any) => new Date(b.created_at) - new Date(a.created_at))"
         :key="item._id"
       >
-        <BaseAvatar :size="32" />
+        <BaseAvatar :url="item?.user?.avatar" :size="32" />
 
         <div class="flex-1">
           <div class="mb-[4px] flex items-center gap-3">
-            <p class="text-base font-normal c-black-90">
-              {{ item?.account?.name }}
+            <p class="text-base font-normal c-black-90 m-0">
+              {{ item?.user?.name }}
             </p>
             <span class="text-xs font-normal c-gray-40">
               {{ useMoment(item?.created_at) }}

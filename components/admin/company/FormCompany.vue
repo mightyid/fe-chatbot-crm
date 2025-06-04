@@ -31,11 +31,11 @@ const onSubmit = handleSubmit(() => {
   } else {
     emit('onEdit', { ...toRaw(form.value), _id: props.data?._id })
   }
-  resetForm({
-    values: {
-      name: '',
-    },
-  })
+  // resetForm({
+  //   values: {
+  //     name: '',
+  //   },
+  // })
 })
 const onUpload = (obj: any) => {
   form.value.logo = obj.url

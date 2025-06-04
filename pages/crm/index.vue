@@ -125,11 +125,11 @@ getData()
 getDataColumn()
 getDataLabel()
 const getNumberApplicationStatus = async () => {
-  const { data, loading }: any = await $api(`crm-lead/number`, {
+  const { result }: any = await $api(`lead/number-label`, {
     method: 'GET',
   })
   let obj = {} as any
-  data.value.result.forEach((item: any) => {
+  result.forEach((item: any) => {
     obj[item._id] = item.count
   })
   numberApplicationStatus.value = obj
@@ -204,14 +204,14 @@ const closeNote = () => {
 }
 
 const editNoteById = async () => {
-  const { data, error } = await $api<any>(`lead/${formNote.value._id}/note`, {
+  const { result }: any = await $api<any>(`lead/${formNote.value._id}/note`, {
     method: 'POST',
     body: {
       note: formNote.value.content,
     },
   })
 
-  if (data.value.result) {
+  if (result) {
     const index = applications.value.findIndex((item: any) => item?._id === formNote.value?._id)
     // const newItem = {
     //   ...applications.value[index],
@@ -478,12 +478,12 @@ watchDebounced(
 
         <div class="mt-6 flex flex-col gap-6" v-if="formNote?.note?.length > 0">
           <div class="relative flex items-start gap-3" v-for="(item, index) in formNote.note" :key="item._id">
-            <BaseAvatar :size="32" />
+            <BaseAvatar :url="item?.user?.avatar" :size="32" />
 
             <div class="flex-1">
               <div class="mb-[4px] flex items-center gap-3">
-                <p class="text-base font-normal c-black-90">
-                  {{ item?.account?.name }}
+                <p class="text-base font-normal c-black-90 m-0">
+                  {{ item?.user?.name }}
                 </p>
                 <span class="text-xs font-normal c-gray-40">
                   {{ useMoment(item?.created_at) }}

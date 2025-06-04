@@ -64,11 +64,11 @@ const onSubmit = handleSubmit(() => {
   } else {
     emit('onEdit', { ...toRaw(form.value), _id: props.data?._id })
   }
-  resetForm({
-    values: {
-      name: '',
-    },
-  })
+  // resetForm({
+  //   values: {
+  //     name: '',
+  //   },
+  // })
 })
 if (props?.isEdit) {
   form.value = props.data

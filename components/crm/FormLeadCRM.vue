@@ -44,11 +44,11 @@ const onSubmit = handleSubmit(() => {
   } else {
     emit('onEdit', { ...toRaw(form.value), _id: props.data?._id })
   }
-  resetForm({
-    values: {
-      name: '',
-    },
-  })
+  // resetForm({
+  //   values: {
+  //     name: '',
+  //   },
+  // })
 })
 
 getLabels()
@@ -79,7 +79,7 @@ watch(
         <InputText name="name" type="text" placeholder="Enter" v-model="form.name" />
       </div>
       <div class="flex gap-2 flex-col" v-for="column in columns" :key="column._id">
-        <label class="text-base font-normal c-black-90" for="props.name"> Field {{ column?.label }} </label>
+        <label class="text-base font-normal c-black-90" for="props.name"> {{ column?.label }} </label>
         <InputText :name="column.label" type="text" placeholder="Enter" v-model="form.data[column.key]" />
       </div>
     </div>
