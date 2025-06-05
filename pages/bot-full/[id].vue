@@ -7,6 +7,7 @@ definePageMeta({
   auth: false,
   layout: 'blank',
 })
+const { t } = useI18n()
 const { $api } = useNuxtApp()
 const route = useRoute()
 const appStore = useAppStore()
@@ -54,9 +55,7 @@ const getInfoGroup = async () => {
   })
 }
 const startChat = async () => {
-  const newForm = {
-    iframe_id: route.query.iframe_id || undefined,
-  }
+  const newForm = {}
   form.value.forEach((item: any) => {
     //@ts-ignore
     newForm[item.key] = item.value
@@ -65,6 +64,7 @@ const startChat = async () => {
     method: 'POST',
     body: {
       form: newForm,
+      iframe_id: route.query.iframe_id || undefined,
     },
   })
   token.value = result.access_token
@@ -256,7 +256,7 @@ watch(
               />
             </div>
 
-            <Button class="w-full" @click="startChat" :disabled="checkDisabled">Start</Button>
+            <Button class="w-full" @click="startChat" :disabled="checkDisabled">{{ t('common.start') }}</Button>
           </div>
         </div>
         <div class="fc" :style="boxStyle" v-else>

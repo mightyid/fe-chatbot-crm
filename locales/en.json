@@ -584,7 +584,8 @@
     "create_contract_type": "Create contract type",
     "edit_contract_type": "Edit contract type",
     "manager": "Manager",
-    "date_reset": "Permission reset date"
+    "date_reset": "Permission reset date",
+    "start": "Start"
   },
   "button": {
     "detail": "Detail",

@@ -584,7 +584,8 @@
     "create_contract_type": "Tạo loại hợp đồng",
     "edit_contract_type": "Chỉnh sửa loại hợp đồng",
     "manager": "Người quản lý",
-    "date_reset": "Ngày đặt lại phép"
+    "date_reset": "Ngày đặt lại phép",
+    "start": "Bắt đầu"
   },
   "button": {
     "detail": "Chi tiết",

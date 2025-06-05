@@ -24,6 +24,7 @@ const isShowImportExcel = ref(false)
 const { $dayjs: dayjs, $api } = useNuxtApp()
 const columns = ref<any>([])
 const labels = ref<any>([])
+const listIframe = ref<any>([])
 const formNote = ref<any>({
   _id: '',
   content: '',
@@ -37,6 +38,7 @@ const query = ref({
   filterBy: (route.query?.filterBy as string) || null,
   from: (route.query.from as string) || null,
   to: (route.query.to as string) || null,
+  iframe_id: (route.query.iframe_id as string) || null,
 })
 const perPage = ref(20)
 const totalRecords = ref(0)
@@ -91,16 +93,12 @@ const closeDialogIFrame = () => {
   isShowIframe.value = false
 }
 
-const copyIframe = () => {
-  navigator.clipboard.writeText(iframe.value)
-  toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
-  closeDialogIFrame()
+const getListIframe = async () => {
+  const { result }: any = await $api(`iframe`, {
+    method: 'GET',
+  })
+  listIframe.value = result || []
 }
-const getIframe = (obj: any) => {
-  isShowIframe.value = true
-  iframe.value = window.origin + `/tracking?application_id=${obj._id}`
-}
-
 const getData = async () => {
   isLoading.value = true
 
@@ -121,7 +119,25 @@ const getData = async () => {
   isLoading.value = false
 }
 getData()
-
+nextTick(() => {
+  getListIframe()
+})
+const numberBadge = computed(() => {
+  let count = 0
+  // if (query.value.label_id) {
+  //   count += 1
+  // }
+  if (query.value.from) {
+    count += 1
+  }
+  if (query.value.to) {
+    count += 1
+  }
+  if (query.value.iframe_id) {
+    count += 1
+  }
+  return count
+})
 getDataColumn()
 getDataLabel()
 const getNumberApplicationStatus = async () => {
@@ -153,6 +169,7 @@ const clearAll = () => {
     filterBy: null,
     from: null,
     to: null,
+    iframe_id: '',
   }
   getData()
 }
@@ -293,11 +310,24 @@ watchDebounced(
         <h1 class="page-heading m-0">Leads CRM</h1>
         <div class="flex-1 flex items-center justify-end gap-4">
           <InputSearch class="w-[300px]" v-model="query.search" />
-          <ButtonFilter @onClearAll="clearAll" @onApply="getData">
-            <template #body>
-              <div class="flex flex-row gap-2 mb-4">
+          <ButtonFilter @onClearAll="clearAll" @onApply="getData" :numberBadge="numberBadge">
+            <template v-slot="slotProps">
+              <!-- <div class="flex flex-row gap-2 mb-4">
                 <BaseInputCalendar label="From" v-model="query.from" />
                 <BaseInputCalendar label="To" v-model="query.to" />
+              </div> -->
+              <BaseInputSelect
+                label="Campaign"
+                :options="listIframe"
+                name="iframe_id"
+                :filter="true"
+                option-label="name"
+                option-value="_id"
+                v-model="query.iframe_id"
+              />
+              <div class="fr gap-2 mt-4 jc-fe">
+                <Button label="Clear" severity="secondary" @click="clearAll" />
+                <Button label="Apply" severity="primary" @click="getData" />
               </div>
             </template>
           </ButtonFilter>

@@ -10,13 +10,27 @@ const query = ref({
 const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
-const listChatbot = ref([])
+const listIframe = ref([])
 const isShowDetailLink = ref(false)
 const linkDetail = ref('')
+const isShowCreateLinkBot = ref(false)
+const listChatbot = ref<any>([])
+const bot_id = ref('')
+const recordActive = ref<any>({})
 const { user } = useAuth()
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
+
+const getListBot = async () => {
+  const { loading, result, total_pages, total }: any = await $api('chat-bot', {
+    method: 'GET',
+    params: {
+      ...query.value,
+    },
+  })
+  listChatbot.value = result || []
+}
 const getData = async () => {
   isLoading.value = true
 
@@ -26,10 +40,13 @@ const getData = async () => {
       ...query.value,
     },
   })
-  listChatbot.value = result || []
+  listIframe.value = result || []
   totalRecords.value = total_pages * perPage.value || 0
   useQueryURL(query.value)
   isLoading.value = false
+  nextTick(() => {
+    getListBot()
+  })
 }
 getData()
 
@@ -61,9 +78,16 @@ const confirmDelete = (record: any) => {
     },
   })
 }
+const linkIframeBot = computed(() => {
+  return `${window.location.origin}/bot/${bot_id.value}?iframe_id=${recordActive.value?._id}`
+})
 const openViewDetailLink = (record: any) => {
   isShowDetailLink.value = true
   linkDetail.value = `${window.location.origin}/iframe/crm/create?company_id=${user?.value.company?._id}&iframe_id=${record._id}&label=${record.label}`
+}
+const openCreateLinkBot = (record: any) => {
+  isShowCreateLinkBot.value = true
+  recordActive.value = record
 }
 const copyLink = (link: string) => {
   navigator.clipboard.writeText(link)
@@ -89,7 +113,7 @@ const copyLink = (link: string) => {
       <div class="bg-white fc p-4 mt-4 rounded">
         <BaseSearch v-model="query.search" @onSearch="getData" />
         <DataTable
-          :value="listChatbot"
+          :value="listIframe"
           dataKey="_id"
           rowHover
           lazy
@@ -135,8 +159,11 @@ const copyLink = (link: string) => {
           <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
-                <button @click="openViewDetailLink(slotProps.data)">
-                  <img class="icon-lg" src="~/assets/icons/i-eye-secondary-circle.svg" alt="" v-tooltip.top="'View'" />
+                <button @click="openCreateLinkBot(slotProps.data)" v-tooltip.top="'Create campaign with bot'">
+                  <img class="icon-lg" src="~/assets/icons/i-eye-secondary-circle.svg" alt="" />
+                </button>
+                <button @click="openViewDetailLink(slotProps.data)" alt="" v-tooltip.top="'View'">
+                  <img class="icon-lg" src="~/assets/icons/i-eye-secondary-circle.svg" />
                 </button>
                 <nuxt-link :to="`/link/edit/${slotProps.data._id}`">
                   <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
@@ -163,9 +190,31 @@ const copyLink = (link: string) => {
           <Qr-Code v-if="linkDetail" :value="linkDetail" />
         </div>
       </div>
-      <div class="flex justify-end gap-4">
+      <div class="flex justify-end gap-4 mt-4">
         <Button label="Cancel" severity="secondary" type="button" @click="isShowDetailLink = false" />
         <Button label="Copy Link" severity="primary" type="button" @click="copyLink(linkDetail)" v-if="linkDetail" />
+      </div>
+    </BaseDialog>
+    <BaseDialog :visible="isShowCreateLinkBot" @closeDialog="isShowCreateLinkBot = false">
+      <div class="fc gap-4">
+        <BaseInputSelect
+          :options="listChatbot"
+          optionLabel="name"
+          optionValue="_id"
+          :filterDefault="true"
+          v-model="bot_id"
+          label="BOT"
+        />
+        <span class="text-base break-all" v-if="bot_id">
+          {{ linkIframeBot }}
+        </span>
+        <div class="flex ai-c jc-c mb-3" v-if="bot_id">
+          <Qr-Code v-if="linkIframeBot" :value="linkIframeBot" />
+        </div>
+      </div>
+      <div class="flex justify-end gap-4 mt-4">
+        <Button label="Cancel" severity="secondary" type="button" @click="isShowCreateLinkBot = false" />
+        <Button label="Copy Link" severity="primary" type="button" @click="copyLink(linkIframeBot)" v-if="bot_id" />
       </div>
     </BaseDialog>
   </div>
