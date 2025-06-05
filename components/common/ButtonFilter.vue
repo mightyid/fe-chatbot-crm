@@ -21,7 +21,7 @@ const hidePanel = () => {
 
 <template>
   <Button
-    class="gap-2 group bg-primary !hover:bg-primary-20 border-transparent overflow-visible"
+    class="gap-2 group bg-[#3AB2F8] !hover:bg-primary border-transparent overflow-visible"
     v-badge.info="numberBadge > 0 ? numberBadge.toString() : undefined"
     @click="toggle"
   >

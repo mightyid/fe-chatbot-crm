@@ -125,7 +125,7 @@ const importExcel = () => {
       v-if="dataTable?.length"
     />
     <div class="fr ai-c jc-fe gap-4" v-if="dataTable?.length">
-      <Button label="Cancel" severity="cancel" @click="emit('onCancel')" />
+      <Button label="Cancel" severity="secondary" @click="emit('onCancel')" />
       <Button
         label="Import"
         severity="primary"
