@@ -13,7 +13,7 @@ const form = ref<any>({
   data: {},
 })
 
-if (!route.query?.crm_id || !route.query?.company_id || !route.query?.label) {
+if (!route.query?.iframe_id || !route.query?.company_id) {
   router.push('/')
 }
 const isCheckDisabled = computed(() => {
@@ -29,11 +29,12 @@ const getData = async () => {
   const { result }: any = await $api(`crm-open-iframe/detail`, {
     method: 'GET',
     params: {
-      iframe_id: route.query?.crm_id,
+      iframe_id: route.query?.iframe_id,
       company_id: route.query?.company_id,
       //   label: route.params?.label,
     },
   })
+  console.log(result, 'result')
   if (result) {
     info.value = result
   } else {
@@ -45,15 +46,15 @@ const onSubmit = async () => {
   if (!Object.values(form.value.data)?.length) {
     window.location.reload()
   } else {
-    const { data }: any = await $api('crm-open-iframe/submit', {
+    const { statusCode }: any = await $api('crm-open-iframe/submit', {
       method: 'POST',
       body: {
         company_id: route?.query?.company_id,
-        iframe_id: route?.query?.crm_id,
+        iframe_id: route?.query?.iframe_id,
         data: form.value.data,
       },
     })
-    if (data.value?.statusCode == 200) {
+    if (statusCode == 200) {
       toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
       isSuccess.value = true
     } else {
@@ -85,11 +86,11 @@ getData()
       </div>
     </div>
     <div class="flex justify-end gap-4">
-      <Button label="Cancel" severity="help" type="button" @click="cancel" />
+      <Button label="Cancel" severity="secondary" type="button" @click="cancel" />
       <Button label="Register" severity="primary" type="button" @click="onSubmit" :disabled="isCheckDisabled" />
     </div>
   </div>
-  <div class="mx-auto max-w-500 fc jc-c ai-c" v-else>
+  <div class="mx-auto max-w-500 fc jc-c ai-c mt-30vh" v-else>
     <img src="~/assets/images/success.svg" class="w-64px h-64px mb-3" alt="" />
     <div class="text-m c-black-90">Congratulations!</div>
     <div class="text-m c-black-90">You have successfully registered.</div>

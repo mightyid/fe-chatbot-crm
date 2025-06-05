@@ -54,7 +54,9 @@ const getInfoGroup = async () => {
   })
 }
 const startChat = async () => {
-  const newForm = {}
+  const newForm = {
+    iframe_id: route.query.iframe_id || undefined,
+  }
   form.value.forEach((item: any) => {
     //@ts-ignore
     newForm[item.key] = item.value

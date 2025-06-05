@@ -54,7 +54,9 @@ const getInfoGroup = async () => {
   })
 }
 const startChat = async () => {
-  const newForm = {}
+  const newForm = {
+    iframe_id: route.query.iframe_id || undefined,
+  }
   form.value.forEach((item: any) => {
     //@ts-ignore
     newForm[item.key] = item.value
@@ -233,7 +235,10 @@ watch(
             <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
           </div>
           <div class="fr ai-c gap-2">
-            <nuxt-link :to="`/bot-full/${info?._id}`" target="_blank">
+            <nuxt-link
+              :to="`/bot-full/${info?._id}${route.query.iframe_id ? `?iframe_id=${route.query.iframe_id}` : ''}`"
+              target="_blank"
+            >
               <img src="~/assets/icons/i-zoom.svg" class="cursor-pointer" @click="closeChatbot" alt="" />
             </nuxt-link>
             <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" />

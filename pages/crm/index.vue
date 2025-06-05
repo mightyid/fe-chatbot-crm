@@ -301,11 +301,9 @@ watchDebounced(
               </div>
             </template>
           </ButtonFilter>
-          <Button size="small" label="Iframe" @click="isShowIframe = true">
-            <template #icon>
-              <img src="~/assets/icons/i-plus-white.svg" alt="" />
-            </template>
-          </Button>
+          <nuxt-link to="/link">
+            <Button size="small" label="Campaign"> </Button>
+          </nuxt-link>
           <nuxt-link to="/crm/create">
             <Button type="button" size="small" label="Create">
               <template #icon>
@@ -343,7 +341,7 @@ watchDebounced(
               <span class="text-base c-black-90">Import Excel</span>
             </div>
           </div>
-          <!-- <Button class="flex-1" label="Clear all" severity="cancel" type="button" @click="onClearAll" />
+          <!-- <Button class="flex-1" label="Clear all" severity="secondary" type="button" @click="onClearAll" />
           <Button class="flex-1" label="Apply" severity="apply" type="button" @click="onApply" /> -->
         </OverlayPanel>
       </TabStatusCRM>
@@ -380,6 +378,15 @@ watchDebounced(
             <nuxt-link :to="`/crm/${slotProps.data._id}`" class="flex items-center gap-1 cursor-pointer">
               <span class="text-base font-normal c-primary whitespace-nowrap">
                 {{ slotProps.data.name }}
+              </span>
+            </nuxt-link>
+          </template>
+        </Column>
+        <Column header="Campaign" :frozen="true" alignFrozen="left">
+          <template #body="slotProps">
+            <nuxt-link :to="`/link`" class="flex items-center gap-1 cursor-pointer" v-if="slotProps.data?.iframe?._id">
+              <span class="text-base font-normal c-primary whitespace-nowrap">
+                {{ slotProps.data?.iframe?.name }}
               </span>
             </nuxt-link>
           </template>
@@ -467,7 +474,7 @@ watchDebounced(
         <BaseEditor class="mb-3" :editorConfig="editorNoteConfig" v-model="formNote.content" />
 
         <div class="flex justify-end gap-4">
-          <Button label="Cancel" severity="cancel" type="button" @click="closeNote" />
+          <Button label="Cancel" severity="secondary" type="button" @click="closeNote" />
           <Button
             label="Save"
             severity="primary"
