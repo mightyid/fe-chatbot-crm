@@ -127,7 +127,7 @@ getMessages()
 <template>
   <div class="grid grid-cols-5 h-full flex-1">
     <div
-      class="fc flex-1 h-full col-span-3 overflow-hidden border-[1px] border-solid border-[#E1E1E1] border-t-none border-b-none"
+      class="fc flex-1 h-full col-span-3 overflow-hidden border-[1px] border-solid border-[#E1E1E1] border-t-none border-b-none border-l-none"
     >
       <BoxChat :listMessage="listMessage" :isScrollToBottom="isScrollToBottom" @loadMore="getMessages" :isMain="true" />
       <div class="fc w-full p-2 gap-1">

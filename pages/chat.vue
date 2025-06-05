@@ -44,7 +44,7 @@ const visibilityChanged = (isVisible: any, entry: any) => {
 <template>
   <div class="flex-1 w-full h-full grid grid-cols-5 overflow-hidden">
     <div
-      class="col-span-1 flex-1 overflow-auto bg-white border-l-[1px] border-l-solid border-l-[#E1E1E1] hide-scrollbar"
+      class="col-span-1 flex-1 overflow-auto bg-white border-[1px] border-solid border-[#E1E1E1] border-t-none border-b-none hide-scrollbar"
     >
       <NavChatItem
         :groups="listGroup"

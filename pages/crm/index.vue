@@ -125,6 +125,7 @@ getData()
 getDataColumn()
 getDataLabel()
 const getNumberApplicationStatus = async () => {
+  console.log('get')
   const { result }: any = await $api(`lead/number-label`, {
     method: 'GET',
   })
@@ -170,10 +171,10 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { data }: any = await $api(`lead/${record._id}`, {
+      const { statusCode }: any = await $api(`lead/${record._id}`, {
         method: 'DELETE',
       })
-      if (data.value.statusCode === 200) {
+      if (statusCode === 200) {
         getData()
         toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
       }

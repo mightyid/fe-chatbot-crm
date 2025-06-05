@@ -15,9 +15,8 @@ const props = defineProps({
     default: [],
   },
 })
-const { $auth: auth } = useNuxtApp()
 const { handleSubmit, resetForm } = useForm()
-
+const { user } = useAuth()
 const iframe = ref('')
 const emit = defineEmits(['onClose'])
 const appStore = useAppStore()
@@ -28,35 +27,36 @@ const is_active = ref(true)
 const name = ref('')
 const { $api } = useNuxtApp()
 const getIframe = async () => {
-  const { data }: any = await $api('lead/iframe', {
+  const { result }: any = await $api('lead/iframe', {
     method: 'GET',
   })
-  is_active.value = data.value?.result.is_active || false
-  label_id.value = data.value?.result.label || false
-  name.value = data.value?.result.name || ''
+  is_active.value = result.is_active || false
+  label_id.value = result.label || false
+  name.value = result.name || ''
   newColumns.value.forEach((element: any) => {
-    if (data.value?.result?.columns.includes(element._id)) {
+    if (result?.fields.includes(element._id)) {
       element.is_active = true
     } else {
       element.is_active = false
     }
   })
+  console.log(user, 'user')
   //@ts-ignore
-  iframe.value = `${window.location.origin}/iframe/crm/create?agent_id=${auth?.user?.agent?._id}&crm_id=${data.value.result._id}&label=${data.value.result.label}`
+  iframe.value = `${window.location.origin}/iframe/crm/create?company_id=${user?.value.company?._id}&crm_id=${result._id}&label=${result.label}`
 }
 const updateIframe = async () => {
   const ids = newColumns.value.filter((el: any) => el.is_active)
 
-  const { data }: any = await $api('lead/iframe', {
+  const { statusCode }: any = await $api('lead/iframe', {
     method: 'PUT',
     body: {
       label_id: label_id.value || undefined,
-      columns: ids.map((el: any) => el._id) || undefined,
+      fields: ids.map((el: any) => el._id) || undefined,
       is_active: is_active.value,
       name: name.value || '',
     },
   })
-  if (data.value?.statusCode == 200) {
+  if (statusCode == 200) {
     getIframe()
   }
 }
@@ -113,7 +113,7 @@ const copyIframe = () => {
       <Button label="Update Iframe" severity="primary" type="submit" />
     </div>
   </form>
-  <BaseInputTextArea class="mb-3 c-primary" name="iframe" v-model="iframe" :disabled="true" v-if="iframe" />
+  <BaseInputTextArea class="mb-3 c-primary !bg-b-0" name="iframe" v-model="iframe" :disabled="true" v-if="iframe" />
   <div class="flex ai-c jc-c mb-3">
     <Qr-Code v-if="iframe" :value="iframe" />
   </div>

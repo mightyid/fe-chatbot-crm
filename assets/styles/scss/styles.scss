@@ -464,3 +464,7 @@ a {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+thead.p-datatable-thead {
+  background: #f4f4f4 !important;
+}

@@ -9,7 +9,6 @@
     "build:prod": "nuxt build --dotenv .env.prod",
     "prod": "nuxt dev  --dotenv .env.prod",
     "generate:prod": "nuxt generate --dotenv .env.prod",
-
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -23,6 +22,7 @@
     "dayjs-nuxt": "2.1.11",
     "nuxt": "^3.17.3",
     "pinia": "^3.0.2",
+    "qrcode-vue3": "^1.7.3",
     "read-excel-file": "^5.8.8",
     "sass-embedded": "^1.88.0",
     "socket.io-client": "^4.0.1",
@@ -36,10 +36,10 @@
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "devDependencies": {
     "@primeuix/themes": "^1.1.1",
-    "@primevue/nuxt-module": "^4.3.4",
+    "@primevue/nuxt-module": "^4.2.5",
     "@unocss/nuxt": "^66.1.1",
     "postcss": "^8.5.3",
-    "primevue": "^4.3.4",
+    "primevue": "^4.2.5",
     "unocss": "^66.1.1"
   }
 }

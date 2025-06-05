@@ -32,9 +32,10 @@ const getColumns = async () => {
     method: 'GET',
   })
   columns.value = result || []
-
+  if (!form.value.data) form.value.data = {}
   columns.value.forEach((column: any) => {
-    // form.value.data[column._id] = ''
+    // if (!form.value.data[column.key]) form.value.data[column.key] = ''
+    // form.value.data[column.key] = form.value.data[column.key] || ''
   })
 }
 
