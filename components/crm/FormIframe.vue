@@ -13,7 +13,7 @@ const props = defineProps({
 const { handleSubmit, resetForm } = useForm()
 const { user } = useAuth()
 const iframe = ref('')
-const emit = defineEmits(['onClose', 'onSubmit'])
+const emit = defineEmits(['onClose', 'onSubmit', 'onCancel'])
 const toast = useToast()
 const label_id = ref('')
 const is_active = ref(true)
@@ -110,7 +110,7 @@ const copyIframe = () => {
     <BaseSwitch v-model="is_active" label="Active" name="active" />
 
     <div class="flex justify-end gap-4 mb-4 mt-4">
-      <Button label="Cancel" severity="secondary" />
+      <Button label="Cancel" severity="secondary" @click="emit('onCancel')" />
       <Button :label="`${isEdit ? 'Save' : 'Create'}`" severity="primary" type="submit" />
     </div>
   </form>

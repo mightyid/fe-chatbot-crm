@@ -38,7 +38,7 @@ const createLeadCRM = async (form: any) => {
 
       <div class="box">
         <div class="page-heading mb-4">Edit</div>
-        <FormIframe @onSubmit="createLeadCRM" :isEdit="true" @onCancel="router.push('/crm')" />
+        <FormIframe @onSubmit="createLeadCRM" :isEdit="true" @onCancel="router.push('/link')" />
       </div>
     </div>
   </div>

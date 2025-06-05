@@ -293,6 +293,10 @@ const createApplicationDefault = async () => {
     getData()
   }
 }
+const addQueryCampaign = (id: string) => {
+  query.value.iframe_id = id
+  getData()
+}
 watchDebounced(
   () => query.value.search,
   (newValue) => {
@@ -414,11 +418,15 @@ watchDebounced(
         </Column>
         <Column header="Campaign" :frozen="true" alignFrozen="left">
           <template #body="slotProps">
-            <nuxt-link :to="`/link`" class="flex items-center gap-1 cursor-pointer" v-if="slotProps.data?.iframe?._id">
+            <div
+              class="flex items-center gap-1 cursor-pointer"
+              v-if="slotProps.data?.iframe?._id"
+              @click="addQueryCampaign(slotProps.data?.iframe?._id)"
+            >
               <span class="text-base font-normal c-primary whitespace-nowrap">
                 {{ slotProps.data?.iframe?.name }}
               </span>
-            </nuxt-link>
+            </div>
           </template>
         </Column>
 
