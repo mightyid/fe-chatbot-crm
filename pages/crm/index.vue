@@ -238,6 +238,7 @@ const editNoteById = async () => {
     // applications.value.splice(index, 1, newItem)
     closeNote()
     getData()
+    formNote.value.content = ''
   }
 }
 
@@ -349,6 +350,7 @@ watchDebounced(
       </div>
 
       <TabStatusCRM
+        class="mt-4"
         :numberApplicationStatus="numberApplicationStatus"
         @onChangeStatus="onChangeStatus"
         :labels="labels"
@@ -397,7 +399,7 @@ watchDebounced(
         :rowsPerPageOptions="[20, 50, 100]"
         @page="changePage"
       >
-        <Column selectionMode="multiple" headerStyle="width: 3rem" :frozen="true" alignFrozen="left"></Column>
+        <!-- <Column selectionMode="multiple" headerStyle="width: 3rem" :frozen="true" alignFrozen="left"></Column> -->
 
         <Column header="#" :frozen="true" alignFrozen="left">
           <template #body="slotProps">
@@ -436,6 +438,10 @@ watchDebounced(
           :frozen="column.is_fixed"
           v-for="(column,index) in columns?.filter((el:any)=> el.is_active)"
           :key="column._id"
+          :style="{
+            minWidth: `${column.width}px`,
+            width: `${column.width}px`,
+          }"
         >
           <template #body="slotProps">
             <div

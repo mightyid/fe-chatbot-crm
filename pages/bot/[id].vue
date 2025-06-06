@@ -185,6 +185,9 @@ const licenseSocket = () => {
   })
 }
 const closeChatbot = () => {
+  var message = {
+    isClose: true,
+  }
   isShowBoxChat.value = false
   var parentOrigin = window.location.ancestorOrigins
   window.parent.postMessage(message, parentOrigin[0])
@@ -258,7 +261,9 @@ watch(
               />
             </div>
 
-            <Button class="w-full" @click="startChat" :disabled="checkDisabled">{{ t('common.start') }}</Button>
+            <Button class="w-full !bg-primary" @click="startChat" :disabled="checkDisabled">{{
+              t('common.start')
+            }}</Button>
           </div>
         </div>
         <div class="fc" :style="boxStyle" v-else>

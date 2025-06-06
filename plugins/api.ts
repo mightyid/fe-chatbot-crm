@@ -6,12 +6,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   const toast = useToast()
 
   const showError = (response: any) => {
-    // toast.add({
-    //   severity: 'error',
-    //   summary: 'Error ' + response?._data?.statusCode,
-    //   detail: response?._data?.message || response?._data?.key,
-    //   life: 3000,
-    // })
+    toast.add({
+      severity: 'error',
+      summary: 'Error ' + response?._data?.statusCode,
+      detail: response?._data?.message || response?._data?.key,
+      life: 3000,
+    })
   }
 
   let isRefreshingToken = false
@@ -37,7 +37,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       window.location.reload()
     } catch (error) {
       console.error(error)
-      showError(response)
+      // showError(response)
       logout()
     } finally {
       isRefreshingToken = false

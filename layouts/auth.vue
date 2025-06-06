@@ -25,5 +25,7 @@
         <slot />
       </div>
     </div>
+    <ConfirmDialog />
+    <Toast />
   </div>
 </template>

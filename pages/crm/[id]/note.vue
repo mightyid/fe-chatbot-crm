@@ -57,6 +57,7 @@ const createNote = async () => {
     // }
     // applications.value.splice(index, 1, newItem)
     // closeNote()
+    formNote.value.content = ''
   }
 }
 </script>

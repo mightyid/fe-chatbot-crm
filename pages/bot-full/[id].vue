@@ -256,7 +256,9 @@ watch(
               />
             </div>
 
-            <Button class="w-full" @click="startChat" :disabled="checkDisabled">{{ t('common.start') }}</Button>
+            <Button class="w-full !bg-primary" @click="startChat" :disabled="checkDisabled">{{
+              t('common.start')
+            }}</Button>
           </div>
         </div>
         <div class="fc" :style="boxStyle" v-else>
