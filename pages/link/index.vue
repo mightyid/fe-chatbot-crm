@@ -159,10 +159,10 @@ const copyLink = (link: string) => {
           <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
-                <button @click="openCreateLinkBot(slotProps.data)" v-tooltip.top="'Create campaign with bot'">
+                <button @click="openCreateLinkBot(slotProps.data)" v-tooltip.top="'Link campaign with bot'">
                   <img class="icon-lg" src="~/assets/icons/i-eye-secondary-circle.svg" alt="" />
                 </button>
-                <button @click="openViewDetailLink(slotProps.data)" alt="" v-tooltip.top="'View'">
+                <button @click="openViewDetailLink(slotProps.data)" alt="" v-tooltip.top="'Link campaign'">
                   <img class="icon-lg" src="~/assets/icons/i-eye-secondary-circle.svg" />
                 </button>
                 <nuxt-link :to="`/link/edit/${slotProps.data._id}`">

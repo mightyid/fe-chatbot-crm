@@ -372,10 +372,10 @@ watchDebounced(
               <img src="~/assets/icons/i-column.svg" alt="" class="icon" />
               <span class="text-base c-black-90">Fields management</span>
             </div>
-            <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
+            <!-- <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
               <img src="~/assets/icons/i-import.svg" alt="" class="icon" />
               <span class="text-base c-black-90">Import Excel</span>
-            </div>
+            </div> -->
           </div>
           <!-- <Button class="flex-1" label="Clear all" severity="secondary" type="button" @click="onClearAll" />
           <Button class="flex-1" label="Apply" severity="apply" type="button" @click="onApply" /> -->

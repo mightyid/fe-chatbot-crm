@@ -14,7 +14,9 @@ const props = defineProps({
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
+const route = useRoute()
 const { handleSubmit, resetForm } = useForm()
+const isAdmin = ref(route.query?.isAdmin === 'true' || false)
 const form = ref<any>({
   is_active: true,
   name: '',
@@ -100,8 +102,8 @@ watch(
       />
       <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
     </div>
-    <div class="my-4 text-lg c-primary font-bold">Config ChatGPT</div>
-    <div class="grid grid-cols-2 gap-6">
+    <div class="my-4 text-lg c-primary font-bold" v-if="isAdmin">Config ChatGPT</div>
+    <div class="grid grid-cols-2 gap-6" v-if="isAdmin">
       <BaseInputText
         class="flex-1"
         name="assistant_id"

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import {
+  iChatbot,
+  iChatbotActive,
   iCrm,
   iCrmActive,
   iEmployee,
@@ -67,13 +69,13 @@ const DEFAULT_NAV = [
         iconActive: iEmployeeActive,
         to: '/chat',
       },
-      // {
-      //   title: 'Chatbot',
-      //   key: 'chatbot',
-      //   icon: iEmployee,
-      //   iconActive: iEmployeeActive,
-      //   to: '/chatbot',
-      // },
+      {
+        title: 'Chatbot',
+        key: 'chatbot',
+        icon: iChatbot,
+        iconActive: iChatbotActive,
+        to: '/chatbot',
+      },
       // {
       //   title: 'common.employee',
       //   key: 'menu-employees',

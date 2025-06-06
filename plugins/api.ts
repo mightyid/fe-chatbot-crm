@@ -70,7 +70,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           }
         }
       } else {
-        showError(response)
+        // showError(response)
       }
 
       console.error(response)

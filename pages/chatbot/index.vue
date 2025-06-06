@@ -11,6 +11,7 @@ const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
 const listChatbot = ref([])
+const isAdmin = ref(route.query?.isAdmin === 'true' || false)
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
@@ -109,7 +110,7 @@ watchDebounced(
       <div class="flex flex-row items-center justify-between">
         <div class="page-heading m-0">Chatbot</div>
         <div class="flex items-center justify-end gap-4">
-          <nuxt-link to="/chatbot/create">
+          <nuxt-link to="/chatbot/create" v-if="isAdmin">
             <Button type="button" size="small" label="Create">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
@@ -175,25 +176,15 @@ watchDebounced(
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
                 <button @click="copyBot(slotProps.data._id)">
-                  <img
-                    class="icon-lg"
-                    src="~/assets/icons/i-eye-secondary-circle.svg"
-                    alt=""
-                    v-tooltip.top="'Copy bot'"
-                  />
+                  <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy bot'" />
                 </button>
                 <button @click="copyCodeIframe(slotProps.data._id)">
-                  <img
-                    class="icon-lg"
-                    src="~/assets/icons/i-eye-secondary-circle.svg"
-                    alt=""
-                    v-tooltip.top="'Copy code iframe'"
-                  />
+                  <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy code iframe'" />
                 </button>
                 <nuxt-link :to="`/chatbot/edit/${slotProps.data._id}`">
                   <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
                 </nuxt-link>
-                <button @click="confirmDelete(slotProps.data)">
+                <button @click="confirmDelete(slotProps.data)" v-if="isAdmin">
                   <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />
                 </button>
               </div>
