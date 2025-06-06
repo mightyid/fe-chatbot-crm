@@ -39,6 +39,7 @@ const query = ref({
   from: (route.query.from as string) || null,
   to: (route.query.to as string) || null,
   iframe_id: (route.query.iframe_id as string) || null,
+  limit: 20,
 })
 const perPage = ref(20)
 const totalRecords = ref(0)
@@ -156,6 +157,8 @@ onMounted(() => {
 })
 
 const changePage = (e: any) => {
+  // console.log(e, 'e')
+  query.value.limit = e.rows
   perPage.value = e.rows
   query.value.page = e.page + 1
   getData()
@@ -170,6 +173,7 @@ const clearAll = () => {
     from: null,
     to: null,
     iframe_id: '',
+    limit: 20,
   }
   getData()
 }

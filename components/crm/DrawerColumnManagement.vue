@@ -63,17 +63,22 @@ const confirmDelete = async (obj: any) => {
     },
   })
 }
+// const debounceFnSort = useDebounceFn(async () => {
+
+// }, 2000)
 const sortColumns = async () => {
   const ids = columns.value.map((item: any, index: number) => {
     return {
-      column_id: item._id,
-      order: index,
+      field_id: item._id,
+      pos: index,
+      // name: item.label,
     }
   })
-  const { data }: any = await $api(`crm-field`, {
+  console.log(ids, 'ids')
+  const { data }: any = await $api(`crm-field/change/pos`, {
     method: 'PUT',
     body: {
-      data: ids,
+      pos_data: ids,
     },
   })
   emit('onChange')

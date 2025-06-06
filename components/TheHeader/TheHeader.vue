@@ -62,7 +62,7 @@ watch(
 <template>
   <div class="sticky top-0 py-[12px] px-[24px] bg-white border-b-1 border-gray-20 border-b-solid z-2">
     <div class="flex items-center justify-end gap-6">
-      <Dropdown v-model="selectLang" :options="langOptions" optionValue="value" class="px-1">
+      <!-- <Dropdown v-model="selectLang" :options="langOptions" optionValue="value" class="px-1">
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex items-center">
             <img class="icon" src="~/assets/icons/i-flag-vi.svg" v-if="slotProps?.value === 'vi'" />
@@ -76,7 +76,7 @@ watch(
             <img class="icon" src="~/assets/icons/i-flag-en.svg" v-else />
           </div>
         </template>
-      </Dropdown>
+      </Dropdown> -->
 
       <!-- <TheHeaderNotifications /> -->
 

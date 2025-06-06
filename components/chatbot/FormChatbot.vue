@@ -90,7 +90,7 @@ watch(
         :rules="{ required: false }"
         v-model="form.message"
       />
-      <BaseInputSelect
+      <!-- <BaseInputSelect
         class="flex-1"
         name="position"
         label="Position"
@@ -99,7 +99,7 @@ watch(
         option-value=""
         :rules="{ required: false }"
         v-model="form.position"
-      />
+      /> -->
       <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
     </div>
     <div class="my-4 text-lg c-primary font-bold" v-if="isAdmin">Config ChatGPT</div>

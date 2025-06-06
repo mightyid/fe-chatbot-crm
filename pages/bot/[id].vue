@@ -48,7 +48,11 @@ const getInfoGroup = async () => {
       Authorization: `Bearer ${token.value}`,
     },
   })
-  groupInfo.value = result
+  if (result) {
+    groupInfo.value = result
+  } else {
+    appStore.tokenBot = ''
+  }
   nextTick(() => {
     getMessage()
     licenseSocket()
