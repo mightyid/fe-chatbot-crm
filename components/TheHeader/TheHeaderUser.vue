@@ -15,14 +15,7 @@ const actions = ref([
   //     hidePanel()
   //   },
   // },
-  // {
-  //   icon: iUpdateInformation,
-  //   name: 'common.update_information',
-  //   action() {
-  //     router.push('/profile/update-information')
-  //     hidePanel()
-  //   },
-  // },
+
   // {
   //   icon: iSetting,
   //   name: 'Setting',
@@ -31,6 +24,22 @@ const actions = ref([
   //     hidePanel()
   //   },
   // },
+  {
+    icon: iUpdateInformation,
+    name: 'common.update_information',
+    action() {
+      router.push('/update-information')
+      hidePanel()
+    },
+  },
+  {
+    icon: iProfile,
+    name: 'Change Password',
+    action() {
+      router.push('/change-password')
+      hidePanel()
+    },
+  },
   {
     icon: iLogout,
     name: 'common.logout',
