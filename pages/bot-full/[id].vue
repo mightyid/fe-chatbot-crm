@@ -225,7 +225,7 @@ watch(
         class="fc border-1 h-full w-full !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
       >
-        <div class="fr justify-between p-2 py-2 bg-primary">
+        <div class="fr justify-between p-2 py-2">
           <div class="fr items-center gap-2">
             <div class="fc w-[32px] aspect-square rounded-full overflow-hidden bg-white">
               <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
@@ -237,7 +237,7 @@ watch(
               />
             </div>
 
-            <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
+            <div class="text-md font-semibold c-black-90 line-clamp-1">{{ info?.name }}</div>
           </div>
           <div class="fr ai-c gap-4">
             <!-- <nuxt-link :to="`/bot-full/${info?._id}`" target="_blank">

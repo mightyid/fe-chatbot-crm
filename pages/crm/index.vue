@@ -504,12 +504,12 @@ watchDebounced(
         </template>
       </DataTable>
       <div class="flex jc-c ai-c mt-4" v-else>
-        <Button
+        <!-- <Button
           label="Use Default Lead CRM"
           severity="primary"
           type="button"
           @click="createApplicationDefault"
-        ></Button>
+        ></Button> -->
       </div>
 
       <!-- Iframe -->

@@ -66,13 +66,13 @@ const changeStatus = (id: any) => {
 }
 const copyCodeIframe = (val: any) => {
   const url = `${window.location.origin}/bot/${val}`
-  const position = 'right: 16px;'
+  const position = 'right: 0px'
   const iframe =
     '<script>' +
     `
       const iframe = document.createElement('iframe');
       iframe.id = 'iframe_mightyid';
-      iframe.setAttribute('style', 'position: fixed; ${position}; bottom: 16px; width: 402px; height: 498px; background: transparent; border: none; z-index: 100000000;');
+      iframe.setAttribute('style', 'position: fixed; ${position}; bottom: 0px; width: 402px; height: 506px; background: transparent; border: none; z-index: 100000000;');
       iframe.setAttribute('src', '${url}');
       document.body.appendChild(iframe);
       window.addEventListener("message", receiveMessage, false);
