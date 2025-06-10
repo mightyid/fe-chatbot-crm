@@ -266,7 +266,7 @@ watch(
             </div>
 
             <Button class="w-full !bg-primary" @click="startChat" :disabled="checkDisabled">{{
-              t('common.start')
+              info?.label_btn || t('common.start')
             }}</Button>
           </div>
         </div>

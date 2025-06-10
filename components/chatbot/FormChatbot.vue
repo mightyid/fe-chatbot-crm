@@ -30,6 +30,7 @@ const form = ref<any>({
   api_key: '',
   organization: '',
   webhook: '',
+  label_btn: 'Start Chat',
 })
 const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
@@ -89,6 +90,13 @@ watch(
         label="Message"
         :rules="{ required: false }"
         v-model="form.message"
+      />
+      <BaseInputText
+        class="flex-1"
+        name="label_btn"
+        label="Text Button Start"
+        :rules="{ required: false }"
+        v-model="form.label_btn"
       />
       <!-- <BaseInputSelect
         class="flex-1"
