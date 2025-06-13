@@ -34,13 +34,11 @@ const getData = async () => {
       //   label: route.params?.label,
     },
   })
-  console.log(result, 'result')
   if (result) {
     info.value = result
   } else {
     router.push('/')
   }
-  console.log(result)
 }
 const onSubmit = async () => {
   if (!Object.values(form.value.data)?.length) {

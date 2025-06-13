@@ -74,7 +74,6 @@ const getEmployeeList = async () => {
     is_role: 1,
   })
 
-  console.log(result, 'result')
   employees.value = result || []
   pagination.value.total = total
 

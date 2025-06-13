@@ -19,12 +19,13 @@ const { handleSubmit, resetForm } = useForm()
 const isAdmin = ref(route.query?.isAdmin === 'true' || false)
 const form = ref<any>({
   is_active: true,
+  is_show: true,
   name: '',
   avatar: '',
   message: 'Xin chào',
   form: [],
   position: 'right',
-  color: '',
+  color: '#3ABFF8',
   scripts: [],
   assistant_id: '',
   api_key: '',
@@ -56,7 +57,6 @@ const onUpload = (obj: any) => {
 }
 const getFormOptions = async () => {
   const { result }: any = await $api('crm-field')
-  console.log(result, 'result')
   formOptions.value = result || []
 }
 getFormOptions()
@@ -98,6 +98,14 @@ watch(
         :rules="{ required: false }"
         v-model="form.label_btn"
       />
+      <BaseInputText
+        class="flex-1"
+        name="color"
+        label="Mãu màu (#hex)"
+        placeholder="#3abff8"
+        :rules="{ required: false }"
+        v-model="form.color"
+      />
       <!-- <BaseInputSelect
         class="flex-1"
         name="position"
@@ -109,6 +117,7 @@ watch(
         v-model="form.position"
       /> -->
       <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
+      <BaseSwitch class="flex-1" name="is_show" label="Show Popup" v-model="form.is_show" />
     </div>
     <div class="my-4 text-lg c-primary font-bold" v-if="isAdmin">Config ChatGPT</div>
     <div class="grid grid-cols-2 gap-6" v-if="isAdmin">

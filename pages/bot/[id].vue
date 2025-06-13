@@ -33,12 +33,21 @@ const boxStyle = ref({
 const getData = async () => {
   const { result }: any = await $api(`incognito/${route.params.id}`)
   info.value = result
-  console.log(token.value, 'token2222')
+  isShowBoxChat.value = result.is_show == false ? false : true
   if (token.value) {
     getInfoGroup()
   }
   if (result.form) {
     form.value = result.form
+  }
+  if (result.is_show == false) {
+    var message = {
+      isCollapse: false,
+      isOpen: false,
+    }
+    message.isCollapse = true
+    var parentOrigin = window.location.ancestorOrigins
+    window.parent.postMessage(message, parentOrigin[0])
   }
 }
 const getInfoGroup = async () => {
@@ -190,7 +199,7 @@ const licenseSocket = () => {
 }
 const closeChatbot = () => {
   var message = {
-    isClose: true,
+    // isClose: true,
   }
   isShowBoxChat.value = false
   var parentOrigin = window.location.ancestorOrigins
@@ -205,6 +214,26 @@ const closeChatbot = () => {
 const debounceSend = useDebounceFn(() => {
   sendMessage()
 }, 200)
+
+const clickAvatar = () => {
+  isShowBoxChat.value = !isShowBoxChat.value
+  var message = {
+    isCollapse: false,
+    isOpen: false,
+  }
+  if (!isShowBoxChat.value) {
+    message.isCollapse = true
+    var parentOrigin = window.location.ancestorOrigins
+    window.parent.postMessage(message, parentOrigin[0])
+  } else {
+    message.isOpen = true
+    var parentOrigin = window.location.ancestorOrigins
+    window.parent.postMessage(message, parentOrigin[0])
+  }
+
+  isScrollToBottom.value = new Date().getTime()
+}
+
 onMounted(() => {})
 
 onUnmounted(() => {
@@ -227,7 +256,10 @@ watch(
         class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
       >
-        <div class="fr justify-between p-2 py-2 bg-primary">
+        <div
+          class="fr justify-between p-2 py-2 bg-primary"
+          :style="{ backgroundColor: info?.color + '!important' || '#3ABFF8' }"
+        >
           <div class="fr items-center gap-2">
             <div class="fc w-[32px] aspect-square rounded-full overflow-hidden bg-white">
               <img :src="info.avatar" class="w-[32px] h-[32px] rounded-full object-cover" alt="" v-if="info.avatar" />
@@ -239,9 +271,9 @@ watch(
               />
             </div>
 
-            <div class="text-md font-semibold c-white line-clamp-1">{{ info?.name }}</div>
+            <div class="text-md font-semibold c-white line-clamp-1 w-full max-w-[240px]">{{ info?.name }}</div>
           </div>
-          <div class="fr ai-c gap-2">
+          <div class="fr ai-c">
             <nuxt-link
               :to="`/bot-full/${info?._id}${route.query.iframe_id ? `?iframe_id=${route.query.iframe_id}` : ''}`"
               target="_blank"
@@ -265,9 +297,13 @@ watch(
               />
             </div>
 
-            <Button class="w-full !bg-primary" @click="startChat" :disabled="checkDisabled">{{
-              info?.label_btn || t('common.start')
-            }}</Button>
+            <Button
+              class="w-full !bg-primary border-none"
+              @click="startChat"
+              :disabled="checkDisabled"
+              :style="{ backgroundColor: info?.color + '!important' || '#3ABFF8' }"
+              >{{ info?.label_btn || t('common.start') }}</Button
+            >
           </div>
         </div>
         <div class="fc" :style="boxStyle" v-else>
@@ -294,6 +330,7 @@ watch(
                 @click="debounceSend"
                 :style="{
                   cursor: message.length > 0 || !isLoading ? 'pointer' : 'not-allowed',
+                  backgroundColor: info?.color + '!important' || '#3ABFF8',
                 }"
               >
                 <img src="~/assets/icons/i-send-white.svg" class="w-20px h-20px" alt="" />
@@ -306,12 +343,28 @@ watch(
         </div>
       </div>
       <div
-        class="relative fr justify-end cursor-pointer"
-        :class="{ 'call-animation': !isShowBoxChat }"
-        @click=";(isShowBoxChat = !isShowBoxChat), (isScrollToBottom = new Date().getTime())"
+        class="absolute right-0 rounded text-center bg-primary c-white mb-64px shadow-lg cursor-pointer min-w-200px rounded-16px overflow-hidden px-2 py-1 text-lg line-clamp-2 z999999"
+        :style="{ backgroundColor: info?.color + '!important' || '#3ABFF8' }"
+        @click="clickAvatar"
+        v-if="!isShowBoxChat"
       >
-        <img :src="info.avatar" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-if="info.avatar" />
-        <img src="~/assets/images/logo-icon.svg" class="w-[56px] h-[56px] rounded-full object-cover" alt="" v-else />
+        {{ info?.message || t('common.start') }}
+      </div>
+      <div class="relative fr justify-end cursor-pointer" :class="{ 'call-animation': !isShowBoxChat }">
+        <img
+          :src="info.avatar"
+          class="w-[56px] h-[56px] rounded-full object-cover z9999"
+          alt=""
+          v-if="info.avatar"
+          @click="clickAvatar"
+        />
+        <img
+          src="~/assets/images/logo-icon.svg"
+          class="w-[56px] h-[56px] rounded-full object-cover z9999"
+          alt=""
+          v-else
+          @click="clickAvatar"
+        />
       </div>
     </div>
   </div>

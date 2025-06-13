@@ -55,7 +55,6 @@ const sendMessage = async () => {
       hash: new Date().getTime(),
     },
   })
-  console.log(result, 'result message')
   message.value = ''
   isLoading.value = false
   stopTyping()
