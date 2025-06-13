@@ -81,6 +81,18 @@ const copyCodeIframe = (val: any) => {
         if(newIf && event.data.isClose) {
           newIf.remove()
         }
+        if (event.data.isCollapse == true) {
+          newIf.setAttribute(
+            'style',
+            'position: fixed; right: 0px; bottom: 0px; width: 225px; height: 160px; background: transparent; border: none; z-index: 100000000;',
+          )
+        }
+        if (event.data.isOpen == true) {
+          newIf.setAttribute(
+            'style',
+            'position: fixed; right: 0px; bottom: 0px; width: 402px; height: 506px; background: transparent; border: none; z-index: 100000000;',
+          )
+        }
       }
        ` +
     '<' +
