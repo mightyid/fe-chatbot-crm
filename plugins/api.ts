@@ -73,7 +73,11 @@ export default defineNuxtPlugin((nuxtApp) => {
         // showError(response)
       }
 
-      console.error(response)
+      if (response.status === 403 || response.status === 400) {
+        // await navigateTo('/403')
+        showError(response)
+      }
+      // console.error(response)
     },
 
     retry: false,
