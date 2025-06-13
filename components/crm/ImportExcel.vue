@@ -2,13 +2,13 @@
 import readXlsxFile from 'read-excel-file'
 const props = defineProps({
   columns: {
-    type: Object,
-    default: {},
+    type: Array,
+    default: [],
   },
 })
 const listColTable = ref([])
 const dataTable = ref([])
-const dataSelect = ref({})
+const dataSelect = ref<any>({})
 const emit = defineEmits(['onCancel', 'onSubmit'])
 const label_id = ref(null)
 const labels = ref([])
@@ -28,10 +28,10 @@ const readFile = async (e: Event) => {
   }
 }
 const getLabel = async () => {
-  const { data }: any = await $api(`crm-label`, {
+  const { result }: any = await $api(`crm-label`, {
     method: 'GET',
   })
-  labels.value = unref(data)?.result || []
+  labels.value = result || []
 }
 getLabel()
 const reset = () => {
@@ -93,7 +93,7 @@ const importExcel = () => {
                 v-model="dataSelect[index]"
                 :option-label="'label'"
                 :name="dataSelect[index] + item"
-                :option-value="'_id'"
+                :option-value="'key'"
               />
               <div class="text-base">
                 <!-- {{ item }} -->

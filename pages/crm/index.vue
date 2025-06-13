@@ -112,7 +112,6 @@ const getData = async () => {
       to: query.value.to ? dayjs(query.value.to).format('YYYY-MM-DD 23:59:59') : undefined,
     },
   })
-  console.log(result, 'result')
   applications.value = result || []
   totalRecords.value = total_pages * perPage.value || 0
   useQueryURL(query.value)
@@ -254,14 +253,14 @@ const toggleMenuSetting = (e: Event) => {
   menuSetting.value.toggle(e)
 }
 const importExcel = async (obj: any) => {
-  const { data, error } = await $api<any>(`crm-lead/create-many`, {
+  const { statusCode } = await $api<any>(`lead/create-many`, {
     method: 'POST',
     body: {
       data: obj.data,
       label_id: obj.label_id,
     },
   })
-  if (!error.value) {
+  if (statusCode === 200) {
     toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
     getData()
     isShowImportExcel.value = false
@@ -376,10 +375,10 @@ watchDebounced(
               <img src="~/assets/icons/i-column.svg" alt="" class="icon" />
               <span class="text-base c-black-90">Fields management</span>
             </div>
-            <!-- <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
+            <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
               <img src="~/assets/icons/i-import.svg" alt="" class="icon" />
               <span class="text-base c-black-90">Import Excel</span>
-            </div> -->
+            </div>
           </div>
           <!-- <Button class="flex-1" label="Clear all" severity="secondary" type="button" @click="onClearAll" />
           <Button class="flex-1" label="Apply" severity="apply" type="button" @click="onApply" /> -->
@@ -413,10 +412,10 @@ watchDebounced(
             </nuxt-link>
           </template>
         </Column>
-        <Column header="Name" :frozen="true" alignFrozen="left">
+        <Column header="Name" :frozen="true" alignFrozen="left" style="max-width: 500px; min-width: 300px">
           <template #body="slotProps">
             <nuxt-link :to="`/crm/${slotProps.data._id}`" class="flex items-center gap-1 cursor-pointer">
-              <span class="text-base font-normal c-primary whitespace-nowrap">
+              <span class="text-base font-normal c-primary">
                 {{ slotProps.data.name }}
               </span>
             </nuxt-link>
@@ -429,7 +428,7 @@ watchDebounced(
               v-if="slotProps.data?.iframe?._id"
               @click="addQueryCampaign(slotProps.data?.iframe?._id)"
             >
-              <span class="text-base font-normal c-primary whitespace-nowrap">
+              <span class="text-base font-normal c-primary">
                 {{ slotProps.data?.iframe?.name }}
               </span>
             </div>
@@ -454,7 +453,7 @@ watchDebounced(
                 minWidth: `${column.width}px`,
               }"
             >
-              <span class="text-base font-normal c-black-90 whitespace-nowrap">
+              <span class="text-base font-normal c-black-90">
                 {{
                   slotProps.data?.data && slotProps.data?.data[column.key]
                     ? slotProps.data?.data[column.key]?.value

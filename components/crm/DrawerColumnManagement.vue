@@ -107,7 +107,7 @@ watch(
     <template #header>
       <div class="!w-full fr flex-1 jc-sb">
         <div class="text-base font-bold">Fields Management</div>
-        <div class="fr ai-c c-primary gap-2 cursor-pointer" @click="isShowModalCreateColumn = true">
+        <div class="fr ai-c c-primary gap-2 cursor-pointer mr-4" @click="isShowModalCreateColumn = true">
           <img src="~/assets/icons/i-add-primary.svg" alt="" />
           Field
         </div>
