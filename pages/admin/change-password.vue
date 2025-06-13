@@ -7,7 +7,6 @@ const changePassword = async (form: any) => {
     method: 'PUT',
     body: form,
   })
-  console.log(result, statusCode)
   if (statusCode === 200) {
     toast.add({ severity: 'success', summary: 'Successfully', detail: 'Created', life: 3000 })
   }
