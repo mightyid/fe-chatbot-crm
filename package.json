@@ -21,6 +21,7 @@
     "ckeditor5-custom-build": "file:ckeditor5",
     "dayjs-nuxt": "2.1.11",
     "nuxt": "^3.17.3",
+    "nuxt-aos": "^1.2.5",
     "pinia": "^3.0.2",
     "qrcode-vue3": "^1.7.3",
     "read-excel-file": "^5.8.8",
