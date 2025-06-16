@@ -24,7 +24,12 @@ const updateStopBot = async () => {
   <div class="flex-1 fc p-4">
     <div class="fc jc-c ai-c gap-4 mt-4">
       <BaseAvatar :size="64" :url="info?.bot?.avatar" />
-      <div class="text-lg font-semibold c-black-90 capitalize">{{ info?.name }}</div>
+      <div class="text-lg font-semibold c-black-90 capitalize">
+        {{ info?.name }}
+        <nuxt-link :to="`/crm/edit/${info?._id}`">
+          <img src="~/assets/icons/i-edit-primary.svg" alt="" />
+        </nuxt-link>
+      </div>
     </div>
     <div class="fc py-4" v-if="info?.data">
       <div class="fr gap-4" v-for="item in Object.values(info?.data)">

@@ -33,9 +33,12 @@ const boxStyle = ref({
 const getData = async () => {
   const { result }: any = await $api(`incognito/${route.params.id}`)
   info.value = result
-  console.log(token.value, 'token2222')
   if (token.value) {
     getInfoGroup()
+  } else {
+    if (route.query?.is_auto_start == 'true') {
+      startChat()
+    }
   }
   if (result.form) {
     form.value = result.form
@@ -64,6 +67,14 @@ const startChat = async () => {
     //@ts-ignore
     newForm[item.key] = item.value
   })
+  if (route.query?.is_auto_start == 'true' && route.query?.name && route.query?.phone) {
+    //@ts-ignore
+    newForm.name = route.query?.name || ''
+    //@ts-ignore
+    newForm.phone = JSON.parse(JSON.stringify(route.query?.phone)) || ''
+    //@ts-ignore
+    newForm.zalo = true
+  }
   const { result }: any = await $api(`incognito/${route.params.id}/start`, {
     method: 'POST',
     body: {

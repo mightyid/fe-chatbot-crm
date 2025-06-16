@@ -36,8 +36,33 @@ const getData = async () => {
   })
   if (result) {
     info.value = result
+    submitCRM()
   } else {
     router.push('/')
+  }
+}
+const submitCRM = async () => {
+  if (route.query?.zalo && route.query?.phone && route.query?.name) {
+    const data = {
+      name: route.query?.name,
+      phone: route.query?.phone,
+    }
+    const { statusCode }: any = await $api('crm-open-iframe/submit', {
+      method: 'POST',
+      body: {
+        company_id: route?.query?.company_id,
+        iframe_id: route?.query?.iframe_id,
+        data,
+        zalo: true,
+      },
+    })
+    if (statusCode == 200) {
+      toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
+      isSuccess.value = true
+      window.close()
+    } else {
+      router.push('/')
+    }
   }
 }
 const onSubmit = async () => {
@@ -70,8 +95,8 @@ getData()
   <div class="page bg-white p-4 rounded" v-if="!isSuccess">
     <div class="text-3xl font-bold">{{ info?.name }}</div>
     <div class="fc gap-1 text-base mt-2">
-      <div class="fr ai-c font-bold">Information</div>
-      <div class="fr ai-c">Company: {{ info?.company?.name }}</div>
+      <!-- <div class="fr ai-c font-bold">Information</div>
+      <div class="fr ai-c">Company: {{ info?.company?.name }}</div> -->
       <!-- <div class="fr ai-c">Email: {{ info?.school?.email }}</div>
       <div class="fr ai-c">Phone: {{ info?.school?.phone }}</div> -->
     </div>
@@ -88,7 +113,7 @@ getData()
       <Button label="Register" severity="primary" type="button" @click="onSubmit" :disabled="isCheckDisabled" />
     </div>
   </div>
-  <div class="mx-auto max-w-500 fc jc-c ai-c mt-30vh" v-else>
+  <div class="mx-auto max-w-500 fc jc-c ai-c mt-30vh mt-4" v-else>
     <img src="~/assets/images/success.svg" class="w-64px h-64px mb-3" alt="" />
     <div class="text-m c-black-90">Congratulations!</div>
     <div class="text-m c-black-90">You have successfully registered.</div>

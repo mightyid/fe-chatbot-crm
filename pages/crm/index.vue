@@ -421,7 +421,7 @@ watchDebounced(
             </nuxt-link>
           </template>
         </Column>
-        <Column header="Campaign" :frozen="true" alignFrozen="left">
+        <Column header="Campaign" :frozen="true" alignFrozen="left" style="min-width: 200px">
           <template #body="slotProps">
             <div
               class="flex items-center gap-1 cursor-pointer"
@@ -470,10 +470,13 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
+        <Column header="Actions" :frozen="true" alignFrozen="right" ">
           <template #body="slotProps">
             <div class="flex gap-2 jc-fe">
               <!-- <FormAssignNote :data="slotProps.data" v-if="usePermission('admin')" /> -->
+              <nuxt-link :to="`/chat/${slotProps.data._id}`">
+                <img class="icon-lg" src="~/assets/icons/i-view-message.svg" alt="" v-tooltip.top="'View message'" />
+              </nuxt-link>
               <button class="relative">
                 <img
                   class="icon-lg"
