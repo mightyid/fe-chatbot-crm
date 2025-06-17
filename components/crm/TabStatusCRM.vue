@@ -37,7 +37,8 @@ const changeStatus = (val: any) => {
         :style="{
           color: route.query?.label_id == '' || !route.query?.label_id ? '#3ABFF8' : '#8A8A8A',
           borderBottomColor: '#3ABFF8',
-        }">
+        }"
+      >
         All
         <div
           v-if="total > 0"
@@ -47,7 +48,8 @@ const changeStatus = (val: any) => {
             color: route.query?.label_id == '' || !route.query?.label_id ? '#ffffff' : '#8A8A8A',
             backgroundColor: route.query?.label_id == '' || !route.query?.label_id ? '#3ABFF8' : '#EFEFEF',
             border: route.query?.label_id == '' || !route.query?.label_id ? 'none' : '',
-          }">
+          }"
+        >
           {{ total }}
         </div>
       </div>
@@ -61,7 +63,9 @@ const changeStatus = (val: any) => {
           color: route.query?.label_id == item._id ? item.color : '#8A8A8A',
           borderBottomColor: route.query?.label_id == item._id ? item.color : '#000000',
         }"
-        :key="item.key">
+        :key="item.key"
+      >
+        <TagIcon :color="item.color" />
         {{ item.name }}
         <div
           severity="danger"
@@ -71,7 +75,8 @@ const changeStatus = (val: any) => {
             backgroundColor: route.query?.label_id == item._id ? item.color : '#EFEFEF',
             border: route.query?.label_id == item._id ? 'none' : '',
           }"
-          v-if="numberApplicationStatus[item._id] > 0">
+          v-if="numberApplicationStatus[item._id] > 0"
+        >
           {{ numberApplicationStatus[item._id] }}
         </div>
       </div>
