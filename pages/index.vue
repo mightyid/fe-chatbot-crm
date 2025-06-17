@@ -1,13 +1,20 @@
-<template>
-  <div>
-    
-  </div>
-</template>
+<script setup lang="ts">
+import LandingPageChatbot from '~/components/LandingPage/LandingPageChatbot.vue'
+import LandingPageCrm from '~/components/LandingPage/LandingPageCrm.vue'
+import LandingPageHero from '~/components/LandingPage/LandingPageHero.vue'
+import LandingPageSmartApply from '~/components/LandingPage/LandingPageSmartApply.vue'
+import LandingPageWebhook from '~/components/LandingPage/LandingPageWebhook.vue'
 
-<script lang="ts" setup>
-
+definePageMeta({
+  layout: 'landing-page',
+  auth: false,
+})
 </script>
 
-<style>
-
-</style>
+<template>
+  <LandingPageHero />
+  <LandingPageChatbot />
+  <LandingPageCrm />
+  <LandingPageSmartApply />
+  <LandingPageWebhook />
+</template>
