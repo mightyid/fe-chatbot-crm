@@ -6,7 +6,9 @@ definePageMeta({
 const router = useRouter()
 const toast = useToast()
 const route = useRoute()
-const info = ref<any>({})
+const info = ref<any>({
+  name: '',
+})
 const dataColumn = ref({})
 const columns = ref<any>([])
 const { $api } = useNuxtApp()

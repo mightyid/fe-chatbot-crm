@@ -75,12 +75,31 @@ const numberApplicationStatus = ref({})
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
-
+const json_fields = ref({})
+const json_data = ref([])
+const json_meta = [
+  [
+    {
+      key: 'charset',
+      value: 'utf-8',
+    },
+  ],
+]
 const getDataColumn = async () => {
   const { result }: any = await $api(`crm-field`, {
     method: 'GET',
   })
   columns.value = result || []
+  let fields = {
+    Name: 'name',
+    Campaign: 'campaign',
+    Label: 'label',
+  }
+  result.forEach((el: any) => {
+    //@ts-ignore
+    fields[el.label] = el.key
+  })
+  json_fields.value = fields
   getData()
 }
 const getDataLabel = async () => {
@@ -114,6 +133,22 @@ const getData = async () => {
   })
   applications.value = result || []
   totalRecords.value = total_pages * perPage.value || 0
+  let datas = [] as any
+  result.forEach((item: any) => {
+    if (item?.data) {
+      let obj = {
+        name: item?.name || '',
+        campaign: item?.iframe?.name || '',
+        label: item?.label?.name || '',
+      }
+      Object.keys(item?.data).forEach((key: any) => {
+        //@ts-ignore
+        obj[key] = item?.data[key].value
+      })
+      datas.push(obj)
+    }
+  })
+  json_data.value = datas
   useQueryURL(query.value)
 
   isLoading.value = false
@@ -377,9 +412,23 @@ watchDebounced(
             </div>
             <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
               <img src="~/assets/icons/i-import.svg" alt="" class="icon" />
-              <span class="text-base c-black-90">Import Excel</span>
+              <span class="text-base c-black-90">Import excel</span>
             </div>
           </div>
+          <download-excel
+            :data="json_data"
+            class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer"
+            :fields="json_fields"
+            worksheet="Lead CRM"
+            type="xlsx"
+            :metadata="json_meta"
+            name="lead-crm.xlsx"
+          >
+            <img src="~/assets/icons/i-export.svg" alt="" class="icon" />
+            Export lead
+            <!-- <img src="download_icon.png" /> -->
+          </download-excel>
+
           <!-- <Button class="flex-1" label="Clear all" severity="secondary" type="button" @click="onClearAll" />
           <Button class="flex-1" label="Apply" severity="apply" type="button" @click="onApply" /> -->
         </OverlayPanel>
@@ -399,11 +448,11 @@ watchDebounced(
         :loading="isLoading"
         v-model:selection="selectedApplications"
         RowsPerPageDropdown
-        :rowsPerPageOptions="[20, 50, 100]"
+        scroll-height="calc(100vh - 270px)"
+        :rowsPerPageOptions="[20, 50, 100, 500, 1000]"
         @page="changePage"
       >
         <!-- <Column selectionMode="multiple" headerStyle="width: 3rem" :frozen="true" alignFrozen="left"></Column> -->
-
         <Column header="#" :frozen="true" alignFrozen="left">
           <template #body="slotProps">
             <nuxt-link :to="`/crm/${slotProps.data._id}`" class="c-primary fr ai-c gap-2">
@@ -470,7 +519,7 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column header="Actions" :frozen="true" alignFrozen="right" ">
+        <Column header="Actions" :frozen="true" alignFrozen="right">
           <template #body="slotProps">
             <div class="flex gap-2 jc-fe">
               <!-- <FormAssignNote :data="slotProps.data" v-if="usePermission('admin')" /> -->

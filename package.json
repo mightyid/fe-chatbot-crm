@@ -27,6 +27,7 @@
     "sass-embedded": "^1.88.0",
     "socket.io-client": "^4.0.1",
     "vue": "^3.5.13",
+    "vue-json-excel3": "^1.0.30",
     "vue-router": "^4.5.1",
     "vue3-markdown": "^1.2.12",
     "vue3-observe-visibility": "^1.0.3",
