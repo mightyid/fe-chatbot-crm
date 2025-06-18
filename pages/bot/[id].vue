@@ -14,7 +14,7 @@ const appStore = useAppStore()
 const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
-const token = ref(appStore.tokenBot || '')
+const token = computed(() => appStore.tokenBot)
 // const token = ref('')
 const socket = ref()
 const listMessage = ref<any>([])
@@ -80,7 +80,6 @@ const startChat = async () => {
       iframe_id: route.query.iframe_id || undefined,
     },
   })
-  token.value = result.access_token
   appStore.tokenBot = result.access_token
   groupInfo.value = result
   nextTick(() => {

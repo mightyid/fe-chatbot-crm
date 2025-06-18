@@ -14,7 +14,7 @@ const appStore = useAppStore()
 const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
-const token = ref(appStore.tokenBot || '')
+const token = computed(() => appStore.tokenBot)
 // const token = ref('')
 const socket = ref()
 const listMessage = ref<any>([])
@@ -51,7 +51,7 @@ const getInfoGroup = async () => {
       Authorization: `Bearer ${token.value}`,
     },
   })
-  if (result) {
+  if (result && result?._id) {
     groupInfo.value = result
   } else {
     appStore.tokenBot = ''
@@ -82,7 +82,6 @@ const startChat = async () => {
       iframe_id: route.query.iframe_id || undefined,
     },
   })
-  token.value = result.access_token
   appStore.tokenBot = result.access_token
   groupInfo.value = result
   nextTick(() => {
@@ -230,7 +229,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-screen max-w-1000px mx-a" v-if="info?._id">
+  <div class="w-full h-dvh max-w-1000px mx-a" v-if="info?._id">
     <div class="flex flex-col items-end justify-end h-full">
       <div
         class="fc border-1 h-full w-full !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"

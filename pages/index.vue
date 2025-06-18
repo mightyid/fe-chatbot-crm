@@ -7,7 +7,7 @@ import LandingPageWebhook from '~/components/LandingPage/LandingPageWebhook.vue'
 
 definePageMeta({
   layout: 'landing-page',
-  auth: false,
+  auth: 'guest',
 })
 </script>
 

@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (to.meta.auth === 'guest') {
-    return user.value.isLoggedIn ? navigateTo('/') : undefined
+    return user.value.isLoggedIn ? navigateTo('/crm') : undefined
   }
 
   if (to.meta.auth !== false && !user.value.isLoggedIn) {
