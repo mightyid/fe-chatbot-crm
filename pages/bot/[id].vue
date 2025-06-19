@@ -51,21 +51,25 @@ const getData = async () => {
   }
 }
 const getInfoGroup = async () => {
-  const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-  })
-  if (result) {
-    groupInfo.value = result
-  } else {
+  try {
+    const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+    if (result && result?._id) {
+      groupInfo.value = result
+    } else {
+      appStore.tokenBot = ''
+    }
+    nextTick(() => {
+      getMessage()
+      licenseSocket()
+    })
+  } catch {
     appStore.tokenBot = ''
   }
-  nextTick(() => {
-    getMessage()
-    licenseSocket()
-  })
 }
 const startChat = async () => {
   const newForm = {}
@@ -274,7 +278,9 @@ watch(
           </div>
           <div class="fr ai-c">
             <nuxt-link
-              :to="`/bot-full/${info?._id}${route.query.iframe_id ? `?iframe_id=${route.query.iframe_id}` : ''}`"
+              :to="`/bot-full/${info?._id}?${
+                route.query.iframe_id ? `iframe_id=${route.query.iframe_id}` : ''
+              }&token=${token}`"
               target="_blank"
             >
               <img src="~/assets/icons/i-zoom.svg" class="cursor-pointer" @click="closeChatbot" alt="" />

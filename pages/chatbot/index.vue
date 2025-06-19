@@ -180,7 +180,7 @@ watchDebounced(
           </Column>
           <Column field="status" header="Status">
             <template #body="slotProps">
-              <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="changeStatus(slotProps.data)" />
+              <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="changeStatus(slotProps.data._id)" />
             </template>
           </Column>
 

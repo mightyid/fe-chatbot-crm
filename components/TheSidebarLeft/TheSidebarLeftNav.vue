@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAppStore } from '~/stores/app'
+
 import {
   iChatbot,
   iChatbotActive,
@@ -13,6 +15,8 @@ import {
 } from '~/assets/icons'
 // import { cloneDeep } from 'lodash'
 import { PATH_EMPLOYEES_LIST, PATH_POSITION_LIST, PATH_ROLE_LIST } from '~/constant/routerPath'
+const appStore = useAppStore()
+const isUser = computed(() => (appStore.strategyAuth == 'user' ? true : false))
 
 type MenuType = {
   name: string
@@ -99,58 +103,78 @@ const DEFAULT_NAV = [
     ],
   },
 ] as MenuType[]
+const DEFAULT_NAV_ADMIN = [
+  {
+    name: 'common.menu',
+    menuKey: 'menu',
+    menus: [
+      {
+        title: 'Company',
+        key: 'crm',
+        icon: iCrm,
+        iconActive: iCrmActive,
+        to: '/admin/company',
+      },
+    ],
+  },
+] as MenuType[]
 
 const navByPermissions = ref<MenuType[]>([])
 
 const getNavAdmin = () => {
   navByPermissions.value = []
-  const userPermissions = (user.value?.role?.permissions as string[]) || []
-  const isRoleActive = user.value?.role?.is_active
-  if (user.value?.is_admin) {
+  // const userPermissions = (user.value?.role?.permissions as string[]) || []
+  // const isRoleActive = user.value?.role?.is_active
+  // if (user.value?.is_admin) {
+  //   navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV))
+  // } else {
+  //   const cloneDefaultNav = JSON.parse(JSON.stringify(DEFAULT_NAV))
+  //   cloneDefaultNav.forEach((item: MenuType) => {
+  //     const menus = [] as NavItemType[]
+
+  //     item?.menus?.forEach((nav: NavItemType) => {
+  //       if (nav?.sub && nav?.sub?.length > 0) {
+  //         const subMatches = [] as SubItemType[]
+
+  //         nav?.sub?.forEach((sub: SubItemType) => {
+  //           if (
+  //             (isRoleActive && sub?.permissionKey && userPermissions?.includes(sub?.permissionKey)) ||
+  //             !sub.permissionKey
+  //           ) {
+  //             subMatches.push(sub)
+  //           }
+  //         })
+
+  //         if (subMatches?.length > 0) {
+  //           menus.push({
+  //             ...nav,
+  //             sub: subMatches,
+  //           })
+  //         }
+  //       } else {
+  //         if (
+  //           (isRoleActive && nav?.permissionKey && userPermissions?.includes(nav?.permissionKey)) ||
+  //           !nav.permissionKey ||
+  //           (nav?.permissionKey === 'view_form' && user.value?.is_manager)
+  //         ) {
+  //           menus?.push(nav)
+  //         }
+  //       }
+  //     })
+
+  //     if (menus?.length > 0) {
+  //       navByPermissions.value.push({
+  //         name: item?.name,
+  //         menuKey: item?.menuKey,
+  //         menus,
+  //       })
+  //     }
+  //   })
+  // }
+  if (isUser.value) {
     navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV))
   } else {
-    const cloneDefaultNav = JSON.parse(JSON.stringify(DEFAULT_NAV))
-    cloneDefaultNav.forEach((item: MenuType) => {
-      const menus = [] as NavItemType[]
-
-      item?.menus?.forEach((nav: NavItemType) => {
-        if (nav?.sub && nav?.sub?.length > 0) {
-          const subMatches = [] as SubItemType[]
-
-          nav?.sub?.forEach((sub: SubItemType) => {
-            if (
-              (isRoleActive && sub?.permissionKey && userPermissions?.includes(sub?.permissionKey)) ||
-              !sub.permissionKey
-            ) {
-              subMatches.push(sub)
-            }
-          })
-
-          if (subMatches?.length > 0) {
-            menus.push({
-              ...nav,
-              sub: subMatches,
-            })
-          }
-        } else {
-          if (
-            (isRoleActive && nav?.permissionKey && userPermissions?.includes(nav?.permissionKey)) ||
-            !nav.permissionKey ||
-            (nav?.permissionKey === 'view_form' && user.value?.is_manager)
-          ) {
-            menus?.push(nav)
-          }
-        }
-      })
-
-      if (menus?.length > 0) {
-        navByPermissions.value.push({
-          name: item?.name,
-          menuKey: item?.menuKey,
-          menus,
-        })
-      }
-    })
+    navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV_ADMIN))
   }
 }
 getNavAdmin()

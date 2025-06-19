@@ -14,6 +14,10 @@ const appStore = useAppStore()
 const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
+
+if (route.query?.token) {
+  appStore.tokenBot = route.query.token as string
+}
 const token = computed(() => appStore.tokenBot)
 // const token = ref('')
 const socket = ref()
@@ -45,21 +49,25 @@ const getData = async () => {
   }
 }
 const getInfoGroup = async () => {
-  const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token.value}`,
-    },
-  })
-  if (result && result?._id) {
-    groupInfo.value = result
-  } else {
+  try {
+    const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+    if (result && result?._id) {
+      groupInfo.value = result
+    } else {
+      appStore.tokenBot = ''
+    }
+    nextTick(() => {
+      getMessage()
+      licenseSocket()
+    })
+  } catch {
     appStore.tokenBot = ''
   }
-  nextTick(() => {
-    getMessage()
-    licenseSocket()
-  })
 }
 const startChat = async () => {
   const newForm = {}
