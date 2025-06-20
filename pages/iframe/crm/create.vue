@@ -108,7 +108,7 @@ getData()
         <InputText :name="column.label" type="text" placeholder="Enter" v-model="form.data[column.key]" />
       </div>
     </div>
-    <div class="flex justify-end gap-4">
+    <div class="flex justify-end gap-4 mt-4">
       <Button label="Cancel" severity="secondary" type="button" @click="cancel" />
       <Button label="Register" severity="primary" type="button" @click="onSubmit" :disabled="isCheckDisabled" />
     </div>

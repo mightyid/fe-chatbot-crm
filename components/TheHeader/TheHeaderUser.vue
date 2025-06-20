@@ -33,6 +33,14 @@ const actions = ref([
     },
   },
   {
+    icon: iUpdateInformation,
+    name: 'Company Profile',
+    action() {
+      router.push('/company-profile')
+      hidePanel()
+    },
+  },
+  {
     icon: iProfile,
     name: 'Change Password',
     action() {
