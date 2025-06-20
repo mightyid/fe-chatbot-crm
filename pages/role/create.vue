@@ -60,7 +60,6 @@ const redirectToRoleList = () => {
           v-model:name="form.name"
           v-model:is_admin="form.is_admin"
           v-model:is_active="form.is_active"
-          v-model:branches="form.branches"
           v-model:permissions="form.permissions"
           :isSubmit="isSubmit"
           @onSubmit="createRole"

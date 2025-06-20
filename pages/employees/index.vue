@@ -254,17 +254,14 @@ watchDebounced(
         >
           <template #body="slotProps">
             <div class="flex items-center justify-end gap-2">
-              <nuxt-link
+              <!-- <nuxt-link
                 :to="generatePathWithParams(PATH_EMPLOYEES_DETAIL, { id: slotProps?.data?._id })"
                 v-can="'view_employee'"
               >
                 <img src="~/assets/icons/i-eye-secondary-circle.svg" alt="" />
-              </nuxt-link>
+              </nuxt-link> -->
 
-              <nuxt-link
-                :to="generatePathWithParams(PATH_EMPLOYEES_EDIT, { id: slotProps?.data?._id })"
-                v-can="'update_employee'"
-              >
+              <nuxt-link :to="`/employees/${slotProps.data._id}/edit`" v-can="'update_employee'">
                 <img src="~/assets/icons/i-pen-secondary-circle.svg" alt="" />
               </nuxt-link>
 

@@ -7,6 +7,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  info: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 const emit = defineEmits(['onSubmit'])
@@ -17,19 +21,25 @@ const form = ref({
   phone: '',
   avatar: '',
   password: '',
+  role_id: '',
+  is_admin: true,
 })
 const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const { handleSubmit } = useForm()
-
-const employeeServices = useEmployee()
+const { $api: api } = useNuxtApp()
 
 const isPageEdit = computed(() => (route.params.id ? true : false))
+const listRole = ref([])
+const getData = async () => {
+  const { result }: any = await api(`user/role`)
+  listRole.value = result
+}
+getData()
 
 const goBack = () => {
   const previousPath = (router.options.history.state.back || null) as string
-
   if (previousPath) {
     router.push(previousPath)
   } else {
@@ -44,6 +54,13 @@ const onUpload = (obj: any) => {
 const submitForm = handleSubmit(() => {
   emit('onSubmit', form.value)
 })
+watch(
+  () => props.info,
+  (newValue) => {
+    form.value = JSON.parse(JSON.stringify(newValue))
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -63,13 +80,7 @@ const submitForm = handleSubmit(() => {
         </BaseButtonUpload>
       </div>
 
-      <BaseInputText
-        name="name"
-        label="Name"
-        :rules="{ required: true }"
-        :disabled="isPageEdit ? true : false"
-        v-model="form.name"
-      />
+      <BaseInputText name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
       <BaseInputText
         name="email"
         label="Email"
@@ -84,12 +95,19 @@ const submitForm = handleSubmit(() => {
         :rules="{ required: isPageEdit ? false : true }"
         v-model="form.password"
       />
-      <BaseInputText
-        name="phone"
-        label="Phone"
-        :rules="{ required: false }"
-        :disabled="isPageEdit ? true : false"
-        v-model="form.phone"
+      <BaseInputText name="phone" label="Phone" :rules="{ required: false }" v-model="form.phone" />
+
+      <BaseSwitch class="mb-6" name="is_admin" :label="t('common.admin')" v-model="form.is_admin" />
+
+      <BaseInputSelect
+        v-if="!form.is_admin"
+        name="role"
+        label="Role"
+        optionLabel="name"
+        optionValue="_id"
+        :options="listRole"
+        :rules="{ required: form.is_admin ? false : true }"
+        v-model="form.role_id"
       />
 
       <BaseSwitch class="mb-6" name="is-active" :label="t('common.active')" v-model="form.is_active" />
@@ -97,7 +115,12 @@ const submitForm = handleSubmit(() => {
 
     <div class="flex justify-end gap-[16px]">
       <Button :label="t('button.cancel')" outlined severity="secondary" type="button" @click="goBack" />
-      <Button :label="t('button.create')" severity="primary" type="button" @click="submitForm" />
+      <Button
+        :label="isPageEdit ? t('button.save') : t('button.create')"
+        severity="primary"
+        type="button"
+        @click="submitForm"
+      />
     </div>
   </form>
 </template>

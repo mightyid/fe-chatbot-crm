@@ -30,15 +30,7 @@ const branchOptions = ref<any>([])
 const permissionOrigin = ref<any>([])
 const newPermissions = ref([])
 
-const getPermissions = async () => {
-  isLoadingPermission.value = true
-
-  const { result } = await roleServices.getPermissions()
-
-  permissionOrigin.value = result
-
-  isLoadingPermission.value = false
-}
+const getPermissions = async () => {}
 getPermissions()
 
 const onSubmit = handleSubmit(() => {
@@ -101,19 +93,6 @@ const changePermissions = (values: any) => {
     </div>
 
     <div class="mb-4" v-if="!is_admin">
-      <BaseInputSelectMultiple
-        class="mb-4"
-        name="select-branch"
-        optionValue="_id"
-        optionLabel="name"
-        :options="branchOptions"
-        :label="t('common.applied_branch')"
-        :loading="isLoadingBranch"
-        :filterDefault="true"
-        :rules="{ required: true }"
-        v-model="branches"
-      />
-
       <PermissionTable
         :options="permissionOrigin"
         :data="permissions"

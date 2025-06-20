@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 const { t } = useI18n()
-const { $moment } = useNuxtApp()
+const { $moment, $api } = useNuxtApp()
 const router = useRouter()
 const route = useRoute()
 const toast = useToast()
@@ -25,31 +25,15 @@ const headEl = ref<any>(null)
 
 const isPageEdit = computed(() => (route.params.id ? true : false))
 
-const submitStaffInfo = async () => {
-  headEl?.value?.scrollIntoView()
-  currentStep.value = EmployeeEnum.LaborContract
-}
-
-const submitLaborContract = async () => {
-  try {
-    isSubmit.value = true
-
-    const { statusCode } = await employeeServices.createEmployee({})
-
-    if (statusCode >= 200 && statusCode < 300) {
-      toast.add({ severity: 'success', summary: t('common.success'), detail: t('common.added'), life: 3000 })
-      router.push(PATH_EMPLOYEES_LIST)
-    }
-  } catch (error) {
-    console.log(error)
-  } finally {
-    isSubmit.value = false
+const submitStaffInfo = async (obj: any) => {
+  const { statusCode }: any = await $api(`user/staff`, {
+    method: 'POST',
+    body: obj,
+  })
+  if (statusCode === 200) {
+    toast.add({ severity: 'success', summary: 'Successfully', detail: 'Created', life: 3000 })
+    router.push(PATH_EMPLOYEES_LIST)
   }
-}
-
-const backToEmployeeInfo = () => {
-  headEl?.value?.scrollIntoView()
-  currentStep.value = EmployeeEnum.EmployeeInfo
 }
 </script>
 

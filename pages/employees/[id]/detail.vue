@@ -20,6 +20,7 @@ const getEmployeeById = async () => {
   try {
     isLoading.value = true
     const { statusCode, result } = await employeeServices.getEmployeeById(route.params.id as string)
+    console.log(result, 'result')
     employee.value = result || {}
   } catch (error) {
     console.error(error)
@@ -36,31 +37,6 @@ const redirectTeachersList = () => {
 const redirectEdit = () => {
   router.push(`/employees/${route.params.id}/edit?redirect=${route.query.tab}`)
 }
-
-onMounted(() => {
-  const key = route.query.tab
-  if (key) {
-    const index = tabs.value.findIndex((item: any) => item?.key === key)
-    indexTabActive.value = index
-  }
-})
-
-watch(
-  () => indexTabActive.value,
-  (newValue) => {
-    if (newValue !== null) {
-      const key = tabs.value[newValue].key
-      router.push({
-        query: {
-          tab: key,
-        },
-      })
-    }
-  },
-  {
-    immediate: true,
-  },
-)
 </script>
 
 <template>
