@@ -24,6 +24,10 @@ export default defineNuxtConfig({
           property: 'og:description',
           content: 'MightyChatbot',
         },
+        {
+          property: 'zalo-platform-site-verification',
+          content: 'ODovUAJP2cH2zO5jmzq9EX_ZeYBpbNHwCpar',
+        },
       ],
     },
   },
