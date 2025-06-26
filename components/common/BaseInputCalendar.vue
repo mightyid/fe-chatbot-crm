@@ -148,13 +148,13 @@ const dateSelect = (value: any) => {
       >
         <template #inputicon="{ clickCallback }">
           <img
-            class="absolute top-[50%] right-12 translate-y-[-50%] cursor-pointer"
+            class="absolute top-[50%] right-12px translate-y-[-50%] cursor-pointer"
             src="~/assets/icons/i-clock.svg"
             @click="clickCallback"
             v-if="timeOnly"
           />
           <img
-            class="absolute top-[50%] right-12 translate-y-[-50%] cursor-pointer"
+            class="absolute top-[50%] right-12px translate-y-[-50%] cursor-pointer"
             src="~/assets/icons/i-calendar-primary.svg"
             @click="clickCallback"
             v-else
@@ -165,3 +165,8 @@ const dateSelect = (value: any) => {
     </div>
   </div>
 </template>
+<style lang="scss" scoped>
+:deep(.p-datepicker-input-icon-container) {
+  position: initial !important;
+}
+</style>

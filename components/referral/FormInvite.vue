@@ -18,7 +18,10 @@ const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const route = useRoute()
 const { handleSubmit, resetForm } = useForm()
 const isShowImportExcel = ref(false)
-
+const listChatbot = ref<any>([])
+const listIframe = ref<any>([])
+const bot_id = ref('')
+const iframe_id = ref('')
 const form = ref<any>({
   name: '',
   email: '',
@@ -48,6 +51,22 @@ const addUser = handleSubmit(() => {
   }
   listUser.value.push(data)
 })
+
+const getListIframe = async () => {
+  const { result }: any = await $api(`iframe`, {
+    method: 'GET',
+  })
+  listIframe.value = result || []
+}
+const getListBot = async () => {
+  const { loading, result, total_pages, total }: any = await $api('chat-bot', {
+    method: 'GET',
+  })
+  listChatbot.value = result || []
+}
+getListBot()
+getListIframe()
+
 const confirmDelete = (record: any) => {
   confirm.require({
     message: 'Are you sure you want to delete?',
@@ -58,17 +77,29 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      listUser.value = listUser.value.filter((item: any) => item._id !== record._id)
+      listUser.value = listUser.value.filter((item: any) => item.email !== record.email && item.phone !== record.phone)
     },
     reject: () => {
       // toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
     },
   })
 }
-const importExcel = async (obj: any) => {}
+const importExcel = async (obj: any) => {
+  console.log(obj, 'obj')
+  obj?.forEach((el: any) => {
+    if (el.email && el.phone) {
+      listUser.value.push(el)
+    }
+  })
+  isShowImportExcel.value = false
+}
 
 const onSubmit = () => {
-  emit('onSubmit', listUser.value)
+  emit('onSubmit', {
+    listData: listUser.value,
+    iframe_id: iframe_id.value,
+    bot_id: bot_id.value,
+  })
 }
 
 watch(
@@ -81,7 +112,7 @@ watch(
 </script>
 
 <template>
-  <!-- <Button @click="isShowImportExcel = true" class="mb-4"> Import Excel </Button> -->
+  <Button @click="isShowImportExcel = true" class="mb-4"> Import Excel </Button>
 
   <form autocomplete="off" @submit.prevent="addUser">
     <div class="grid grid-cols-4 gap-6">
@@ -120,25 +151,48 @@ watch(
     </template>
   </DataTable>
 
-  <div class="flex justify-end gap-4 mt-4">
-    <Button
-      type="button"
-      label="Cancel"
-      severity="secondary"
-      @click="
-        () => {
-          emit('onCancel')
-        }
-      "
-    />
-    <Button
-      :disabled="listUser.length > 0 ? false : true"
-      :label="isEdit ? 'Save' : 'Invite'"
-      severity="primary"
-      @click="onSubmit"
-    />
+  <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-2 gap-4">
+      <BaseInputSelect
+        label="Iframe"
+        :options="listIframe"
+        name="iframe_id"
+        :filter="true"
+        option-label="name"
+        option-value="_id"
+        v-model="iframe_id"
+      />
+
+      <BaseInputSelect
+        label="Bot"
+        :options="listChatbot"
+        name="bot_id"
+        :filter="true"
+        option-label="name"
+        option-value="_id"
+        v-model="bot_id"
+      />
+    </div>
+    <div class="fr jc-fe ai-e gap-4">
+      <Button
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        @click="
+          () => {
+            emit('onCancel')
+          }
+        "
+      />
+      <Button
+        :disabled="listUser.length > 0 && bot_id && iframe_id ? false : true"
+        :label="isEdit ? 'Save' : 'Invite'"
+        severity="primary"
+        @click="onSubmit"
+      />
+    </div>
   </div>
   <BaseDialog :visible="isShowImportExcel" title="Import Excel" @onClose="isShowImportExcel = false" width="960px">
-    <!-- <ImportExcelReferral :columns="columns" @on-cancel="isShowImportExcel = false" @on-submit="importExcel" /> -->
+    <ImportExcelReferral :columns="columns" @on-cancel="isShowImportExcel = false" @on-submit="importExcel" />
   </BaseDialog>
 </template>

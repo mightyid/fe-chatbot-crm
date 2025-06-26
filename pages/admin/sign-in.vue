@@ -7,7 +7,7 @@ definePageMeta({
 const { $api } = useNuxtApp()
 const router = useRouter()
 const { handleSubmit } = useForm()
-const { login, setToken, setRefreshToken, getUserInfo } = useAuth()
+const { loginAdmin, setToken, setRefreshToken, getUserInfo } = useAuth()
 const { showToastError } = useShowToast()
 const redirectBack = useRedirectBack()
 const appStore = useAppStore()
@@ -25,7 +25,7 @@ const onSubmit = handleSubmit(async () => {
       password: form.value.password,
     }
 
-    const { result } = await login(body)
+    const { result }: any = await loginAdmin(body)
 
     setToken(result?.access_token)
     setRefreshToken(result?.refresh_token)
@@ -59,18 +59,16 @@ const onSubmit = handleSubmit(async () => {
 
     <form autocomplete="off" @submit.prevent="onSubmit">
       <div class="mb-4">
-        <BaseLabel text="Email" showRequired />
-        <BaseInputText name="email" :rules="{ required: true, email: true }" v-model="form.email" />
+        <BaseInputText label="Email" name="email" :rules="{ required: true, email: true }" v-model="form.email" />
       </div>
 
       <div class="mb-4">
-        <div class="flex justify-between">
-          <BaseLabel text="Mật khẩu" showRequired />
+        <BaseInputPassword label="Password" name="password" :rules="{ required: true }" v-model="form.password" />
+        <div class="flex jc-fe">
           <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/forgot-password`">
             Quên mật khẩu
           </nuxt-link>
         </div>
-        <BaseInputPassword name="password" :rules="{ required: true }" v-model="form.password" />
       </div>
 
       <Button class="ml-auto !flex" label="Đăng nhập" severity="primary" type="submit" :loading="isLoading" />

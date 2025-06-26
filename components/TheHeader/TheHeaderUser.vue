@@ -4,26 +4,9 @@ import { iProfile, iSetting, iLogout, iKey, iUpdateInformation } from '~/assets/
 const { user, logout } = useAuth()
 const { t } = useI18n()
 const router = useRouter()
-
+const isReferral = computed(() => (useAppStore().strategyAuth == 'referral' ? true : false))
 const overPanel = ref()
 const actions = ref([
-  // {
-  //   icon: iProfile,
-  //   name: 'common.personal_information',
-  //   action() {
-  //     router.push('/profile/personal-information')
-  //     hidePanel()
-  //   },
-  // },
-
-  // {
-  //   icon: iSetting,
-  //   name: 'Setting',
-  //   action() {
-  //     console.log('Setting click')
-  //     hidePanel()
-  //   },
-  // },
   {
     icon: iUpdateInformation,
     name: 'common.update_information',
@@ -48,6 +31,16 @@ const actions = ref([
       hidePanel()
     },
   },
+  {
+    icon: iLogout,
+    name: 'common.logout',
+    action() {
+      logout()
+      hidePanel()
+    },
+  },
+])
+const actionsUserReferral = ref([
   {
     icon: iLogout,
     name: 'common.logout',
@@ -85,7 +78,7 @@ const hidePanel = () => {
       </div>
 
       <div class="mx-[-12px]">
-        <template v-for="item in actions" :key="item?.name">
+        <template v-for="item in isReferral ? actionsUserReferral : actions" :key="item?.name">
           <div
             class="p-[12px] flex items-center gap-[12px] bg-white cursor-pointer transition-all hover:bg-gray-10"
             @click="item?.action"

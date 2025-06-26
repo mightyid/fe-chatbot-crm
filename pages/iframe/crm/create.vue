@@ -31,6 +31,7 @@ const getData = async () => {
     params: {
       iframe_id: route.query?.iframe_id,
       company_id: route.query?.company_id,
+
       //   label: route.params?.label,
     },
   })
@@ -52,6 +53,8 @@ const submitCRM = async () => {
       body: {
         company_id: route?.query?.company_id,
         iframe_id: route?.query?.iframe_id,
+        referral_id: route.query.referral_id || undefined,
+
         data,
         zalo: true,
       },

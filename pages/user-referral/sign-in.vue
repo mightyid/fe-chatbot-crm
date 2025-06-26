@@ -7,7 +7,7 @@ definePageMeta({
 const { $api } = useNuxtApp()
 const router = useRouter()
 const { handleSubmit } = useForm()
-const { login, setToken, setRefreshToken, getUserInfo } = useAuth()
+const { loginReferral, setToken, setRefreshToken, getUserReferral } = useAuth()
 const { showToastError } = useShowToast()
 const redirectBack = useRedirectBack()
 const appStore = useAppStore()
@@ -15,7 +15,7 @@ const form = ref({
   email: '',
   password: '',
 })
-appStore.strategyAuth = 'user'
+appStore.strategyAuth = 'referral'
 
 const isLoading = ref(false)
 const onSubmit = handleSubmit(async () => {
@@ -27,11 +27,11 @@ const onSubmit = handleSubmit(async () => {
       password: form.value.password,
     }
 
-    const { result }: any = await login(body)
+    const { result }: any = await loginReferral(body)
 
     setToken(result?.access_token)
     setRefreshToken(result?.refresh_token)
-    await getUserInfo()
+    await getUserReferral()
 
     // redirectBack('/')
     window.location.reload()
@@ -58,7 +58,7 @@ const onSubmit = handleSubmit(async () => {
 
 <template>
   <div class="page">
-    <h2 class="mt-0 mb-[24px] text-3xl font-semibold c-black-90"> Đăng nhập </h2>
+    <h2 class="mt-0 mb-[24px] text-3xl font-semibold c-black-90"> Login Referral </h2>
 
     <form autocomplete="off" @submit.prevent="onSubmit">
       <div class="mb-4">
@@ -75,9 +75,6 @@ const onSubmit = handleSubmit(async () => {
       </div>
 
       <Button class="ml-auto !flex" label="Đăng nhập" severity="primary" type="submit" :loading="isLoading" />
-      <nuxt-link to="/user-referral/sign-in" class="mt-0 mb-[24px] text-base c-black-90">
-        Login with account referral?
-      </nuxt-link>
     </form>
   </div>
 </template>

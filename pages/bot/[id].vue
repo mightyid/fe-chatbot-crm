@@ -82,6 +82,7 @@ const startChat = async () => {
     body: {
       form: newForm,
       iframe_id: route.query.iframe_id || undefined,
+      referral_id: route.query.referral_id || undefined,
     },
   })
   appStore.tokenBot = result.access_token

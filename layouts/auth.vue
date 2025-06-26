@@ -4,7 +4,7 @@
       <div class="h-full flex flex-col gap-6">
         <div class="p-8">
           <nuxt-link class="block" to="/">
-            <img class="max-w-[196px]" src="/images/logo.svg" alt="" />
+            <img class="max-w-[196px]" src="@/assets/images/logo.svg" alt="" />
           </nuxt-link>
         </div>
 

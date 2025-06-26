@@ -20,9 +20,7 @@ const links = ref([
 const inviteReferral = async (form: any) => {
   const { statusCode }: any = await $api('referral-invitation/invite', {
     method: 'POST',
-    body: {
-      listData: form,
-    },
+    body: form,
   })
 
   if (statusCode === 200) {

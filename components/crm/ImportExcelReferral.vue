@@ -8,7 +8,7 @@ const props = defineProps({
 })
 const listColTable = ref([])
 const dataTable = ref([])
-const dataSelect = ref<any>({})
+const dataSelect = ref<any>([])
 const emit = defineEmits(['onCancel', 'onSubmit'])
 const { $api } = useNuxtApp()
 const readFile = async (e: Event) => {
@@ -16,11 +16,10 @@ const readFile = async (e: Event) => {
   const file = e.target?.files[0]
   if (file) {
     readXlsxFile(file).then((rows: any) => {
-      console.log(rows, 'rows')
       if (rows.length > 0) {
         listColTable.value = rows[0]
         dataTable.value = rows.slice(1)
-        console.log(dataTable.value, 'dataTable.value')
+        // console.log(dataTable.value, 'dataTable.value')
       }
     })
   }
@@ -46,9 +45,7 @@ const importExcel = () => {
     console.log(obj)
     arr.push(obj)
   })
-  emit('onSubmit', {
-    data: arr,
-  })
+  emit('onSubmit', arr)
 }
 </script>
 
@@ -78,14 +75,15 @@ const importExcel = () => {
         <tr>
           <th v-for="(item, index) in listColTable" :key="item">
             <div class="fc">
-              <BaseInputSelect
+              <Dropdown
                 show-clear
                 :options="columns"
                 v-model="dataSelect[index]"
                 :option-label="'label'"
-                :name="dataSelect[index] + item"
                 :option-value="'key'"
+                :name="dataSelect[index] + item"
               />
+
               <div class="text-base">
                 <!-- {{ item }} -->
               </div>

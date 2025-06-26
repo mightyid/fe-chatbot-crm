@@ -25,6 +25,7 @@ const { $dayjs: dayjs, $api } = useNuxtApp()
 const columns = ref<any>([])
 const labels = ref<any>([])
 const listIframe = ref<any>([])
+const listUserReferral = ref<any>([])
 const formNote = ref<any>({
   _id: '',
   content: '',
@@ -39,6 +40,7 @@ const query = ref({
   from: (route.query.from as string) || null,
   to: (route.query.to as string) || null,
   iframe_id: (route.query.iframe_id as string) || null,
+  referral_id: (route.query.referral_id as string) || null,
   limit: 20,
 })
 const perPage = ref(20)
@@ -119,6 +121,12 @@ const getListIframe = async () => {
   })
   listIframe.value = result || []
 }
+const getUserReferral = async () => {
+  const { result }: any = await $api(`user-referral`, {
+    method: 'GET',
+  })
+  listUserReferral.value = result || []
+}
 const getData = async () => {
   isLoading.value = true
 
@@ -156,6 +164,7 @@ const getData = async () => {
 getData()
 nextTick(() => {
   getListIframe()
+  getUserReferral()
 })
 const numberBadge = computed(() => {
   let count = 0
@@ -169,6 +178,9 @@ const numberBadge = computed(() => {
     count += 1
   }
   if (query.value.iframe_id) {
+    count += 1
+  }
+  if (query.value.referral_id) {
     count += 1
   }
   return count
@@ -208,6 +220,7 @@ const clearAll = () => {
     to: null,
     iframe_id: '',
     limit: 20,
+    referral_id: '',
   }
   getData()
 }
@@ -336,6 +349,10 @@ const addQueryCampaign = (id: string) => {
   query.value.iframe_id = id
   getData()
 }
+const addQueryReferral = (id: string) => {
+  query.value.referral_id = id
+  getData()
+}
 watchDebounced(
   () => query.value.search,
   (newValue) => {
@@ -359,15 +376,26 @@ watchDebounced(
                 <BaseInputCalendar label="From" v-model="query.from" />
                 <BaseInputCalendar label="To" v-model="query.to" />
               </div> -->
-              <BaseInputSelect
-                label="Campaign"
-                :options="listIframe"
-                name="iframe_id"
-                :filter="true"
-                option-label="name"
-                option-value="_id"
-                v-model="query.iframe_id"
-              />
+              <div class="fc gap-4">
+                <BaseInputSelect
+                  label="Campaign"
+                  :options="listIframe"
+                  name="iframe_id"
+                  :filter="true"
+                  option-label="name"
+                  option-value="_id"
+                  v-model="query.iframe_id"
+                />
+                <BaseInputSelect
+                  label="User Referral"
+                  :options="listUserReferral"
+                  name="referral_id"
+                  :filter="true"
+                  option-label="name"
+                  option-value="_id"
+                  v-model="query.referral_id"
+                />
+              </div>
               <div class="fr gap-2 mt-4 jc-fe">
                 <Button label="Clear" severity="secondary" @click="clearAll" />
                 <Button label="Apply" severity="primary" @click="getData" />
@@ -461,7 +489,7 @@ watchDebounced(
             </nuxt-link>
           </template>
         </Column>
-        <Column header="Name" :frozen="true" alignFrozen="left" style="max-width: 500px; min-width: 300px">
+        <Column header="Name" :frozen="true" alignFrozen="left" style="min-width: 300px; width: 300px">
           <template #body="slotProps">
             <nuxt-link :to="`/crm/${slotProps.data._id}`" class="flex items-center gap-1 cursor-pointer">
               <span class="text-base font-normal c-primary">
@@ -470,15 +498,28 @@ watchDebounced(
             </nuxt-link>
           </template>
         </Column>
-        <Column header="Campaign" :frozen="true" alignFrozen="left" style="min-width: 200px">
+        <Column header="Campaign" style="min-width: 200px">
           <template #body="slotProps">
             <div
-              class="flex items-center gap-1 cursor-pointer"
+              class="w-full flex items-center gap-1 cursor-pointer"
               v-if="slotProps.data?.iframe?._id"
               @click="addQueryCampaign(slotProps.data?.iframe?._id)"
             >
               <span class="text-base font-normal c-primary">
                 {{ slotProps.data?.iframe?.name }}
+              </span>
+            </div>
+          </template>
+        </Column>
+        <Column header="Referral" style="min-width: 200px">
+          <template #body="slotProps">
+            <div
+              @click="addQueryReferral(slotProps.data?.referral?._id)"
+              class="flex items-center gap-1 cursor-pointer"
+              v-if="slotProps.data?.referral?._id"
+            >
+              <span class="text-base font-normal c-primary">
+                {{ slotProps.data?.referral?.name }}
               </span>
             </div>
           </template>

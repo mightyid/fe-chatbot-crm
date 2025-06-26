@@ -17,7 +17,7 @@ import {
 import { PATH_EMPLOYEES_LIST, PATH_POSITION_LIST, PATH_ROLE_LIST } from '~/constant/routerPath'
 const appStore = useAppStore()
 const isUser = computed(() => (appStore.strategyAuth == 'user' ? true : false))
-
+const isAdmin = computed(() => (appStore.strategyAuth == 'admin' ? true : false))
 type MenuType = {
   name: string
   menuKey: string
@@ -81,6 +81,26 @@ const DEFAULT_NAV = [
         to: '/chatbot',
       },
       {
+        title: 'Referral',
+        key: 'referral',
+        icon: iChatbot,
+        iconActive: iChatbotActive,
+        sub: [
+          {
+            title: 'Invitation',
+            key: 'invitation',
+            permissionKey: 'view_employee',
+            to: '/referral/invitation',
+          },
+          {
+            title: 'Management',
+            key: 'Management',
+            permissionKey: 'view_roles',
+            to: '/referral/management',
+          },
+        ],
+      },
+      {
         title: 'common.employee',
         key: 'menu-employees',
         icon: iEmployee,
@@ -114,6 +134,21 @@ const DEFAULT_NAV_ADMIN = [
         icon: iCrm,
         iconActive: iCrmActive,
         to: '/admin/company',
+      },
+    ],
+  },
+] as MenuType[]
+const DEFAULT_NAV_REFERRAL = [
+  {
+    name: 'common.menu',
+    menuKey: 'menu',
+    menus: [
+      {
+        title: 'CRM',
+        key: 'crm',
+        icon: iCrm,
+        iconActive: iCrmActive,
+        to: '/user-referral/crm',
       },
     ],
   },
@@ -173,8 +208,10 @@ const getNavAdmin = () => {
   // }
   if (isUser.value) {
     navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV))
-  } else {
+  } else if (isAdmin.value) {
     navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV_ADMIN))
+  } else {
+    navByPermissions.value = JSON.parse(JSON.stringify(DEFAULT_NAV_REFERRAL))
   }
 }
 getNavAdmin()

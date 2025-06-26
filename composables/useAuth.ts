@@ -1,22 +1,4 @@
-import type {
-  GenderType,
-  RefreshTokenResponseType,
-  ResponseType,
-  ResponseTypeList,
-  ResponseTypeListWithTotalMoney,
-} from '~/types'
 import { useAppStore } from '~/stores/app'
-
-type BodyUpdateUser = {
-  name: string
-  avatar: string
-  gender: GenderType
-  phone: string
-  province: string
-  district: string
-  township: string
-  address: string
-}
 
 export default function useAuth() {
   const URL = `/user`
@@ -28,7 +10,19 @@ export default function useAuth() {
   const refreshToken = computed(() => appStore.refreshToken || '')
 
   async function login(body: { email: string; password: string }) {
-    return $api<RefreshTokenResponseType>(isUser.value ? `user/auth/login` : `admin/auth/login`, {
+    return $api(`user/auth/login`, {
+      method: 'POST',
+      body,
+    })
+  }
+  async function loginAdmin(body: { email: string; password: string }) {
+    return $api(`admin/auth/login`, {
+      method: 'POST',
+      body,
+    })
+  }
+  async function loginReferral(body: { email: string; password: string }) {
+    return $api(`referral/auth/login`, {
       method: 'POST',
       body,
     })
@@ -45,9 +39,31 @@ export default function useAuth() {
 
   async function getUserInfo() {
     try {
-      const { result } = await $api<any>(isUser.value ? `user/info` : `admin/auth/info`, { method: 'GET' })
+      const { result } = await $api<any>(`user/info`, { method: 'GET' })
       appStore.updateUser({
         ...result,
+        isLoggedIn: true,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  async function getUserAdmin() {
+    try {
+      const { result } = await $api<any>(`admin/auth/info`, { method: 'GET' })
+      appStore.updateUser({
+        ...result,
+        isLoggedIn: true,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  async function getUserReferral() {
+    try {
+      const { result } = await $api<any>(`referral/info`, { method: 'GET' })
+      appStore.updateUser({
+        ...result?.referralInfo,
         isLoggedIn: true,
       })
     } catch (error) {
@@ -63,6 +79,10 @@ export default function useAuth() {
     setRefreshToken: appStore.setRefreshToken,
     login,
     logout,
+    loginReferral,
     getUserInfo,
+    getUserReferral,
+    getUserAdmin,
+    loginAdmin,
   }
 }
