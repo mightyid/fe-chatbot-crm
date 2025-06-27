@@ -16,6 +16,7 @@ const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const labels = ref<any>([])
 const columns = ref<any>([])
 const { handleSubmit, resetForm } = useForm()
+const { t } = useI18n()
 const form = ref<any>({
   data: {},
   label_id: null,
@@ -68,7 +69,7 @@ watch(
       <BaseInputSelectTag
         v-model="form.label_id"
         name="label"
-        label="Label"
+        :label="t('common.label')"
         option-label="name"
         option-value="_id"
         :options="labels"
@@ -86,7 +87,7 @@ watch(
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -94,7 +95,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Create'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.create')" severity="primary" />
     </div>
   </form>
 </template>

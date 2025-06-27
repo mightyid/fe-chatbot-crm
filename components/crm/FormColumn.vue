@@ -11,20 +11,20 @@ const props = defineProps({
     default: false,
   },
 })
-
+const { t } = useI18n()
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const fields = ref<any>([
   {
     value: 'name',
-    label: 'Name',
+    label: t('common.name'),
   },
   {
     value: 'email',
-    label: 'Email',
+    label: t('common.email'),
   },
   {
     value: 'phone',
-    label: 'Phone',
+    label: t('common.phone'),
   },
   // {
   //   value: 'country',
@@ -87,7 +87,13 @@ watch(
   <form autocomplete="off" @submit.prevent="onSubmit">
     <div class="text-2xl font-bold text-center">{{ isEdit ? 'Edit Column' : 'Create Field' }}</div>
     <div class="grid grid-cols-1 gap-6">
-      <BaseInputText class="flex-1" name="label" label="Name" :rules="{ required: true }" v-model="form.label" />
+      <BaseInputText
+        class="flex-1"
+        name="label"
+        :label="t('common.name')"
+        :rules="{ required: true }"
+        v-model="form.label"
+      />
       <BaseInputText class="flex-1" name="key" label="Key" :rules="{ required: true }" v-model="form.key" />
       <BaseInputNumber class="flex-1" name="width" label="Width" :rules="{ required: true }" v-model="form.width" />
       <!-- <BaseInputSelect
@@ -106,14 +112,14 @@ watch(
         label="Field profile"
         :rules="{ required: false }"
         v-model="form.field_profile" /> -->
-      <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
+      <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
       <BaseSwitch class="flex-1" name="is_fixed" label="Fixed" v-model="form.is_fixed" />
     </div>
 
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -121,7 +127,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Create'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.create')" severity="primary" />
     </div>
   </form>
 </template>

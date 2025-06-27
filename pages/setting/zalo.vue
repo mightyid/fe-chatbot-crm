@@ -5,6 +5,7 @@ const toast = useToast()
 const { $api } = useNuxtApp()
 const { user } = useAuth()
 const isLoading = ref(false)
+const { t } = useI18n()
 const form = ref<any>({
   zalo: {
     access_token: '',
@@ -187,7 +188,7 @@ if (route.query?.code?.length && route.query?.state) {
           :rules="{ required: false }"
         />
         <div class="col-span-2">
-          <BaseSwitch class="flex-1" name="active" label="Active" v-model="form.zalo.is_active" />
+          <BaseSwitch class="flex-1" name="active" :label="t('common.active')" v-model="form.zalo.is_active" />
         </div>
         <div class="col-span-2 c-red" v-if="!form.zalo.verify && form.zalo.phone_test">
           Please verify zalo config to get access token

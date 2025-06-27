@@ -585,7 +585,29 @@
     "edit_contract_type": "Edit contract type",
     "manager": "Manager",
     "date_reset": "Permission reset date",
-    "start": "Start"
+    "start": "Start",
+    "message": "Message",
+    "referral": "Referral",
+    "invitation": "Invitation",
+    "management": "Management",
+    "login_with_referral": "Login with user referral",
+    "campaign": "Campaign",
+    "referral_invitation": "Referral invitation",
+    "old_password": "Old password",
+    "company_profile": "Company profile",
+    "chatbot": "Chatbot",
+    "crm": "CRM",
+    "user_referral": "User referral",
+    "stop_bot": "Stop bot",
+    "config": "Config",
+    "created_at": "Created at",
+    "phone": "Phone",
+    "add_user": "Add user",
+    "labels_management": "Labels Management",
+    "fields_management" : "Fields Management",
+    "label" : "Label",
+    "enter_message": "Enter a message"
+
   },
   "button": {
     "detail": "Detail",
@@ -611,7 +633,8 @@
     "create_and_send": "Create and send",
     "upload": "Upload",
     "export_pdf": "Export pdf",
-    "only_view": "Only view"
+    "only_view": "Only view",
+    "invite": "Invite"
   },
   "notifications": {
     "admin": {

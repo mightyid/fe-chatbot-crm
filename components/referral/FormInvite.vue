@@ -69,11 +69,11 @@ getListIframe()
 
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -116,27 +116,45 @@ watch(
 
   <form autocomplete="off" @submit.prevent="addUser">
     <div class="grid grid-cols-4 gap-6">
-      <BaseInputText class="flex-1" name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
-      <BaseInputText class="flex-1" name="email" label="Email" :rules="{ required: false }" v-model="form.email" />
-      <BaseInputText class="flex-1" name="phone" label="Phone" :rules="{ required: true }" v-model="form.phone" />
+      <BaseInputText
+        class="flex-1"
+        name="name"
+        :label="t('common.name')"
+        :rules="{ required: true }"
+        v-model="form.name"
+      />
+      <BaseInputText
+        class="flex-1"
+        name="email"
+        :label="t('common.email')"
+        :rules="{ required: false }"
+        v-model="form.email"
+      />
+      <BaseInputText
+        class="flex-1"
+        name="phone"
+        :label="t('common.phone')"
+        :rules="{ required: true }"
+        v-model="form.phone"
+      />
 
       <div class="flex-1 fc jc-fe">
-        <Button type="submit"> Add User </Button>
+        <Button type="submit"> {{ t('common.add_user') }} </Button>
       </div>
     </div>
   </form>
   <DataTable :value="listUser" dataKey="_id" rowHover lazy scrollable class="mt-4">
-    <Column header="Name">
+    <Column :header="t('common.name')">
       <template #body="slotProps">
         <span class="fr ai-c gap-2">
           {{ slotProps.data.name }}
         </span>
       </template>
     </Column>
-    <Column header="Email" field="email"> </Column>
-    <Column header="Phone" field="phone"> </Column>
+    <Column :header="t('common.email')" field="email"> </Column>
+    <Column :header="t('common.phone')" field="phone"> </Column>
 
-    <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
+    <Column :header="t('common.actions')" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
       <template #body="slotProps">
         <div class="flex gap-2 jc-fe">
           <button @click="confirmDelete(slotProps.data)">
@@ -176,7 +194,7 @@ watch(
     <div class="fr jc-fe ai-e gap-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -186,7 +204,7 @@ watch(
       />
       <Button
         :disabled="listUser.length > 0 && bot_id && iframe_id ? false : true"
-        :label="isEdit ? 'Save' : 'Invite'"
+        :label="isEdit ? t('button.save') : t('button.invite')"
         severity="primary"
         @click="onSubmit"
       />

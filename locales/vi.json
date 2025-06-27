@@ -585,7 +585,28 @@
     "edit_contract_type": "Chỉnh sửa loại hợp đồng",
     "manager": "Người quản lý",
     "date_reset": "Ngày đặt lại phép",
-    "start": "Bắt đầu"
+    "start": "Bắt đầu",
+    "message": "Tin nhắn",
+    "referral": "Giới thiệu",
+    "invitation": "Lời mời",
+    "management": "Quản lý",
+    "login_with_referral": "Đăng nhập với vai trò giới thiệu",
+    "campaign": "Chiến dịch",
+    "referral_invitation": "Lời mời giới thiệu",
+    "old_password": "Mật khâu cũ",
+    "company_profile": "Hồ sơ công ty",
+    "chatbot": "Chatbot",
+    "crm": "CRM",
+    "user_referral": "Người giới thiệu",
+    "stop_bot": "Dừng chatbot",
+    "config": "Cấu hình",
+    "created_at": "Ngày tạo",
+    "phone": "Số điện thoại",
+    "add_user": "Thêm người dùng",
+    "labels_management": "Quản lý nhãn",
+    "fields_management": "Quản lý cột",
+    "label" :"Nhãn",
+    "enter_message": "Nhập tin nhắn"
   },
   "button": {
     "detail": "Chi tiết",
@@ -611,7 +632,9 @@
     "create_and_send": "Tạo và gửi",
     "upload": "Tải lên",
     "export_pdf": "Xuất pdf",
-    "only_view": "Chỉ xem"
+    "only_view": "Chỉ xem",
+    "invite": "Mời"
+
   },
   "notifications": {
     "admin": {

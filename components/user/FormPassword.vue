@@ -14,6 +14,7 @@ const props = defineProps({
 const { $api } = useNuxtApp()
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const { handleSubmit, resetForm } = useForm()
+const { t } = useI18n()
 const form = ref<any>({
   old_password: '',
   new_password: '',
@@ -46,14 +47,14 @@ watch(
       <BaseInputPassword
         class="flex-1"
         name="old_password"
-        label="Old Password"
+        :label="t('common.old_password')"
         :rules="{ required: true }"
         v-model="form.old_password"
       />
       <BaseInputPassword
         class="flex-1"
         name="new_password"
-        label="New Password"
+        :label="t('common.new_password')"
         :rules="{ required: true }"
         v-model="form.new_password"
       />
@@ -61,7 +62,7 @@ watch(
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -69,7 +70,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Update'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('common.update')" severity="primary" />
     </div>
   </form>
 </template>

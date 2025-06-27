@@ -82,7 +82,13 @@ watch(
           </div>
         </BaseButtonUpload>
       </div>
-      <BaseInputText class="flex-1" name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
+      <BaseInputText
+        class="flex-1"
+        name="name"
+        :label="t('common.name')"
+        :rules="{ required: true }"
+        v-model="form.name"
+      />
 
       <BaseInputText
         class="flex-1"
@@ -116,7 +122,7 @@ watch(
         :rules="{ required: false }"
         v-model="form.position"
       /> -->
-      <BaseSwitch class="flex-1" name="is_active" label="Active" v-model="form.is_active" />
+      <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
       <BaseSwitch class="flex-1" name="is_show" label="Show Popup" v-model="form.is_show" />
     </div>
     <div class="my-4 text-lg c-primary font-bold" v-if="isAdmin">Config ChatGPT</div>
@@ -176,7 +182,7 @@ watch(
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -184,7 +190,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Create'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.create')" severity="primary" />
     </div>
   </form>
 </template>

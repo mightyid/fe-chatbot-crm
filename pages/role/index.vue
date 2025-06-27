@@ -166,7 +166,7 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column :header="t('common.created_date')" style="width: 120px">
+        <Column :header="t('common.created_at')" style="width: 120px">
           <template #body="slotProps">
             <p class="m-0 whitespace-nowrap text-base font-normal c-black-90">
               {{

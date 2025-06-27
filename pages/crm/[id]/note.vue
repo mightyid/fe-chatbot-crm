@@ -10,6 +10,7 @@ const route = useRoute()
 const toast = useToast()
 const emit = defineEmits(['onGetData'])
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const editorNoteConfig = ref({
   removePlugins: ['Image'],
   placeholder: 'Enter',
@@ -68,7 +69,7 @@ const createNote = async () => {
 
     <div class="flex justify-end gap-4">
       <Button
-        label="Create"
+        :label="t('button.create')"
         severity="primary"
         type="button"
         @click="createNote"

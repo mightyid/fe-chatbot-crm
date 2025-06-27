@@ -58,21 +58,33 @@ watch(
           </div>
         </BaseButtonUpload>
       </div>
-      <BaseInputText class="flex-1" name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
+      <BaseInputText
+        class="flex-1"
+        name="name"
+        :label="t('common.name')"
+        :rules="{ required: true }"
+        v-model="form.name"
+      />
       <BaseInputText
         class="flex-1"
         name="email"
-        label="Email"
+        :label="t('common.email')"
         :rules="{ required: true }"
         v-model="form.email"
         :disabled="true"
       />
-      <BaseInputText class="flex-1" name="phone" label="Phone" :rules="{ required: true }" v-model="form.phone" />
+      <BaseInputText
+        class="flex-1"
+        name="phone"
+        :label="t('common.phone')"
+        :rules="{ required: true }"
+        v-model="form.phone"
+      />
     </div>
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -80,7 +92,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Update'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('common.update')" severity="primary" />
     </div>
   </form>
 </template>

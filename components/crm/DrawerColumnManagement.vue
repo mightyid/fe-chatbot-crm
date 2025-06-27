@@ -11,6 +11,7 @@ const columns = ref<any>([])
 const confirm = useConfirm()
 const emit = defineEmits(['onChange'])
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const getData = async () => {
   const { result }: any = await $api(`crm-field`, {
     method: 'GET',
@@ -44,11 +45,11 @@ const editColumn = async (obj: any) => {
 }
 const confirmDelete = async (obj: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -97,7 +98,7 @@ watch(
 <template>
   <Sidebar
     v-model:visible="isShowDrawerColumn"
-    header="Fields Management"
+    :header="t('common.fields_management')"
     position="right"
     class="!w-[700px]"
     :pt="{
@@ -106,7 +107,7 @@ watch(
   >
     <template #header>
       <div class="!w-full fr flex-1 jc-sb">
-        <div class="text-base font-bold">Fields Management</div>
+        <div class="text-base font-bold"> {{ t('common.fields_management') }} </div>
         <div class="fr ai-c c-primary gap-2 cursor-pointer mr-4" @click="isShowModalCreateColumn = true">
           <img src="~/assets/icons/i-add-primary.svg" alt="" />
           Field

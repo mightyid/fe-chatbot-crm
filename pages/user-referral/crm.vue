@@ -21,6 +21,7 @@ const isShowDrawerLabel = ref(false)
 const { user } = useAuth()
 const isShowDrawerColumn = ref(false)
 const isShowImportExcel = ref(false)
+const { t } = useI18n()
 const { $dayjs: dayjs, $api } = useNuxtApp()
 const columns = ref<any>([])
 const labels = ref<any>([])
@@ -166,11 +167,11 @@ const cancelSelected = () => {
 
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -227,7 +228,7 @@ watchDebounced(
           <!-- <ButtonFilter @onClearAll="clearAll" @onApply="getData" :numberBadge="numberBadge">
             <template v-slot="slotProps">
               <BaseInputSelect
-                label="Campaign"
+                :label="t('common.campaign')"
                 :options="listIframe"
                 name="iframe_id"
                 :filter="true"
@@ -236,8 +237,8 @@ watchDebounced(
                 v-model="query.iframe_id"
               />
               <div class="fr gap-2 mt-4 jc-fe">
-                <Button label="Clear" severity="secondary" @click="clearAll" />
-                <Button label="Apply" severity="primary" @click="getData" />
+                <Button :label="t('button.clear')" severity="secondary" @click="clearAll" />
+                <Button :label="t('button.apply')" severity="primary" @click="getData" />
               </div>
             </template>
           </ButtonFilter> -->
@@ -273,7 +274,7 @@ watchDebounced(
             </div>
           </template>
         </Column>
-        <Column header="Name" :frozen="true" alignFrozen="left" style="max-width: 300px; min-width: 300px">
+        <Column :header="t('common.name')" :frozen="true" alignFrozen="left" style="max-width: 300px; min-width: 300px">
           <template #body="slotProps">
             <div class="flex items-center gap-1 cursor-pointer">
               <span class="text-base font-normal">
@@ -321,13 +322,13 @@ watchDebounced(
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px" field="created_at" header="Created at">
+        <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
           <template #body="slotProps">
             {{ useMoment(slotProps.data.created_at) }}
           </template>
         </Column>
 
-        <Column header="Actions" :frozen="true" alignFrozen="right">
+        <Column :header="t('common.actions')" :frozen="true" alignFrozen="right">
           <template #body="slotProps">
             <div class="flex gap-2 jc-fe">
               <!-- <nuxt-link :to="`/crm/edit/${slotProps.data._id}`">

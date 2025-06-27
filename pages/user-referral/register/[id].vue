@@ -9,6 +9,7 @@ definePageMeta({
 const { $api } = useNuxtApp()
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 const { handleSubmit } = useForm()
 const { login, setToken, setRefreshToken } = useAuth()
 const { showToastError, showToastSuccess } = useShowToast()
@@ -68,9 +69,14 @@ const onSubmit = handleSubmit(async () => {
 
     <form autocomplete="off" @submit.prevent="onSubmit">
       <div class="grid grid-cols-1 gap-4">
-        <BaseInputText label="Name" name="name" v-model="form.name" :rules="{ required: true }" />
+        <BaseInputText :label="t('common.name')" name="name" v-model="form.name" :rules="{ required: true }" />
 
-        <BaseInputPassword label="Password" name="password" v-model="form.password" :rules="{ required: true }" />
+        <BaseInputPassword
+          :label="t('common.password')"
+          name="password"
+          v-model="form.password"
+          :rules="{ required: true }"
+        />
 
         <BaseInputText label="Address" name="address" v-model="form.address" :rules="{ required: true }" />
 
@@ -79,14 +85,20 @@ const onSubmit = handleSubmit(async () => {
         <BaseInputSelect
           v-model="form.gender"
           name="gender"
-          label="Gender"
+          :label="t('common.gender')"
           :options="GENDER_OPTIONS"
           option-label="name"
           option-value="value"
         />
       </div>
 
-      <Button class="ml-auto !flex mt-4" label="Đăng nhập" severity="primary" type="submit" :loading="isLoading" />
+      <Button
+        class="ml-auto !flex mt-4"
+        :label="t('common.login')"
+        severity="primary"
+        type="submit"
+        :loading="isLoading"
+      />
     </form>
   </div>
 </template>

@@ -16,7 +16,7 @@ const appStore = useAppStore()
 const { setLocale, locale } = useI18n()
 const primevue = usePrimeVue()
 
-const selectLang = ref<LocaleType>(appStore.locale)
+const selectLang = ref<any>(appStore.locale)
 const langOptions = ref<LangItemType[]>([
   {
     name: '',
@@ -40,14 +40,14 @@ const changeTextByLocale = (newValue: string) => {
     }
   }
 }
-changeTextByLocale(locale.value)
-
+changeTextByLocale(selectLang.value)
+setLocale(selectLang.value)
 watch(
   () => selectLang.value,
   (newValue) => {
     if (newValue) {
       setLocale(newValue)
-      // appStore.updateLocale(newValue)
+      appStore.locale = newValue
 
       // Set locale for primevue
       changeTextByLocale(newValue)
@@ -62,7 +62,7 @@ watch(
 <template>
   <div class="sticky top-0 py-[12px] px-[24px] bg-white border-b-1 border-gray-20 border-b-solid z-2">
     <div class="flex items-center justify-end gap-6">
-      <!-- <Dropdown v-model="selectLang" :options="langOptions" optionValue="value" class="px-1">
+      <Dropdown v-model="selectLang" :options="langOptions" optionValue="value" class="px-1">
         <template #value="slotProps">
           <div v-if="slotProps.value" class="flex items-center">
             <img class="icon" src="~/assets/icons/i-flag-vi.svg" v-if="slotProps?.value === 'vi'" />
@@ -76,7 +76,7 @@ watch(
             <img class="icon" src="~/assets/icons/i-flag-en.svg" v-else />
           </div>
         </template>
-      </Dropdown> -->
+      </Dropdown>
 
       <!-- <TheHeaderNotifications /> -->
 

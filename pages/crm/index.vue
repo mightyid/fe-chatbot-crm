@@ -26,6 +26,7 @@ const columns = ref<any>([])
 const labels = ref<any>([])
 const listIframe = ref<any>([])
 const listUserReferral = ref<any>([])
+const { t } = useI18n()
 const formNote = ref<any>({
   _id: '',
   content: '',
@@ -231,11 +232,11 @@ const cancelSelected = () => {
 
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -334,17 +335,7 @@ const sortData = (e: any) => {
 
   applications.value = data
 }
-const createApplicationDefault = async () => {
-  const { data, error }: any = await $api('crm-lead/setup', {
-    method: 'POST',
-  })
-  if (!error.value) {
-    toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
-    getDataColumn()
-    getDataLabel()
-    getData()
-  }
-}
+
 const addQueryCampaign = (id: string) => {
   query.value.iframe_id = id
   getData()
@@ -378,7 +369,7 @@ watchDebounced(
               </div> -->
               <div class="fc gap-4">
                 <BaseInputSelect
-                  label="Campaign"
+                  :label="t('common.campaign')"
                   :options="listIframe"
                   name="iframe_id"
                   :filter="true"
@@ -387,7 +378,7 @@ watchDebounced(
                   v-model="query.iframe_id"
                 />
                 <BaseInputSelect
-                  label="User Referral"
+                  :label="t('common.user_referral')"
                   :options="listUserReferral"
                   name="referral_id"
                   :filter="true"
@@ -397,16 +388,16 @@ watchDebounced(
                 />
               </div>
               <div class="fr gap-2 mt-4 jc-fe">
-                <Button label="Clear" severity="secondary" @click="clearAll" />
-                <Button label="Apply" severity="primary" @click="getData" />
+                <Button :label="t('button.clear')" severity="secondary" @click="clearAll" />
+                <Button :label="t('button.apply')" severity="primary" @click="getData" />
               </div>
             </template>
           </ButtonFilter>
           <nuxt-link to="/link">
-            <Button size="small" label="Campaign"> </Button>
+            <Button size="small" :label="t('common.campaign')"> </Button>
           </nuxt-link>
           <nuxt-link to="/crm/create">
-            <Button type="button" size="small" label="Create">
+            <Button type="button" size="small" :label="t('button.create')">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
               </template>
@@ -432,11 +423,11 @@ watchDebounced(
           <div class="fc">
             <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowDrawerLabel = true">
               <img src="~/assets/icons/i-label.svg" alt="" class="icon" />
-              <span class="text-base c-black-90">Labels management</span>
+              <span class="text-base c-black-90"> {{ t('common.labels_management') }} </span>
             </div>
             <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowDrawerColumn = true">
               <img src="~/assets/icons/i-column.svg" alt="" class="icon" />
-              <span class="text-base c-black-90">Fields management</span>
+              <span class="text-base c-black-90"> {{ t('common.fields_management') }} </span>
             </div>
             <div class="fr gap-2 ai-c hover:bg-black-10 p-2 cursor-pointer" @click="isShowImportExcel = true">
               <img src="~/assets/icons/i-import.svg" alt="" class="icon" />
@@ -458,7 +449,7 @@ watchDebounced(
           </download-excel>
 
           <!-- <Button class="flex-1" label="Clear all" severity="secondary" type="button" @click="onClearAll" />
-          <Button class="flex-1" label="Apply" severity="apply" type="button" @click="onApply" /> -->
+          <Button class="flex-1" :label="t('button.apply')" severity="apply" type="button" @click="onApply" /> -->
         </OverlayPanel>
       </TabStatusCRM>
       <DataTable
@@ -489,7 +480,7 @@ watchDebounced(
             </nuxt-link>
           </template>
         </Column>
-        <Column header="Name" :frozen="true" alignFrozen="left" style="min-width: 300px; width: 300px">
+        <Column :header="t('common.name')" :frozen="true" alignFrozen="left" style="min-width: 300px; width: 300px">
           <template #body="slotProps">
             <nuxt-link :to="`/crm/${slotProps.data._id}`" class="flex items-center gap-1 cursor-pointer">
               <span class="text-base font-normal c-primary">
@@ -511,7 +502,7 @@ watchDebounced(
             </div>
           </template>
         </Column>
-        <Column header="Referral" style="min-width: 200px">
+        <Column :header="t('common.user_referral')" style="min-width: 200px">
           <template #body="slotProps">
             <div
               @click="addQueryReferral(slotProps.data?.referral?._id)"
@@ -554,13 +545,13 @@ watchDebounced(
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px" field="created_at" header="Created at">
+        <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
           <template #body="slotProps">
             {{ useMoment(slotProps.data.created_at) }}
           </template>
         </Column>
 
-        <Column header="Actions" :frozen="true" alignFrozen="right">
+        <Column :header="t('common.actions')" :frozen="true" alignFrozen="right">
           <template #body="slotProps">
             <div class="flex gap-2 jc-fe">
               <!-- <FormAssignNote :data="slotProps.data" v-if="usePermission('admin')" /> -->
@@ -614,7 +605,7 @@ watchDebounced(
         <BaseEditor class="mb-3" :editorConfig="editorNoteConfig" v-model="formNote.content" />
 
         <div class="flex justify-end gap-4">
-          <Button label="Cancel" severity="secondary" type="button" @click="closeNote" />
+          <Button :label="t('button.cancel')" severity="secondary" type="button" @click="closeNote" />
           <Button
             label="Save"
             severity="primary"

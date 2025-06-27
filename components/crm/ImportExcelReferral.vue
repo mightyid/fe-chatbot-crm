@@ -11,6 +11,7 @@ const dataTable = ref([])
 const dataSelect = ref<any>([])
 const emit = defineEmits(['onCancel', 'onSubmit'])
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const readFile = async (e: Event) => {
   //@ts-ignore
   const file = e.target?.files[0]
@@ -103,7 +104,7 @@ const importExcel = () => {
     </table>
 
     <div class="fr ai-c jc-fe gap-4" v-if="dataTable?.length">
-      <Button label="Cancel" severity="secondary" @click="emit('onCancel')" />
+      <Button :label="t('button.cancel')" severity="secondary" @click="emit('onCancel')" />
       <Button label="Import" severity="primary" @click="importExcel" />
     </div>
   </div>

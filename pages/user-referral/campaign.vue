@@ -7,6 +7,7 @@ const query = ref({
   page: Number(route.query?.page) || 1,
   search: (route.query?.search as string) || '',
 })
+const { t } = useI18n()
 const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
@@ -57,11 +58,11 @@ const changePage = (e: any) => {
 }
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -99,10 +100,10 @@ const copyLink = (link: string) => {
   <div class="page">
     <div class="page-content">
       <div class="flex flex-row items-center justify-between">
-        <div class="page-heading m-0"> Campaign </div>
+        <div class="page-heading m-0"> {{ t('common.campaign') }} </div>
         <div class="flex items-center justify-end gap-4">
           <nuxt-link to="/link/create">
-            <Button type="button" size="small" label="Create">
+            <Button type="button" size="small" :label="t('button.create')">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
               </template>
@@ -135,7 +136,7 @@ const copyLink = (link: string) => {
               </div>
             </template>
           </Column>
-          <Column header="Name">
+          <Column :header="t('common.name')">
             <template #body="slotProps">
               <span class="fr ai-c gap-2">
                 {{ slotProps.data.name }}
@@ -143,20 +144,25 @@ const copyLink = (link: string) => {
             </template>
           </Column>
 
-          <Column field="status" header="Status">
+          <Column field="status" :header="t('common.status')">
             <template #body="slotProps">
               <!-- <BaseSwitch v-model="slotProps.data.is_active" :disabled="true" /> -->
               <img src="~/assets/icons/i-check-primary.svg" v-if="slotProps.data.is_active" alt="" />
             </template>
           </Column>
 
-          <Column style="min-width: 200px" field="created_at" header="Created at">
+          <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
             <template #body="slotProps">
               {{ useMoment(slotProps.data.created_at) }}
             </template>
           </Column>
 
-          <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
+          <Column
+            :header="t('common.actions')"
+            :frozen="true"
+            alignFrozen="right"
+            :pt="{ root: { class: 'flex jc-fe' } }"
+          >
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
                 <button @click="openCreateLinkBot(slotProps.data)" v-tooltip.top="'Link campaign with bot'">
@@ -191,7 +197,7 @@ const copyLink = (link: string) => {
         </div>
       </div>
       <div class="flex justify-end gap-4 mt-4">
-        <Button label="Cancel" severity="secondary" type="button" @click="isShowDetailLink = false" />
+        <Button :label="t('button.cancel')" severity="secondary" type="button" @click="isShowDetailLink = false" />
         <Button label="Copy Link" severity="primary" type="button" @click="copyLink(linkDetail)" v-if="linkDetail" />
       </div>
     </BaseDialog>
@@ -213,7 +219,7 @@ const copyLink = (link: string) => {
         </div>
       </div>
       <div class="flex justify-end gap-4 mt-4">
-        <Button label="Cancel" severity="secondary" type="button" @click="isShowCreateLinkBot = false" />
+        <Button :label="t('button.cancel')" severity="secondary" type="button" @click="isShowCreateLinkBot = false" />
         <Button label="Copy Link" severity="primary" type="button" @click="copyLink(linkIframeBot)" v-if="bot_id" />
       </div>
     </BaseDialog>

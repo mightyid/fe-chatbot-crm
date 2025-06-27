@@ -6,13 +6,14 @@ definePageMeta({
 const router = useRouter()
 const toast = useToast()
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const links = ref([
   {
     title: 'Lead CRM',
     to: '/crm',
   },
   {
-    title: 'Create',
+    title: t('button.create'),
     to: `/crm/create`,
   },
 ])
@@ -36,7 +37,7 @@ const createLeadCRM = async (form: any) => {
       <BreadCrumbLinks :links="links" />
 
       <div class="box">
-        <div class="page-heading mb-4">Create</div>
+        <div class="page-heading mb-4"> {{ t('button.create') }}</div>
         <FormLeadCRM @onSubmit="createLeadCRM" @onCancel="router.push('/crm')" />
       </div>
     </div>

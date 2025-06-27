@@ -84,7 +84,7 @@ const tickCheckbox = () => {
           if (permission.key) countOriginDelete++
           if (permission.checked) countDelete++
           break
-        case 'create':
+        case t('button.create'):
           if (permission.key) countOriginCreate++
           if (permission.checked) countCreate++
           break
@@ -103,7 +103,7 @@ const customPermission = (data: any) => {
 
   const permissionTemplate: Permission[] = [
     { key: null, checked: false, type: 'view' },
-    { key: null, checked: false, type: 'create' },
+    { key: null, checked: false, type: t('button.create') },
     { key: null, checked: false, type: 'update' },
     { key: null, checked: false, type: 'delete' },
   ]
@@ -321,7 +321,7 @@ watch(
               <BaseCheckbox
                 name="check-create-grant"
                 v-model="checkStatus.create"
-                @update:modelValue="(values) => checkAllEachPermissionType(values, 'create')"
+                @update:modelValue="(values) => checkAllEachPermissionType(values, t('button.create'))"
               />
             </div>
           </td>

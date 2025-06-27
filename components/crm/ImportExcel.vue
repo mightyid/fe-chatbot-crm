@@ -115,7 +115,7 @@ const importExcel = () => {
     <BaseInputSelectTag
       v-model="label_id"
       :options="labels"
-      label="Label"
+      :label="t('common.label')"
       name="Label"
       option-label="name"
       :rules="{
@@ -125,7 +125,7 @@ const importExcel = () => {
       v-if="dataTable?.length"
     />
     <div class="fr ai-c jc-fe gap-4" v-if="dataTable?.length">
-      <Button label="Cancel" severity="secondary" @click="emit('onCancel')" />
+      <Button :label="t('button.cancel')" severity="secondary" @click="emit('onCancel')" />
       <Button
         label="Import"
         severity="primary"

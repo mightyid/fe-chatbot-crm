@@ -11,6 +11,7 @@ const { loginReferral, setToken, setRefreshToken, getUserReferral } = useAuth()
 const { showToastError } = useShowToast()
 const redirectBack = useRedirectBack()
 const appStore = useAppStore()
+const { t } = useI18n()
 const form = ref({
   email: '',
   password: '',
@@ -62,19 +63,29 @@ const onSubmit = handleSubmit(async () => {
 
     <form autocomplete="off" @submit.prevent="onSubmit">
       <div class="mb-4">
-        <BaseInputText label="Email" name="email" :rules="{ required: true, email: true }" v-model="form.email" />
+        <BaseInputText
+          :label="t('common.email')"
+          name="email"
+          :rules="{ required: true, email: true }"
+          v-model="form.email"
+        />
       </div>
 
       <div class="mb-4">
-        <BaseInputPassword label="Password" name="password" :rules="{ required: true }" v-model="form.password" />
+        <BaseInputPassword
+          :label="t('common.password')"
+          name="password"
+          :rules="{ required: true }"
+          v-model="form.password"
+        />
         <div class="flex jc-fe">
           <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/forgot-password`">
-            Quên mật khẩu
+            {{ t('common.forgot_password') }}
           </nuxt-link>
         </div>
       </div>
 
-      <Button class="ml-auto !flex" label="Đăng nhập" severity="primary" type="submit" :loading="isLoading" />
+      <Button class="ml-auto !flex" :label="t('common.login')" severity="primary" type="submit" :loading="isLoading" />
     </form>
   </div>
 </template>

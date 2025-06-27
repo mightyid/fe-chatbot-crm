@@ -10,6 +10,7 @@ const labels = ref<any>([])
 const confirm = useConfirm()
 const emit = defineEmits(['onChange'])
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const getData = async () => {
   const { result }: any = await $api(`crm-label`, {
     method: 'GET',
@@ -43,11 +44,11 @@ const editLabel = async (obj: any) => {
 }
 const confirmDelete = async (obj: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -76,7 +77,7 @@ watch(
 <template>
   <Sidebar
     v-model:visible="isShowDrawerLabel"
-    header="Labels Management"
+    :header="t('common.labels_management')"
     position="right"
     class="!w-[700px]"
     :pt="{
@@ -85,7 +86,7 @@ watch(
   >
     <template #header>
       <div class="!w-full fr flex-1 jc-sb">
-        <div class="text-base font-bold">Labels Management</div>
+        <div class="text-base font-bold"> {{ t('common.labels_management') }} </div>
         <div class="fr ai-c c-primary gap-2 cursor-pointer mr-4" @click="isShowModalCreateLabel = true">
           <img src="~/assets/icons/i-add-primary.svg" alt="" />
           Label

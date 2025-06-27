@@ -6,6 +6,7 @@ const { $api } = useNuxtApp()
 const { user } = useAuth()
 const isLoading = ref(false)
 const mailType = ['smtp', 'ses']
+const { t } = useI18n()
 const form = ref<any>({
   mail: {
     from: 'no-reply@studyguide.dev',
@@ -105,7 +106,7 @@ const verifyMail = async () => {
           option-label=""
           option-value=""
         />
-        <BaseSwitch class="flex-1" name="active" label="Active" v-model="form.mail.is_active" />
+        <BaseSwitch class="flex-1" name="active" :label="t('common.active')" v-model="form.mail.is_active" />
         <div class="col-span-2 grid grid-cols-2 gap-4" v-if="form.mail.type == 'smtp'">
           <BaseInputText
             v-model="form.mail.from"
@@ -120,7 +121,12 @@ const verifyMail = async () => {
             label="Email User"
             :rules="{ required: true, email: true }"
           />
-          <BaseInputText v-model="form.mail.password" name="password" label="Password" :rules="{ required: true }" />
+          <BaseInputText
+            v-model="form.mail.password"
+            name="password"
+            :label="t('common.password')"
+            :rules="{ required: true }"
+          />
         </div>
 
         <div class="col-span-2 grid grid-cols-2 gap-4" v-if="form.mail.type == 'ses'">

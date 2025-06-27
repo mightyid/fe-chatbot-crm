@@ -11,6 +11,7 @@ const { login, setToken, setRefreshToken, getUserInfo } = useAuth()
 const { showToastError } = useShowToast()
 const redirectBack = useRedirectBack()
 const appStore = useAppStore()
+const { t } = useI18n()
 const form = ref({
   email: '',
   password: '',
@@ -58,25 +59,35 @@ const onSubmit = handleSubmit(async () => {
 
 <template>
   <div class="page">
-    <h2 class="mt-0 mb-[24px] text-3xl font-semibold c-black-90"> Đăng nhập </h2>
+    <h2 class="mt-0 mb-[24px] text-3xl font-semibold c-black-90"> {{ t('common.login') }} </h2>
 
     <form autocomplete="off" @submit.prevent="onSubmit">
       <div class="mb-4">
-        <BaseInputText label="Email" name="email" :rules="{ required: true, email: true }" v-model="form.email" />
+        <BaseInputText
+          :label="t('common.email')"
+          name="email"
+          :rules="{ required: true, email: true }"
+          v-model="form.email"
+        />
       </div>
 
       <div class="mb-4">
-        <BaseInputPassword label="Password" name="password" :rules="{ required: true }" v-model="form.password" />
+        <BaseInputPassword
+          :label="t('common.password')"
+          name="password"
+          :rules="{ required: true }"
+          v-model="form.password"
+        />
         <div class="flex jc-fe">
           <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/forgot-password`">
-            Quên mật khẩu
+            {{ t('common.forgot_password') }}
           </nuxt-link>
         </div>
       </div>
 
-      <Button class="ml-auto !flex" label="Đăng nhập" severity="primary" type="submit" :loading="isLoading" />
+      <Button class="ml-auto !flex" :label="t('common.login')" severity="primary" type="submit" :loading="isLoading" />
       <nuxt-link to="/user-referral/sign-in" class="mt-0 mb-[24px] text-base c-black-90">
-        Login with account referral?
+        {{ t('common.login_with_referral') }}
       </nuxt-link>
     </form>
   </div>

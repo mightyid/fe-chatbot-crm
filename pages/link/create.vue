@@ -6,13 +6,14 @@ definePageMeta({
 const router = useRouter()
 const toast = useToast()
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const links = ref([
   {
-    title: 'Campaign',
+    title: t('common.campaign'),
     to: '/link',
   },
   {
-    title: 'Create',
+    title: t('button.create'),
     to: `/link/create`,
   },
 ])

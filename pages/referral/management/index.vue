@@ -14,6 +14,7 @@ const router = useRouter()
 const route = useRoute()
 const { $api } = useNuxtApp()
 const listReferral = ref<any>([])
+const { t } = useI18n()
 const pagination = ref({
   perPage: 20,
   currentPage: route.query?.page ? Number(route.query?.page) : 1,
@@ -58,11 +59,11 @@ const changePage = (e: any) => {
 
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -105,13 +106,13 @@ watchDebounced(
 <template>
   <div class="page p-4">
     <div class="mb-4 flex items-center justify-between gap-[16px]">
-      <h1 class="flex-1 m-0 page-heading"> Referral Management </h1>
+      <h1 class="flex-1 m-0 page-heading"> {{ t('common.management') }} </h1>
 
       <nuxt-link
         class="text-base font-normal text-left c-black-90 no-underline bg-transparent transition-all hover:bg-gray-10"
         to="/referral/create"
       >
-        <Button> Invite </Button>
+        <Button> {{ t('button.invite') }} </Button>
       </nuxt-link>
     </div>
 
@@ -143,30 +144,30 @@ watchDebounced(
             </div>
           </template>
         </Column>
-        <Column header="Name">
+        <Column :header="t('common.name')">
           <template #body="slotProps">
             <span class="fr ai-c gap-2">
               {{ slotProps.data.name }}
             </span>
           </template>
         </Column>
-        <Column header="Email" field="email"> </Column>
-        <Column header="Phone" field="phone"> </Column>
+        <Column :header="t('common.email')" field="email"> </Column>
+        <Column :header="t('common.email')" field="phone"> </Column>
 
-        <Column field="is_active" header="Active">
+        <Column field="is_active" :header="t('common.active')">
           <template #body="slotProps">
             <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="updateStatus(slotProps.data._id)" />
             <!-- <img src="~/assets/icons/i-check-primary.svg" v-if="slotProps.data.is_active" alt="" /> -->
           </template>
         </Column>
-        <Column style="min-width: 200px" field="created_at" header="Created at">
+        <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
           <template #body="slotProps">
             {{ useMoment(slotProps.data.created_at) }}
           </template>
         </Column>
 
         <Column
-          header="Actions"
+          :header="t('common.actions')"
           :frozen="true"
           alignFrozen="right"
           style="min-width: 100px"

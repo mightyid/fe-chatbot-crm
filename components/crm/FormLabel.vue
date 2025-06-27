@@ -14,7 +14,7 @@ const props = defineProps({
 
 const listColors = ['#6F57CF', '#AB99EC', '#E93C82', '#0091FF', '#66B975', '#E6484E']
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
-
+const { t } = useI18n()
 const { handleSubmit, resetForm } = useForm()
 
 const form = ref<any>({
@@ -53,7 +53,13 @@ watch(
   <form autocomplete="off" @submit.prevent="onSubmit">
     <div class="text-2xl font-bold text-center">{{ isEdit ? 'Edit Label' : 'Create Label' }}</div>
     <div class="grid grid-cols-1 gap-6">
-      <BaseInputText class="flex-1" name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
+      <BaseInputText
+        class="flex-1"
+        name="name"
+        :label="t('common.name')"
+        :rules="{ required: true }"
+        v-model="form.name"
+      />
       <div class="fr ai-c gap-4">
         <div
           class="p-[6px] rounded relative cursor-pointer"
@@ -98,7 +104,7 @@ watch(
     <div class="flex justify-end gap-4 mt-4">
       <Button
         type="button"
-        label="Cancel"
+        :label="t('button.cancel')"
         severity="secondary"
         @click="
           () => {
@@ -106,7 +112,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? 'Save' : 'Create'" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.create')" severity="primary" />
     </div>
   </form>
 </template>

@@ -12,6 +12,7 @@ const info = ref<any>({
 const dataColumn = ref({})
 const columns = ref<any>([])
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const links = ref([
   {
     title: 'Lead CRM',
@@ -61,7 +62,7 @@ getData()
       <BreadCrumbLinks :links="links" />
 
       <div class="box">
-        <div class="page-heading mb-4">Edit Lead CRM</div>
+        <div class="page-heading mb-4">{{ t('button.edit') }} Lead CRM</div>
 
         <FormLeadCRM
           @onEdit="editLeadCRM"

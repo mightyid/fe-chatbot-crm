@@ -11,9 +11,11 @@ const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
 const listChatbot = ref([])
+const { t } = useI18n()
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
+
 const getData = async () => {
   isLoading.value = true
 
@@ -37,11 +39,11 @@ const changePage = (e: any) => {
 }
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -67,7 +69,7 @@ const confirmDelete = (record: any) => {
         <div class="page-heading m-0">Chatbot</div>
         <div class="flex items-center justify-end gap-4">
           <nuxt-link to="/chatbot/create">
-            <Button type="button" size="small" label="Create">
+            <Button type="button" size="small" :label="t('button.create')">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
               </template>
@@ -100,7 +102,7 @@ const confirmDelete = (record: any) => {
               </nuxt-link>
             </template>
           </Column>
-          <Column header="Name" :frozen="true" alignFrozen="left">
+          <Column :header="t('common.name')" :frozen="true" alignFrozen="left">
             <template #body="slotProps">
               <span class="fr ai-c gap-2">
                 {{ slotProps.data.name }}
@@ -108,13 +110,18 @@ const confirmDelete = (record: any) => {
             </template>
           </Column>
 
-          <Column style="min-width: 200px" field="created_at" header="Created at">
+          <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
             <template #body="slotProps">
               <!-- {{ useMoment(slotProps.data.created_at) }} -->
             </template>
           </Column>
 
-          <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
+          <Column
+            :header="t('common.actions')"
+            :frozen="true"
+            alignFrozen="right"
+            :pt="{ root: { class: 'flex jc-fe' } }"
+          >
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
                 <nuxt-link :to="`/crm/edit/${slotProps.data._id}`">

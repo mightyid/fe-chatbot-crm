@@ -1,4 +1,3 @@
-import { useAppStore } from '~/stores/app'
 import vi from '~/locales/vi.json'
 import en from '~/locales/en.json'
 

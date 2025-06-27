@@ -298,7 +298,7 @@ watch(
               <input
                 type="text"
                 rows="1"
-                placeholder="Enter a message"
+                :placeholder="t('common.enter_message')"
                 v-model="message"
                 @keypress.enter="debounceSend"
                 class="w-full h-auto text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"

@@ -12,7 +12,7 @@ const lastMessageId = ref()
 const socket = useSocket()
 const isTyping = ref(false)
 const info = ref<any>({})
-
+const { t } = useI18n()
 const getDataInfo = async () => {
   const { result }: any = await $api(`/lead/${route.params.id}`, {
     method: 'GET',
@@ -134,7 +134,7 @@ getMessages()
         <div class="fr flex-1 border-[1px] border-solid border-[#e7e7e9] rounded-[25px] p-1">
           <input
             type="text"
-            placeholder="Enter a message"
+            :placeholder="t('common.enter_message')"
             v-model="message"
             @keyup.enter="debounceSend"
             class="w-full text-base placeholder:text-sm placeholder:font-500 placeholder:text-[#7E7E80] text-base outline-none rounded-[18px] focus:outline-none px-3 py-1 border-none"

@@ -95,10 +95,10 @@ watch(
         </BaseButtonUpload>
       </div>
 
-      <BaseInputText name="name" label="Name" :rules="{ required: true }" v-model="form.name" />
+      <BaseInputText name="name" :label="t('common.name')" :rules="{ required: true }" v-model="form.name" />
       <BaseInputText
         name="email"
-        label="Email"
+        :label="t('common.email')"
         :rules="{ required: true, email: true }"
         :disabled="isPageEdit ? true : false"
         v-model="form.email"
@@ -106,11 +106,11 @@ watch(
 
       <BaseInputPassword
         name="password"
-        label="Password"
+        :label="t('common.password')"
         :rules="{ required: isPageEdit ? false : true }"
         v-model="form.password"
       />
-      <BaseInputText name="phone" label="Phone" :rules="{ required: false }" v-model="form.phone" />
+      <BaseInputText name="phone" :label="t('common.phone')" :rules="{ required: false }" v-model="form.phone" />
       <BaseInputSelect
         label="Iframe"
         :options="listIframe"

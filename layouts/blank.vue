@@ -32,6 +32,6 @@ document.documentElement.classList.toggle('light')
   <div class="layout-default w-100vw h-100vh">
     <slot></slot>
   </div>
-  <ConfirmDialog />
-  <Toast />
+  <!-- <ConfirmDialog />
+  <Toast /> -->
 </template>

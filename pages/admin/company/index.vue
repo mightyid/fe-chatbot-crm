@@ -8,6 +8,7 @@ const query = ref({
   search: (route.query?.search as string) || '',
   limit: 20,
 })
+const { t } = useI18n()
 const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
@@ -38,11 +39,11 @@ const changePage = (e: any) => {
 }
 const confirmDelete = (record: any) => {
   confirm.require({
-    message: 'Are you sure you want to delete?',
+    message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Cancel',
-    acceptLabel: 'Delete',
+    rejectLabel: t('common.cancel'),
+    acceptLabel: t('common.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -86,7 +87,7 @@ watchDebounced(
         <div class="page-heading m-0">Company</div>
         <div class="flex items-center justify-end gap-4">
           <nuxt-link to="/admin/company/create">
-            <Button type="button" size="small" label="Create">
+            <Button type="button" size="small" :label="t('button.create')">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
               </template>
@@ -119,25 +120,30 @@ watchDebounced(
               </nuxt-link>
             </template>
           </Column>
-          <Column header="Name" :frozen="true" alignFrozen="left">
+          <Column :header="t('common.name')" :frozen="true" alignFrozen="left">
             <template #body="slotProps">
               <span class="fr ai-c gap-2">
                 {{ slotProps.data.name }}
               </span>
             </template>
           </Column>
-          <Column style="min-width: 200px" field="created_at" header="Created at">
+          <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
             <template #body="slotProps">
               {{ useMoment(slotProps.data.created_at) }}
             </template>
           </Column>
-          <Column field="status" header="Status">
+          <Column field="status" :header="t('common.status')">
             <template #body="slotProps">
               <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="changeStatus(slotProps.data)" />
             </template>
           </Column>
 
-          <Column header="Actions" :frozen="true" alignFrozen="right" :pt="{ root: { class: 'flex jc-fe' } }">
+          <Column
+            :header="t('common.actions')"
+            :frozen="true"
+            alignFrozen="right"
+            :pt="{ root: { class: 'flex jc-fe' } }"
+          >
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
                 <nuxt-link :to="`/admin/company/edit/${slotProps.data._id}`">

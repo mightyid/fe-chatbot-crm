@@ -2,6 +2,7 @@
 const { $api } = useNuxtApp()
 const route = useRoute()
 // const info = ref<any>({})
+const { t } = useI18n()
 const props = defineProps({
   info: {
     type: Object,
@@ -38,9 +39,9 @@ const updateStopBot = async () => {
       </div>
     </div>
     <BaseSwitch
-      label="Stop bot "
+      :label="t('common.stop_bot')"
       class="mt-4"
-      name="stop_bot"
+      :name="t('common.stop_bot')"
       v-model="info.stop_bot"
       @update:model-value="updateStopBot"
     />

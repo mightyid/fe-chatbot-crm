@@ -18,7 +18,7 @@ const search = ref('')
 const selectedCustomers = ref()
 const { $auth: auth }: any = useNuxtApp()
 const selectAll = ref(false)
-
+const { t } = useI18n()
 const query = ref({
   page: 1,
   search: '',
@@ -140,7 +140,7 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column field="name" header="Name" alignFrozen="left">
+        <Column field="name" :header="t('common.name')" alignFrozen="left">
           <template #body="slotProps">
             <span class="text-base font-normal line-clamp-1">
               {{ slotProps.data.name }}
@@ -148,7 +148,7 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column field="email" header="Email">
+        <Column field="email" :header="t('common.email')">
           <template #body="slotProps">
             <span class="text-base font-normal line-clamp-1">
               {{ slotProps.data.email }}
@@ -163,7 +163,13 @@ watchDebounced(
           </template>
         </Column>
 
-        <Column field="created_at" header="Created at" :frozen="true" alignFrozen="left" class="min-w-200px">
+        <Column
+          field="created_at"
+          :header="t('common.created_at')"
+          :frozen="true"
+          alignFrozen="left"
+          class="min-w-200px"
+        >
           <template #body="slotProps">
             <span class="text-base font-normal line-clamp-1">
               {{ useMoment(slotProps.data.created_at) }}
@@ -175,7 +181,7 @@ watchDebounced(
         </template>
       </DataTable>
       <!-- <div class="text-base font-semibold c-[#66B975] t-t--c fr justify-end gap-1 mt-2">
-                <Button size="small" label="Cancel" severity="help" @click="closeDialog" />
+                <Button size="small" :label="t('button.cancel')" severity="help" @click="closeDialog" />
                 <Button size="small" label="Save" severity="info" @click="assignAgent" />
             </div> -->
     </div>

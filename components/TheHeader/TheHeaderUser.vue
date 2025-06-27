@@ -17,7 +17,7 @@ const actions = ref([
   },
   {
     icon: iUpdateInformation,
-    name: 'Company Profile',
+    name: 'common.company_profile',
     action() {
       router.push('/company-profile')
       hidePanel()
@@ -25,7 +25,7 @@ const actions = ref([
   },
   {
     icon: iProfile,
-    name: 'Change Password',
+    name: 'common.change_password',
     action() {
       router.push('/change-password')
       hidePanel()
@@ -51,7 +51,7 @@ const actionsUserReferral = ref([
   },
   {
     icon: iProfile,
-    name: 'Change Password',
+    name: 'common.change_password',
     action() {
       router.push('/user-referral/change-password')
       hidePanel()

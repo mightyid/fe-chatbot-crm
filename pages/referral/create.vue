@@ -6,13 +6,14 @@ definePageMeta({
 const router = useRouter()
 const toast = useToast()
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const links = ref([
   {
-    title: 'Referral Invitation',
+    title: t('common.referral_invitation'),
     to: '/referral/invitation',
   },
   {
-    title: 'Create',
+    title: t('button.create'),
     to: `/referral/create`,
   },
 ])
@@ -37,7 +38,7 @@ const inviteReferral = async (form: any) => {
 
       <div class="box">
         <div class="mb-4 flex items-center justify-between gap-[16px]">
-          <h1 class="flex-1 m-0 page-heading"> Referral Invitation </h1>
+          <h1 class="flex-1 m-0 page-heading"> {{ t('common.referral_invitation') }} </h1>
         </div>
 
         <FormInvite @onSubmit="inviteReferral" @onCancel="router.push('/referral/invitation')" />

@@ -19,6 +19,7 @@ const label_id = ref('')
 const is_active = ref(true)
 const name = ref('')
 const route = useRoute()
+const { t } = useI18n()
 const columns = ref<any>([])
 const labels = ref([])
 const { $api } = useNuxtApp()
@@ -88,12 +89,12 @@ const copyIframe = () => {
 
 <template>
   <form class="fc" @submit.prevent="onSubmit">
-    <BaseInputText name="name" label="Name" v-model="name" :rules="{ required: true }" />
+    <BaseInputText name="name" :label="t('common.name')" v-model="name" :rules="{ required: true }" />
     <BaseInputSelectTag
       v-model="label_id"
       class="mt-2"
       :options="labels"
-      label="Label"
+      :label="t('common.label')"
       name="Label"
       option-label="name"
       :rules="{ required: true }"
@@ -107,11 +108,11 @@ const copyIframe = () => {
         </div>
       </div>
     </div>
-    <BaseSwitch v-model="is_active" label="Active" name="active" />
+    <BaseSwitch v-model="is_active" :label="t('common.active')" name="active" />
 
     <div class="flex justify-end gap-4 mb-4 mt-4">
-      <Button label="Cancel" severity="secondary" @click="emit('onCancel')" />
-      <Button :label="`${isEdit ? 'Save' : 'Create'}`" severity="primary" type="submit" />
+      <Button :label="t('button.cancel')" severity="secondary" @click="emit('onCancel')" />
+      <Button :label="`${isEdit ? t('button.save') : t('button.create')}`" severity="primary" type="submit" />
     </div>
   </form>
   <!-- <BaseInputTextArea class="mb-3 c-primary !bg-b-0" name="iframe" v-model="iframe" :disabled="true" v-if="iframe" />
@@ -119,7 +120,7 @@ const copyIframe = () => {
     <Qr-Code v-if="iframe" :value="iframe" />
   </div> -->
   <!-- <div class="flex justify-end gap-4">
-    <Button label="Cancel" severity="secondary" type="button" @click="emit('onClose')" />
+    <Button :label="t('button.cancel')" severity="secondary" type="button" @click="emit('onClose')" />
     <Button label="Copy Link" severity="primary" type="button" @click="copyIframe" v-if="iframe" />
   </div> -->
 </template>

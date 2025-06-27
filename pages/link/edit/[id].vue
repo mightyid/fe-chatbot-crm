@@ -7,13 +7,14 @@ const router = useRouter()
 const route = useRoute()
 const toast = useToast()
 const { $api } = useNuxtApp()
+const { t } = useI18n()
 const links = ref([
   {
     title: 'Campaign',
     to: '/link',
   },
   {
-    title: 'Create',
+    title: t('button.create'),
     to: `/link/create`,
   },
 ])
