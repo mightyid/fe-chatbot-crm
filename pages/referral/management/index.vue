@@ -174,9 +174,9 @@ watchDebounced(
         >
           <template #body="slotProps">
             <div class="flex gap-2 jc-fe">
-              <!-- <nuxt-link :to="`/link/edit/${slotProps.data._id}`">
+              <nuxt-link :to="`/referral/management/${slotProps.data._id}/edit`">
                 <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
-              </nuxt-link> -->
+              </nuxt-link>
               <button @click="confirmDelete(slotProps.data)">
                 <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />
               </button>

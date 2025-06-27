@@ -42,6 +42,22 @@ const actions = ref([
 ])
 const actionsUserReferral = ref([
   {
+    icon: iUpdateInformation,
+    name: 'common.update_information',
+    action() {
+      router.push('/user-referral/profile')
+      hidePanel()
+    },
+  },
+  {
+    icon: iProfile,
+    name: 'Change Password',
+    action() {
+      router.push('/user-referral/change-password')
+      hidePanel()
+    },
+  },
+  {
     icon: iLogout,
     name: 'common.logout',
     action() {
