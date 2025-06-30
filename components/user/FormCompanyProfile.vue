@@ -100,7 +100,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? t('button.save') : t('common.update')" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.update')" severity="primary" />
     </div>
   </form>
 </template>

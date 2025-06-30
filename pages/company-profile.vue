@@ -3,6 +3,7 @@ import FormCompanyProfile from '~/components/user/FormCompanyProfile.vue'
 const { $api } = useNuxtApp()
 const toast = useToast()
 const info = ref<any>({})
+const { t } = useI18n()
 
 const getData = async () => {
   const { result }: any = await $api('company')
@@ -23,7 +24,7 @@ const changeProfile = async (form: any) => {
 <template>
   <div class="page">
     <div class="page-content">
-      <div class="page-heading">Change Password</div>
+      <div class="page-heading"> {{ t('common.company_profile') }}</div>
       <div class="bg-white p-4 rounded mt-4">
         <FormCompanyProfile @onSubmit="changeProfile" :data="info" />
       </div>

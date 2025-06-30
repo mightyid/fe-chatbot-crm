@@ -18,7 +18,7 @@ const form = ref({
   name: '',
   branches: [],
   permissions: [],
-  is_admin: false,
+  is_admin: true,
   is_active: true,
 })
 
@@ -26,7 +26,7 @@ const createRole = async (newPermissions: string[]) => {
   try {
     isSubmit.value = true
 
-    const { statusCode } = await roleServices.createRole({
+    const { statusCode }: any = await roleServices.createRole({
       name: form.value.name || '',
       is_admin: form.value.is_admin ?? false,
       branches: form.value.branches || [],

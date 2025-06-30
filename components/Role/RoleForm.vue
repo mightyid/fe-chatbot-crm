@@ -18,7 +18,7 @@ const { handleSubmit } = useForm()
 const roleServices = useRole()
 
 const name = defineModel('name', { default: '' })
-const is_admin = defineModel<boolean>('is_admin', { default: false })
+const is_admin = defineModel<boolean>('is_admin', { default: true })
 const is_active = defineModel<boolean>('is_active', { default: false })
 const branches = defineModel<string[]>('branches', { default: [] })
 const permissions = defineModel<string[]>('permissions', { default: [] })
@@ -73,7 +73,7 @@ const changePermissions = (values: any) => {
     />
 
     <div class="mb-4 flex items-center gap-1">
-      <BaseCheckbox name="is_admin" :label="t('common.admin')" v-model="is_admin" />
+      <BaseCheckbox name="is_admin" :label="t('common.admin')" v-model="is_admin" :disabled="true" />
 
       <img
         class="icon"
@@ -92,14 +92,14 @@ const changePermissions = (values: any) => {
       />
     </div>
 
-    <div class="mb-4" v-if="!is_admin">
+    <!-- <div class="mb-4" v-if="!is_admin">
       <PermissionTable
         :options="permissionOrigin"
         :data="permissions"
         :isSubmit="isRequired"
         @onChange="changePermissions"
       />
-    </div>
+    </div> -->
 
     <BaseSwitch class="mb-6" name="is-active" :label="t('common.active')" v-model="is_active" />
 

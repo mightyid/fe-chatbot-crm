@@ -15,6 +15,7 @@ const { $api } = useNuxtApp()
 const { user } = useAuth()
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const { handleSubmit, resetForm } = useForm()
+const { t } = useI18n()
 const form = ref<any>({
   name: user.value?.name,
   avatar: user.value?.avatar,
@@ -92,7 +93,7 @@ watch(
           }
         "
       />
-      <Button type="submit" :label="isEdit ? t('button.save') : t('common.update')" severity="primary" />
+      <Button type="submit" :label="isEdit ? t('button.save') : t('button.update')" severity="primary" />
     </div>
   </form>
 </template>
