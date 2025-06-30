@@ -606,7 +606,8 @@
     "labels_management": "Quản lý nhãn",
     "fields_management": "Quản lý cột",
     "label" :"Nhãn",
-    "enter_message": "Nhập tin nhắn"
+    "enter_message": "Nhập tin nhắn",
+    "confirmation" : "Xác nhận"
   },
   "button": {
     "detail": "Chi tiết",
@@ -633,7 +634,8 @@
     "upload": "Tải lên",
     "export_pdf": "Xuất pdf",
     "only_view": "Chỉ xem",
-    "invite": "Mời"
+    "invite": "Mời",
+    "clear" : "Xóa"
 
   },
   "notifications": {

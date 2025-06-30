@@ -45,7 +45,7 @@ const editLabel = async (obj: any) => {
 const confirmDelete = async (obj: any) => {
   confirm.require({
     message: t('common.confirm_delete'),
-    header: 'Confirmation',
+    header: t('common.confirmation'),
     icon: 'pi pi-exclamation-triangle',
     rejectLabel: t('button.cancel'),
     acceptLabel: t('button.delete'),

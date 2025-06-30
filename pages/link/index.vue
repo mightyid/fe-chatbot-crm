@@ -59,7 +59,7 @@ const changePage = (e: any) => {
 const confirmDelete = (record: any) => {
   confirm.require({
     message: t('common.confirm_delete'),
-    header: 'Confirmation',
+    header: t('common.confirmation'),
     icon: 'pi pi-exclamation-triangle',
     rejectLabel: t('button.cancel'),
     acceptLabel: t('button.delete'),
@@ -100,7 +100,7 @@ const copyLink = (link: string) => {
   <div class="page">
     <div class="page-content">
       <div class="flex flex-row items-center justify-between">
-        <div class="page-heading m-0"> Campaign </div>
+        <div class="page-heading m-0"> {{ t('common.campaign') }} </div>
         <div class="flex items-center justify-end gap-4">
           <nuxt-link to="/link/create">
             <Button type="button" size="small" :label="t('button.create')">

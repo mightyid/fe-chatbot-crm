@@ -606,7 +606,8 @@
     "labels_management": "Labels Management",
     "fields_management" : "Fields Management",
     "label" : "Label",
-    "enter_message": "Enter a message"
+    "enter_message": "Enter a message",
+    "confirmation": "Confirmation"
 
   },
   "button": {
@@ -634,7 +635,8 @@
     "upload": "Upload",
     "export_pdf": "Export pdf",
     "only_view": "Only view",
-    "invite": "Invite"
+    "invite": "Invite",
+    "clear" : "Xóa"
   },
   "notifications": {
     "admin": {
