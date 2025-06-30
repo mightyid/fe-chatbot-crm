@@ -72,8 +72,8 @@ const confirmDelete = (record: any) => {
     message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: t('common.cancel'),
-    acceptLabel: t('common.delete'),
+    rejectLabel: t('button.cancel'),
+    acceptLabel: t('button.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
@@ -127,14 +127,14 @@ watch(
         class="flex-1"
         name="email"
         :label="t('common.email')"
-        :rules="{ required: false }"
+        :rules="{ required: true }"
         v-model="form.email"
       />
       <BaseInputText
         class="flex-1"
         name="phone"
         :label="t('common.phone')"
-        :rules="{ required: true }"
+        :rules="{ required: false }"
         v-model="form.phone"
       />
 
@@ -143,7 +143,7 @@ watch(
       </div>
     </div>
   </form>
-  <DataTable :value="listUser" dataKey="_id" rowHover lazy scrollable class="mt-4">
+  <DataTable :value="listUser" dataKey="_id" rowHover lazy scrollable class="mt-4" scroll-height="calc(100vh - 270px)">
     <Column :header="t('common.name')">
       <template #body="slotProps">
         <span class="fr ai-c gap-2">

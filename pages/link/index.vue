@@ -61,8 +61,8 @@ const confirmDelete = (record: any) => {
     message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: t('common.cancel'),
-    acceptLabel: t('common.delete'),
+    rejectLabel: t('button.cancel'),
+    acceptLabel: t('button.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {

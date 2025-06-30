@@ -62,15 +62,15 @@ const confirmDelete = (record: any) => {
     message: t('common.confirm_delete'),
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: t('common.cancel'),
-    acceptLabel: t('common.delete'),
+    rejectLabel: t('button.cancel'),
+    acceptLabel: t('button.delete'),
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { data }: any = await $api(`iframe/${record._id}`, {
+      const { statusCode }: any = await $api(`user-referral/${record._id}`, {
         method: 'DELETE',
       })
-      if (data.value.statusCode === 200) {
+      if (statusCode === 200) {
         getListReferral()
         toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
       }

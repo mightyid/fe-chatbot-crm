@@ -69,7 +69,7 @@ getData()
           :isEdit="true"
           @onCancel="router.push('/crm')"
           :data="{
-            label_id: info.label,
+            label_id: info.label?._id,
             name: info.name,
             data: info.data,
           }"
