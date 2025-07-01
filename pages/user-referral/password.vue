@@ -19,7 +19,7 @@ const changePassword = async (form: any) => {
     <div class="page-content">
       <div class="page-heading"> {{ t('common.change_password') }} </div>
       <div class="bg-white p-4 rounded mt-4">
-        <FormPassword @onSubmit="changePassword" />
+        <FormPassword @onSubmit="changePassword" @onCancel="router.go(-1)" />
       </div>
     </div>
   </div>

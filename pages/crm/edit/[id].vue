@@ -70,8 +70,8 @@ getData()
           @onCancel="router.push('/crm')"
           :data="{
             label_id: info.label?._id,
-            name: info.name,
-            data: info.data,
+            name: info?.name || '',
+            data: info?.data || {},
           }"
         />
       </div>

@@ -80,14 +80,14 @@ const onSubmit = handleSubmit(async () => {
         />
         <div class="flex jc-fe">
           <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/forgot-password`">
-            {{ t('common.forgot_password') }}
+            {{ t('common.forgot_password') }}?
           </nuxt-link>
         </div>
       </div>
 
       <Button class="ml-auto !flex" :label="t('common.login')" severity="primary" type="submit" :loading="isLoading" />
       <nuxt-link to="/user-referral/sign-in" class="mt-0 mb-[24px] text-base c-black-90">
-        {{ t('common.login_with_referral') }}
+        {{ t('common.login_with_referral') }}?
       </nuxt-link>
     </form>
   </div>

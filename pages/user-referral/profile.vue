@@ -2,6 +2,8 @@
 import FormProfile from '~/components/user/FormProfile.vue'
 const { $api } = useNuxtApp()
 const toast = useToast()
+const router = useRouter()
+const { t } = useI18n()
 const changePassword = async (form: any) => {
   const { result, statusCode }: any = await $api('referral/update-profile', {
     method: 'PUT',
@@ -16,9 +18,9 @@ const changePassword = async (form: any) => {
 <template>
   <div class="page">
     <div class="page-content">
-      <div class="page-heading">Change Password</div>
+      <div class="page-heading"> {{ t('common.profile') }}</div>
       <div class="bg-white p-4 rounded mt-4">
-        <FormProfile @onSubmit="changePassword" />
+        <FormProfile @onSubmit="changePassword" @onCancel="router.go(-1)" />
       </div>
     </div>
   </div>

@@ -607,7 +607,8 @@
     "fields_management" : "Fields Management",
     "label" : "Label",
     "enter_message": "Enter a message",
-    "confirmation": "Confirmation"
+    "confirmation": "Confirmation",
+    "signup" : "Signup"
 
   },
   "button": {

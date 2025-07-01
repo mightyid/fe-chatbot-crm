@@ -152,8 +152,7 @@ watchDebounced(
           </template>
         </Column>
         <Column :header="t('common.email')" field="email"> </Column>
-        <Column :header="t('common.email')" field="phone"> </Column>
-
+        <Column :header="t('common.phone')" field="phone"> </Column>
         <Column field="is_active" :header="t('common.active')">
           <template #body="slotProps">
             <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="updateStatus(slotProps.data._id)" />

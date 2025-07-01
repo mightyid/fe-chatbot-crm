@@ -79,7 +79,7 @@ const onSubmit = handleSubmit(async () => {
           v-model="form.password"
         />
         <div class="flex jc-fe">
-          <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/forgot-password`">
+          <nuxt-link class="text-base font-normal c-[#2187FF] no-underline" :to="`/user-referral/forgot-password`">
             {{ t('common.forgot_password') }}
           </nuxt-link>
         </div>

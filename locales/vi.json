@@ -607,7 +607,8 @@
     "fields_management": "Quản lý cột",
     "label" :"Nhãn",
     "enter_message": "Nhập tin nhắn",
-    "confirmation" : "Xác nhận"
+    "confirmation" : "Xác nhận",
+    "signup" : "Đã đăng ký"
   },
   "button": {
     "detail": "Chi tiết",

@@ -33,9 +33,13 @@ const getColumns = async () => {
     method: 'GET',
   })
   columns.value = result || []
-  if (!form.value.data) form.value.data = {}
+  if (!form.value.data) {
+    form.value.data = {}
+  }
   columns.value.forEach((column: any) => {
-    if (!form.value.data[column.key]) form.value.data[column.key] = ''
+    if (!form.value.data[column.key]) {
+      form.value.data[column.key] = ''
+    }
     // form.value.data[column.key] = form.value.data[column.key] || ''
   })
 }
@@ -75,11 +79,11 @@ watch(
         :options="labels"
         :rules="{ required: true }"
       />
-      <div class="flex gap-2 flex-col">
-        <label class="text-base font-normal c-black-90" for="props.name"> Name</label>
+      <div class="flex gap-2 flex-col" v-if="form.name">
+        <label class="text-base font-normal c-black-90" for="props.name"> {{ t('common.name') }} </label>
         <InputText name="name" type="text" placeholder="Enter" v-model="form.name" />
       </div>
-      <div class="flex gap-2 flex-col" v-for="column in columns" :key="column._id" v-if="columns.length">
+      <div class="flex gap-2 flex-col" v-for="column in columns" :key="column._id" v-if="columns.length && form.data">
         <label class="text-base font-normal c-black-90" for="props.name"> {{ column?.label }} </label>
         <InputText :name="column.label" type="text" placeholder="Enter" v-model="form.data[column.key]" />
       </div>

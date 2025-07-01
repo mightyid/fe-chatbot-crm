@@ -53,7 +53,7 @@ const actionsUserReferral = ref([
     icon: iProfile,
     name: 'common.change_password',
     action() {
-      router.push('/user-referral/change-password')
+      router.push('/user-referral/password')
       hidePanel()
     },
   },

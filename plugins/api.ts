@@ -9,7 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     toast.add({
       severity: 'error',
       summary: 'Error ' + response?._data?.statusCode,
-      detail: response?._data?.message[0] || response?._data?.message || response?._data?.key,
+      detail: response?._data?.message || response?._data?.message[0] || response?._data?.key,
       life: 3000,
     })
   }
@@ -73,7 +73,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         // showError(response)
       }
 
-      if (response.status === 403 || response.status === 400) {
+      if (response.status === 403 || response.status === 400 || response.status === 404) {
         // await navigateTo('/403')
         showError(response)
       }
