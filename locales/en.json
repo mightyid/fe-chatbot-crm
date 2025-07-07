@@ -608,7 +608,9 @@
     "label" : "Label",
     "enter_message": "Enter a message",
     "confirmation": "Confirmation",
-    "signup" : "Signup"
+    "signup" : "Signup",
+    "zalo": "Zalo",
+    "mail" :"Mail"
 
   },
   "button": {

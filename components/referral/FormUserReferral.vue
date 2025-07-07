@@ -112,7 +112,7 @@ watch(
       />
       <BaseInputText name="phone" :label="t('common.phone')" :rules="{ required: false }" v-model="form.phone" />
       <BaseInputSelect
-        label="Iframe"
+        :label="t('common.campaign')"
         :options="listIframe"
         name="iframe_id"
         :filter="true"

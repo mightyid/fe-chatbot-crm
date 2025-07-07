@@ -25,6 +25,7 @@ const isScrollToBottom = ref<any>('')
 const isLoadMore = ref(true)
 const lastMessageId = ref()
 const form = ref<any>([])
+const referral_id = ref(route.query.referral_id || '')
 const boxStyle = ref({
   width: '368px',
   height: '375px',
@@ -279,9 +280,9 @@ watch(
           </div>
           <div class="fr ai-c">
             <nuxt-link
-              :to="`/bot-full/${info?._id}?${
-                route.query.iframe_id ? `iframe_id=${route.query.iframe_id}` : ''
-              }&token=${token}`"
+              :to="`/bot-full/${info?._id}?${route.query.iframe_id ? `iframe_id=${route.query.iframe_id}` : ''}${
+                token ? `&token=${token}` : ''
+              }${referral_id ? `&referral_id=${referral_id}` : ''}`"
               target="_blank"
             >
               <img src="~/assets/icons/i-zoom.svg" class="cursor-pointer" @click="closeChatbot" alt="" />

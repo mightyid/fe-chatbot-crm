@@ -104,26 +104,46 @@ const DEFAULT_NAV = [
           },
         ],
       },
-      {
-        title: 'common.employee',
-        key: 'menu-employees',
-        icon: iEmployee,
-        iconActive: iEmployeeActive,
-        sub: [
-          {
-            title: 'common.employees',
-            key: 'employees',
-            permissionKey: 'view_employee',
-            to: PATH_EMPLOYEES_LIST,
-          },
-          {
-            title: 'common.role',
-            key: 'roles',
-            permissionKey: 'view_roles',
-            to: PATH_ROLE_LIST,
-          },
-        ],
-      },
+      // {
+      //   title: 'common.setting',
+      //   key: 'menu-setting',
+      //   icon: iSetting,
+      //   iconActive: iSettingActive,
+      //   sub: [
+      //     {
+      //       title: 'common.zalo',
+      //       key: 'setting-zalo',
+      //       permissionKey: 'setting-zalo',
+      //       to: '/setting/zalo',
+      //     },
+      //     {
+      //       title: 'common.mail',
+      //       key: 'setting-mail',
+      //       permissionKey: 'setting-mail',
+      //       to: '/setting/mail',
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: 'common.employee',
+      //   key: 'menu-employees',
+      //   icon: iEmployee,
+      //   iconActive: iEmployeeActive,
+      //   sub: [
+      //     {
+      //       title: 'common.employees',
+      //       key: 'employees',
+      //       permissionKey: 'view_employee',
+      //       to: PATH_EMPLOYEES_LIST,
+      //     },
+      //     {
+      //       title: 'common.role',
+      //       key: 'roles',
+      //       permissionKey: 'view_roles',
+      //       to: PATH_ROLE_LIST,
+      //     },
+      //   ],
+      // },
     ],
   },
 ] as MenuType[]

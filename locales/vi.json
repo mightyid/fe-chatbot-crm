@@ -608,7 +608,9 @@
     "label" :"Nhãn",
     "enter_message": "Nhập tin nhắn",
     "confirmation" : "Xác nhận",
-    "signup" : "Đã đăng ký"
+    "signup" : "Đã đăng ký",
+    "zalo": "Zalo",
+    "mail" :"Mail"
   },
   "button": {
     "detail": "Chi tiết",

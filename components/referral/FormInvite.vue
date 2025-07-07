@@ -77,7 +77,13 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      listUser.value = listUser.value.filter((item: any) => item.email !== record.email && item.phone !== record.phone)
+      const index = listUser.value.findIndex(
+        (item: any) => item.name === record.name && item.email === record.email && item.phone === record.phone,
+      )
+      listUser.value.splice(index, 1)
+      // listUser.value = listUser.value.filter(
+      //   (item: any) => item.name !== record.name && item.email !== record.email && item.phone !== record.phone,
+      // )
     },
     reject: () => {
       // toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
@@ -87,7 +93,7 @@ const confirmDelete = (record: any) => {
 const importExcel = async (obj: any) => {
   console.log(obj, 'obj')
   obj?.forEach((el: any) => {
-    if (el.email && el.phone) {
+    if (el.email && el.name) {
       listUser.value.push(el)
     }
   })
@@ -172,7 +178,7 @@ watch(
   <div class="grid grid-cols-2 gap-4 mt-4">
     <div class="grid grid-cols-2 gap-4">
       <BaseInputSelect
-        label="Iframe"
+        :label="t('common.campaign')"
         :options="listIframe"
         name="iframe_id"
         :filter="true"

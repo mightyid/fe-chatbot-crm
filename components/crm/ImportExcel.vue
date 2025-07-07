@@ -11,6 +11,7 @@ const dataTable = ref([])
 const dataSelect = ref<any>({})
 const emit = defineEmits(['onCancel', 'onSubmit'])
 const label_id = ref(null)
+const { t } = useI18n()
 const labels = ref([])
 const { $api } = useNuxtApp()
 const readFile = async (e: Event) => {

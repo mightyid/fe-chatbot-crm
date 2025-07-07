@@ -17,7 +17,7 @@ const emit = defineEmits(['onClose', 'onSubmit', 'onCancel'])
 const toast = useToast()
 const label_id = ref('')
 const is_active = ref(true)
-const name = ref('')
+const name_iframe = ref<any>('')
 const route = useRoute()
 const { t } = useI18n()
 const columns = ref<any>([])
@@ -29,7 +29,7 @@ const getData = async () => {
     method: 'GET',
   })
   // columns.value = result || []
-  name.value = result.name
+  name_iframe.value = result.name
   label_id.value = result.label
   is_active.value = result.is_active
   columns.value.map((el: any) => {
@@ -64,7 +64,7 @@ const createIframe = async () => {
     label_id: label_id.value || undefined,
     fields: ids.map((el: any) => el._id) || undefined,
     is_active: is_active.value,
-    name: name.value || '',
+    name: name_iframe.value || '',
   }
   emit('onSubmit', form)
 }
@@ -89,7 +89,7 @@ const copyIframe = () => {
 
 <template>
   <form class="fc" @submit.prevent="onSubmit">
-    <BaseInputText name="name" :label="t('common.name')" v-model="name" :rules="{ required: true }" />
+    <BaseInputText name="name_iframe" :label="t('common.name')" v-model="name_iframe" :rules="{ required: true }" />
     <BaseInputSelectTag
       v-model="label_id"
       class="mt-2"

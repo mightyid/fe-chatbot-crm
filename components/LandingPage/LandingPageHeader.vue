@@ -18,7 +18,7 @@ const toggleMenuMobile = () => {
           class="p-4 fixed top-0 bottom-0 left-0 translate-x-[-100%] flex flex-col gap-4 bg-white overflow-auto transition-all z-99 lg:static lg:translate-x-0 lg:p-0 lg:flex-row lg:items-center lg:overflow-unset"
           :class="isShowMenuMobile ? ['translate-x-0'] : ['']"
         >
-          <a class="text-base font-normal c-primary" href="tel:+84898309509"> Hotline: (+84) 898 309 509 </a>
+          <a class="text-base font-normal c-primary" href="tel:(+84) 78 555 2875"> Hotline: (+84) 78 555 2875</a>
           <nuxt-link to="/sign-in">
             <Button severity="primary" type="button"> Đăng nhập </Button>
           </nuxt-link>
