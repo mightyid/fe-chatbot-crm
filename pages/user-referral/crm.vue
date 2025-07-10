@@ -3,7 +3,7 @@ import TabStatusCRM from '~/components/crm/TabStatusCRM.vue'
 import DrawerLabelManagement from '~/components/crm/DrawerLabelManagement.vue'
 import DrawerColumnManagement from '~/components/crm/DrawerColumnManagement.vue'
 import FormAssignNote from '~/components/crm/FormAssignNote.vue'
-import ImportExcel from '~/components/crm/ImportExcel.vue'
+import ImportLeadReferral from '~/components/crm/ImportLeadReferral.vue'
 import FormIframe from '~/components/crm/FormIframe.vue'
 definePageMeta({
   permission: 'manager_application',
@@ -40,9 +40,12 @@ const totalRecords = ref(0)
 
 const isLoading = ref(false)
 const selectedApplications = ref<any>([])
-const linkReferral = computed(() => {
-  return `${window.location.origin}/bot/${user.value.bot._id}?iframe_id=${user.value?.iframe?._id}&referral_id=${user.value?._id}`
-})
+const linkReferral = ref(
+  `${window.location.origin}/bot/${user.value.bot._id}?iframe_id=${user.value?.iframe?._id}&referral_id=${user.value?._id}`,
+)
+// const linkReferral = computed(() => {
+//   return `${window.location.origin}/bot/${user.value.bot._id}?iframe_id=${user.value?.iframe?._id}&referral_id=${user.value?._id}`
+// })
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
@@ -190,11 +193,10 @@ const confirmDelete = (record: any) => {
 }
 
 const importExcel = async (obj: any) => {
-  const { statusCode } = await $api<any>(`lead/create-many`, {
+  const { statusCode } = await $api<any>(`/referral/lead/create-many`, {
     method: 'POST',
     body: {
       data: obj.data,
-      label_id: obj.label_id,
     },
   })
   if (statusCode === 200) {
@@ -207,7 +209,15 @@ const copyLinkReferral = (link: any) => {
   navigator.clipboard.writeText(linkReferral.value)
   toast.add({ severity: 'success', summary: 'Notifications', detail: 'Copied', life: 3000 })
 }
+const showLinkForm = () => {
+  isShowIframe.value = true
+  linkReferral.value = `${window.location.origin}/iframe/crm/create?company_id=${user?.value.company}&iframe_id=${user.value?.iframe?._id}&referral_id=${user.value?._id}`
+}
 
+const showLinkBot = () => {
+  isShowIframe.value = true
+  linkReferral.value = `${window.location.origin}/bot/${user.value.bot._id}?iframe_id=${user.value?.iframe?._id}&referral_id=${user.value?._id}`
+}
 watchDebounced(
   () => query.value.search,
   (newValue) => {
@@ -243,7 +253,10 @@ watchDebounced(
             </template>
           </ButtonFilter> -->
 
-          <Button size="small" label="Get link referral" @click="isShowIframe = true"> </Button>
+          <Button size="small" label="Get link chatbot" v-tooltip="'Link Chatbot'" @click="showLinkBot"> </Button>
+          <Button size="small" label="Get link form" v-tooltip="'Link Form'" @click="showLinkForm"> </Button>
+          <Button size="small" label="Import Excel" v-tooltip="'Import Excel'" @click="isShowImportExcel = true">
+          </Button>
         </div>
       </div>
 
@@ -347,9 +360,9 @@ watchDebounced(
       </DataTable>
 
       <!-- Iframe -->
-      <BaseDialog :visible="isShowIframe" title="Link Referral" @onClose="closeDialogIFrame">
+      <BaseDialog :visible="isShowIframe" title="Link" @onClose="closeDialogIFrame">
         <div class="fc jc-c ai-c gap-4">
-          <div class="text-base">
+          <div class="text-base break-all">
             {{ linkReferral }}
           </div>
           <QrCode :value="linkReferral" />
@@ -363,7 +376,7 @@ watchDebounced(
       <DrawerColumnManagement v-model:isShowDrawerColumn="isShowDrawerColumn" @onChange="getDataColumn" />
       <DrawerLabelManagement v-model:isShowDrawerLabel="isShowDrawerLabel" @onChange="getDataLabel" />
       <BaseDialog :visible="isShowImportExcel" title="Import Excel" @onClose="isShowImportExcel = false" width="960px">
-        <ImportExcel :columns="columns" @on-cancel="isShowImportExcel = false" @on-submit="importExcel" />
+        <ImportLeadReferral :columns="columns" @on-cancel="isShowImportExcel = false" @on-submit="importExcel" />
       </BaseDialog>
     </div>
   </div>

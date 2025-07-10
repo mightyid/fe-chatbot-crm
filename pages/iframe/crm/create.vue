@@ -79,6 +79,7 @@ const onSubmit = async () => {
         company_id: route?.query?.company_id,
         iframe_id: route?.query?.iframe_id,
         data: form.value.data,
+        referral_id: route.query.referral_id || undefined,
       },
     })
     if (statusCode == 200) {

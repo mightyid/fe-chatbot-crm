@@ -10,9 +10,7 @@ const listColTable = ref([])
 const dataTable = ref([])
 const dataSelect = ref<any>({})
 const emit = defineEmits(['onCancel', 'onSubmit'])
-const label_id = ref(null)
 const { t } = useI18n()
-const labels = ref([])
 const { $api } = useNuxtApp()
 const readFile = async (e: Event) => {
   //@ts-ignore
@@ -28,13 +26,7 @@ const readFile = async (e: Event) => {
     })
   }
 }
-const getLabel = async () => {
-  const { result }: any = await $api(`crm-label`, {
-    method: 'GET',
-  })
-  labels.value = result || []
-}
-getLabel()
+
 const reset = () => {
   dataTable.value = []
   dataSelect.value = {}
@@ -57,7 +49,6 @@ const importExcel = () => {
   })
   emit('onSubmit', {
     data: arr,
-    label_id: label_id.value,
   })
 }
 </script>
@@ -115,26 +106,9 @@ const importExcel = () => {
         </tbody>
       </table>
     </div>
-    <BaseInputSelectTag
-      v-model="label_id"
-      :options="labels"
-      :label="t('common.label')"
-      name="Label"
-      option-label="name"
-      :rules="{
-        required: true,
-      }"
-      option-value="_id"
-      v-if="dataTable?.length"
-    />
     <div class="fr ai-c jc-fe gap-4" v-if="dataTable?.length">
       <Button :label="t('button.cancel')" severity="secondary" @click="emit('onCancel')" />
-      <Button
-        label="Import"
-        severity="primary"
-        @click="importExcel"
-        :disabled="!Object.keys(dataSelect).length || !label_id"
-      />
+      <Button label="Import" severity="primary" @click="importExcel" :disabled="!Object.keys(dataSelect).length" />
     </div>
   </div>
 </template>

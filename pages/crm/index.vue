@@ -102,6 +102,8 @@ const getDataColumn = async () => {
     //@ts-ignore
     fields[el.label] = el.key
   })
+  //@ts-ignore
+  fields['Created_at'] = 'created_at'
   json_fields.value = fields
   getData()
 }
@@ -154,6 +156,8 @@ const getData = async () => {
         //@ts-ignore
         obj[key] = item?.data[key].value
       })
+      //@ts-ignore
+      obj['created_at'] = dayjs(item?.created_at).format('DD/MM/YYYY HH:mm:ss')
       datas.push(obj)
     }
   })
