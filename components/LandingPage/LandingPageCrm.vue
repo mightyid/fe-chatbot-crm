@@ -1,12 +1,13 @@
+<script lang="ts" setup>
+const { t } = useI18n()
+</script>
 <template>
   <section class="hero py-10 px-4 bg-cover bg-no-repeat lg:py-20" data-aos="fade-up">
     <div class="container mx-auto">
       <h3 class="mt-0 mb-4 mx-auto text-label"> CRM </h3>
-      <h2 class="mt-0 mb-4 text-heading text-center"> CRM - Quản lý tuyển sinh chuyên nghiệp </h2>
+      <h2 class="mt-0 mb-4 text-heading text-center"> {{ t('home.CRM - Quản lý tuyển sinh chuyên nghiệp') }} </h2>
       <p class="mt-0 mb-12 text-paragraph text-center">
-        Tối ưu quy trình chăm sóc học sinh với hệ thống CRM mạnh mẽ: quản lý lead hiệu quả, lưu trữ tương tác tư vấn,
-        phân quyền linh hoạt và cập nhật dữ liệu liên tục từ chatbot. Tất cả trong một nền tảng – trực quan, đồng bộ và
-        dễ triển khai.
+        {{ t('home.Tối ưu quy trình chăm sóc học sinh với hệ thống CRM mạnh mẽ: quản lý lead hiệu quả') }}
       </p>
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:auto-rows-fr lg:relative">
@@ -16,10 +17,11 @@
         >
           <div class="flex gap-4">
             <div class="flex-1">
-              <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl"> Tùy biến luồng tư vấn sale </p>
+              <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl">
+                {{ t('home.Tùy biến luồng tư vấn sale') }}
+              </p>
               <p class="m-0 text-base font-normal c-black-60">
-                Thiết lập quy trình chăm sóc học sinh theo từng chiến dịch, từng giai đoạn. Tự do chọn cách phân loại,
-                gắn nhãn và theo dõi hiệu quả tư vấn.
+                {{ t('home.Thiết lập quy trình chăm sóc học sinh theo từng chiến dịch') }}
               </p>
             </div>
 
@@ -36,10 +38,11 @@
             class="p-4 card---clip-bottom-left rounded-2xl lg:p-6"
             style="background: linear-gradient(155deg, #fff3ef -23.5%, #ffe4da 80.24%)"
           >
-            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl"> Phân quyền không giới hạn nhân sự </p>
+            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl">
+              {{ t('home.Phân quyền không giới hạn nhân sự') }}
+            </p>
             <p class="m-0 text-base font-normal c-black-60">
-              Thêm bao nhiêu người dùng tùy ý. Chia quyền linh hoạt theo vai trò để phối hợp làm việc mượt mà giữa các
-              bộ phận.
+              {{ t('home.Thêm bao nhiêu người dùng tùy ý') }}
             </p>
 
             <img class="block mx-auto max-w-full" src="~/assets/images/landing-page/crm-2-1.png" alt="" />
@@ -49,10 +52,11 @@
             class="p-4 rounded-2xl lg:p-6"
             style="background: linear-gradient(155deg, #fff3ef -23.5%, #ffe4da 80.24%)"
           >
-            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl"> Ghi chú và lưu trữ nội dung tư vấn </p>
+            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl">
+              {{ t('home.Ghi chú và lưu trữ nội dung tư vấn') }}
+            </p>
             <p class="m-0 text-base font-normal c-black-60">
-              Lưu lại mọi trao đổi với học sinh theo từng hồ sơ – đảm bảo không bỏ sót thông tin và dễ dàng theo dõi
-              lịch sử chăm sóc.
+              {{ t('home.Lưu lại mọi trao đổi với học sinh theo từng hồ sơ') }}
             </p>
 
             <img class="block mx-auto max-w-full" src="~/assets/images/landing-page/crm-2-2.png" alt="" />
@@ -72,10 +76,11 @@
           </div>
 
           <div class="order-1 lg:order-2">
-            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl"> Tự động đồng bộ thông tin từ chatbot </p>
+            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl">
+              {{ t('home.Tự động đồng bộ thông tin từ chatbot') }}
+            </p>
             <p class="m-0 text-base font-normal c-black-60">
-              Toàn bộ dữ liệu thu thập từ chatbot được đồng bộ về CRM ngay tức thì – không cần nhập tay, không lo trùng
-              lặp.
+              {{ t('home.Toàn bộ dữ liệu thu thập từ chatbot được đồng bộ về CRM ngay tức thì') }}
             </p>
           </div>
         </div>
@@ -91,10 +96,11 @@
           />
 
           <div class="order-1 lg:order-2">
-            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl"> Tùy biến luồng tư vấn sale </p>
+            <p class="mt-0 mb-2 text-lg font-bold c-black-90 lg:text-2xl">
+              {{ t('home.Cho phép cập nhật thông tin cần thu thập liên tục theo thời gian thực') }}
+            </p>
             <p class="m-0 text-base font-normal c-black-60">
-              Thiết lập quy trình chăm sóc học sinh theo từng chiến dịch, từng giai đoạn. Tự do chọn cách phân loại, gắn
-              nhãn và theo dõi hiệu quả tư vấn.
+              {{ t('home.Thông tin từ học sinh được ghi nhận và hiển thị tức thì') }}
             </p>
           </div>
         </div>

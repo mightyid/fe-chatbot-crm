@@ -1,18 +1,21 @@
+<script lang="ts" setup>
+const { t } = useI18n()
+</script>
 <template>
   <section class="hero py-10 px-4 bg-cover bg-no-repeat lg:py-40">
     <div class="container mx-auto">
       <div class="flex flex-col gap-4 lg:flex-row lg:gap-10" data-aos="fade-right">
         <div class="flex-1">
-          <h3 class="mt-0 mb-5 text-label text-center"> MỘT NỀN TẢNG - ĐA KÊNH - TỐI ĐA HIỆU QUẢ TUYỂN SINH </h3>
+          <h3 class="text-label text-center lt-lg:mx-a mt-0 !mb-5">
+            {{ t('home.MỘT NỀN TẢNG - ĐA KÊNH - TỐI ĐA HIỆU QUẢ TUYỂN SINH') }}
+          </h3>
 
-          <h1 class="mt-0 mb-4 text-heading"> Tối Ưu Tuyển Sinh - Vận Hành Đa Kênh Hiệu Quả </h1>
+          <h1 class="mt-0 mb-4 text-heading"> {{ t('home.Tối Ưu Tuyển Sinh - Vận Hành Đa Kênh Hiệu Quả') }} </h1>
           <p class="mt-0 mb-4 text-paragraph text-center lg:text-left">
-            Chọn giải pháp phù hợp với mọi quy mô trung tâm và trường học – từ khởi đầu vững chắc đến quản lý tuyển sinh
-            toàn diện. Maple STC giúp bạn tăng tốc quy trình, tư vấn 24/7, quản lý hồ sơ và kết nối học sinh với trường
-            học một cách thông minh và tự động.
+            {{ t('home.Chọn giải pháp phù hợp với mọi quy mô trung tâm và trường học') }}
           </p>
 
-          <Button class="block mx-auto lg:mx-unset" label="Bắt đầu ngay" severity="primary" type="button" />
+          <Button class="block mx-auto lg:mx-unset" :label="t('home.Bắt đầu ngay')" severity="primary" type="button" />
         </div>
 
         <div class="flex-1" data-aos="fade-left">

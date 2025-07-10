@@ -1,3 +1,6 @@
+<script lang="ts" setup>
+const { t } = useI18n()
+</script>
 <template>
   <footer class="py-10 px-4 bg-[#F9F9F9] border-t border-t-solid border-black-30 lg:py-20">
     <div class="container mx-auto">
