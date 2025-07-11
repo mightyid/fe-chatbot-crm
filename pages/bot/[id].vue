@@ -255,8 +255,8 @@ watch(
 </script>
 
 <template>
-  <div class="fixed bottom-24px right-24px" v-if="info?._id">
-    <div class="flex flex-col items-end justify-end">
+  <div class="fixed bottom-24px" v-if="info?._id" :class="info?.position == 'right' ? 'right-24px' : 'left-24px'">
+    <div class="flex flex-col justify-end" :class="info?.position == 'right' ? 'items-end' : 'items-start'">
       <div
         class="fc border-1 !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
         v-show="isShowBoxChat"
@@ -350,8 +350,9 @@ watch(
         </div>
       </div>
       <div
-        class="absolute right-0 rounded text-center bg-primary c-white mb-64px shadow-lg cursor-pointer min-w-200px rounded-16px overflow-hidden px-2 py-1 text-lg line-clamp-2 z999999"
+        class="absolute rounded text-center bg-primary c-white mb-64px shadow-lg cursor-pointer min-w-200px rounded-16px overflow-hidden px-2 py-1 text-lg line-clamp-2 z999999"
         :style="{ backgroundColor: info?.color + '!important' || '#3ABFF8' }"
+        :class="info?.position == 'right' ? 'right-0' : 'left-0'"
         @click="clickAvatar"
         v-if="!isShowBoxChat"
       >

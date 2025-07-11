@@ -66,8 +66,8 @@ const changeStatus = (id: any) => {
   })
 }
 const copyCodeIframe = (val: any) => {
-  const url = `${window.location.origin}/bot/${val}`
-  const position = 'right: 0px'
+  const url = `${window.location.origin}/bot/${val._id}`
+  const position = `${val.position}: 0px`
   const iframe =
     '<script>' +
     `
@@ -85,13 +85,13 @@ const copyCodeIframe = (val: any) => {
         if (event.data.isCollapse == true) {
           newIf.setAttribute(
             'style',
-            'position: fixed; right: 0px; bottom: 0px; width: 225px; height: 160px; background: transparent; border: none; z-index: 100000000;',
+            'position: fixed; ${position}; bottom: 0px; width: 225px; height: 160px; background: transparent; border: none; z-index: 100000000;',
           )
         }
         if (event.data.isOpen == true) {
           newIf.setAttribute(
             'style',
-            'position: fixed; right: 0px; bottom: 0px; width: 402px; height: 506px; background: transparent; border: none; z-index: 100000000;',
+            'position: fixed; ${position}; bottom: 0px; width: 402px; height: 506px; background: transparent; border: none; z-index: 100000000;',
           )
         }
       }
@@ -196,7 +196,7 @@ watchDebounced(
                 <button @click="copyBot(slotProps.data._id)">
                   <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy bot'" />
                 </button>
-                <button @click="copyCodeIframe(slotProps.data._id)">
+                <button @click="copyCodeIframe(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy code iframe'" />
                 </button>
                 <nuxt-link :to="`/chatbot/edit/${slotProps.data._id}`">

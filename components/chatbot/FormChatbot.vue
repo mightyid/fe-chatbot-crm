@@ -112,7 +112,7 @@ watch(
         :rules="{ required: false }"
         v-model="form.color"
       />
-      <!-- <BaseInputSelect
+      <BaseInputSelect
         class="flex-1"
         name="position"
         label="Position"
@@ -121,7 +121,7 @@ watch(
         option-value=""
         :rules="{ required: false }"
         v-model="form.position"
-      /> -->
+      />
       <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
       <BaseSwitch class="flex-1" name="is_show" label="Show Popup" v-model="form.is_show" />
     </div>
