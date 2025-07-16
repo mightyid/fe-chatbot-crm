@@ -52,7 +52,6 @@ const checkPositionRight = (item: any) => {
   }
 }
 const removeSourceTags = (text: string) => {
-  // return text.trim()
   return text
     .replace(/【\d+(?::\d+)?†source】/g, '')
     .replace(/【[^【】†]+†[^【】]+】/g, '')
@@ -68,6 +67,10 @@ watch(
   () => {
     setTimeout(() => {
       scrollToBottom()
+      document.querySelectorAll('.markdown-body a').forEach((a) => {
+        a.setAttribute('target', '_blank')
+        a.setAttribute('rel', 'noopener noreferrer')
+      })
     }, 100)
   },
 )

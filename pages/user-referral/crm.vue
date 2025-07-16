@@ -100,7 +100,7 @@ const getData = async () => {
     },
   })
   applications.value = result.leads || []
-  totalRecords.value = total_pages * perPage.value || 0
+  totalRecords.value = result.total || 0
   let datas = [] as any
   result.leads.forEach((item: any) => {
     if (item?.data) {
