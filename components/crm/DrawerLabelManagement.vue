@@ -95,7 +95,7 @@ watch(
     </template>
     <div class="fc w-full overflow-x-hidden gap-[4px]">
       <div
-        class="fr jc-sb py-[4px] px-[4px] hover:border-b-[1px] hover:border-b-[#E1E1E1] hover:border-b-solid"
+        class="fr jc-sb py-[4px] px-[4px] hover:border-b-[1px] hover:border-b-[#E9E9E9] hover:border-b-solid"
         v-for="item in labels"
       >
         <div class="fr ai-c text-base font-semibold gap-3">

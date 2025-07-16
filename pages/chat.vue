@@ -43,21 +43,26 @@ const visibilityChanged = (isVisible: any, entry: any) => {
 
 <template>
   <div class="flex-1 w-full h-full grid grid-cols-5 overflow-hidden">
-    <div
-      class="col-span-1 flex-1 overflow-auto bg-white border-[1px] border-solid border-[#E1E1E1] border-t-none border-b-none hide-scrollbar"
-    >
-      <NavChatItem
-        :groups="listGroup"
-        v-for="(item, index) in listGroup"
-        :key="item._id"
-        :info="item"
-        v-observe-visibility="{
-          callback: index === listGroup.length - 1 ? visibilityChanged : () => {},
-          intersection: {
-            threshold: 0.1,
-          },
-        }"
-      />
+    <div class="col-span-1 fc flex-1 bg-white overflow-hidden">
+      <div class="fr ai-c p4 border-solid border-[#E9E9E9] border-[1px] border-t-none border-l-none">
+        <div class="page-heading"> {{ t('common.message') }} </div>
+      </div>
+      <div
+        class="col-span-1 flex-1 overflow-auto bg-white border-[1px] border-solid border-[#E9E9E9] border-t-none border-l-none border-b-none hide-scrollbar"
+      >
+        <NavChatItem
+          :groups="listGroup"
+          v-for="(item, index) in listGroup"
+          :key="item._id"
+          :info="item"
+          v-observe-visibility="{
+            callback: index === listGroup.length - 1 ? visibilityChanged : () => {},
+            intersection: {
+              threshold: 0.1,
+            },
+          }"
+        />
+      </div>
     </div>
     <div class="col-span-4 bg-white flex-1 bg-red overflow-hidden"> <NuxtPage /> </div>
   </div>

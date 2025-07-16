@@ -28,7 +28,7 @@ const changeStatus = (val: any) => {
 </script>
 
 <template>
-  <div class="fr jc-sb ai-c rounded-tl-lg rounded-tr-lg bg-white border-b-[1px] border-b-solid border-b-#E1E1E1">
+  <div class="fr jc-sb ai-c rounded-tl-lg rounded-tr-lg bg-white border-b-[1px] border-b-solid border-b-#E9E9E9">
     <div class="flex items-center gap-0 overflow-x-auto flex-1">
       <div
         class="fr ai-c gap-2 px-[24px] py-[12px] text-base capitalize relative rounded-tl-lg rounded-tr-lg cursor-pointer"

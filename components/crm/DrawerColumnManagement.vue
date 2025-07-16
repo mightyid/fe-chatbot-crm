@@ -116,7 +116,7 @@ watch(
     </template>
     <draggable v-model="columns" group="people" item-key="id" @end="sortColumns">
       <template #item="{ element }">
-        <div class="fr jc-sb py-[4px] px-[4px] hover:border-b-[1px] hover:border-b-[#E1E1E1] hover:border-b-solid">
+        <div class="fr jc-sb py-[4px] px-[4px] hover:border-b-[1px] hover:border-b-[#E9E9E9] hover:border-b-solid">
           <div class="fr ai-c text-base font-semibold gap-3">
             <img src="@/assets/icons/i-menu-bar.svg" class="cursor-pointer" alt="" />
             <BaseCheckbox :name="element.label" v-model="element.is_active" @update:modelValue="editColumn(element)" />

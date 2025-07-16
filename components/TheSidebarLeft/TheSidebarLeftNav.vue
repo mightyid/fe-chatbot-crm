@@ -328,13 +328,13 @@ onMounted(() => {
               </div>
             </Transition>
 
-            <img
+            <!-- <img
               class="icon transition-all"
               :class="[nav?.isCollapse && 'rotate-180', checkActiveRoute(nav) && 'brightness-0 invert']"
               src="~/assets/icons/i-angle-down-black.svg"
               alt=""
               v-if="nav?.sub && nav?.sub?.length > 0"
-            />
+            /> -->
           </nuxt-link>
 
           <!-- Sub -->

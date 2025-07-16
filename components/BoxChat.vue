@@ -77,7 +77,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex-1 h-full overflow-y-auto pb-2 px-2 hide-scrollbar" ref="scrollContainer">
+  <div class="flex-1 h-full overflow-y-auto pb-2 px-4 hide-scrollbar" ref="scrollContainer">
     <div class="flex flex-col-reverse justify-end gap-2">
       <div
         class="flex flex-col"

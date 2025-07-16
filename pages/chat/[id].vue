@@ -126,8 +126,11 @@ getMessages()
 <template>
   <div class="grid grid-cols-5 h-full flex-1">
     <div
-      class="fc flex-1 h-full col-span-3 overflow-hidden border-[1px] border-solid border-[#E1E1E1] border-t-none border-b-none border-l-none"
+      class="fc flex-1 h-full col-span-3 overflow-hidden border-[1px] border-solid border-[#E9E9E9] border-t-none border-b-none border-l-none"
     >
+      <div class="fr ai-c p4 border-solid border-[#E9E9E9] border-[1px] border-t-none border-r-none border-l-none">
+        <div class="page-heading capitalize"> {{ info?.name || 'incognito' }} </div>
+      </div>
       <BoxChat :listMessage="listMessage" :isScrollToBottom="isScrollToBottom" @loadMore="getMessages" :isMain="true" />
       <div class="fc w-full p-2 gap-1">
         <!-- <div class="fr w-full border-t-[0.5px] border-t-solid border-t-[#ccc]"> -->

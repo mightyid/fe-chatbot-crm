@@ -15,7 +15,7 @@ const toggleShow = () => {
 
 <template>
   <div
-    class="min-w-[295px] h-screen flex flex-col bg-white border-r border-gray-200 transition-all fixed top-0 left-0 -translate-x-full [&.active]:translate-x-0 lg:relative lg:translate-x-0 z-102"
+    class="min-w-[295px] h-screen flex flex-col bg-white border-r-solid border-[#E9E9E9] border-r-[1px] transition-all fixed top-0 left-0 -translate-x-full [&.active]:translate-x-0 lg:relative lg:translate-x-0 z-102"
     :class="{ active: isShow }"
     :style="!isExpand ? { minWidth: '92px' } : {}"
   >

@@ -67,7 +67,7 @@ getData()
         <FormLeadCRM
           @onEdit="editLeadCRM"
           :isEdit="true"
-          @onCancel="router.push('/crm')"
+          @onCancel="router.go(-1)"
           :data="{
             label_id: info.label?._id,
             name: info?.name || '',
