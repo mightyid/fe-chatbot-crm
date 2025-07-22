@@ -471,3 +471,10 @@ thead.p-datatable-thead {
 .p-badge-info {
   background: #ff4a4a !important;
 }
+.container {
+}
+@media only screen and (max-width: 1024px) {
+  .container {
+    padding: 0 16px;
+  }
+}

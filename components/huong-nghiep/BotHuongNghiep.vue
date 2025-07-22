@@ -278,7 +278,7 @@ const mapData = (data: any) => {
 </script>
 
 <template>
-  <div class="w-full h-dvh max-w-1000px mx-a" v-if="info?._id">
+  <div class="w-full h-60vh max-w-1000px mx-a" v-if="info?._id">
     <div class="flex flex-col items-end justify-end h-full">
       <div
         class="fc border-1 h-full w-full !bg-white border-gray-20 border-solid rounded overflow-hidden rounded-[16px]"
@@ -305,8 +305,8 @@ const mapData = (data: any) => {
             <img src="~/assets/icons/i-close-circle.svg" class="cursor-pointer" @click="closeChatbot" alt="" /> -->
           </div>
         </div>
-        <div class="fc w-full !overflow-auto gap-4" v-if="!token || !groupInfo" :style="boxStyle">
-          <div class="fc flex-1 justify-center gap-4 p-4">
+        <div class="fc w-full h-full gap-4" v-if="!token || !groupInfo" :style="boxStyle">
+          <div class="fc flex-1 h-full justify-center gap-4 p-4">
             <div class="fc justify-center gap-4" v-if="info.form && info.form.length > 0 && info.form[0].key">
               <BaseInputText
                 v-for="(item, index) in info.form"
@@ -318,9 +318,11 @@ const mapData = (data: any) => {
                 placeholder="Enter "
               />
             </div>
-            <FormTest v-model:form="formTest" />
+            <div class="overflow-auto flex-1">
+              <FormTest v-model:form="formTest" />
+            </div>
 
-            <Button class="w-full !bg-primary" @click="startChat" :disabled="checkDisabled">
+            <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled">
               {{ info?.label_btn || t('common.start') }}
             </Button>
           </div>
