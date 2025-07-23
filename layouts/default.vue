@@ -8,7 +8,6 @@ const { user }: any = useAuth()
 const { t, te } = useI18n()
 // const appStore = useAppStore()
 const toast = useToast()
-
 document.documentElement.classList.toggle('light')
 
 // watch(

@@ -29,6 +29,7 @@ const isScrollToBottom = ref<any>('')
 const isLoadMore = ref(true)
 const lastMessageId = ref()
 const form = ref<any>([])
+const isReady = ref(false)
 const formTest = ref<any>({
   'Nhóm Kĩ thuật': {},
   'Nhóm Nghiên cứu': {},
@@ -275,6 +276,14 @@ const mapData = (data: any) => {
 
   return message
 }
+watch(
+  () => formTest.value,
+  (newValue) => {
+    let a = mapData(newValue)
+    isReady.value = a ? true : false
+  },
+  { deep: true },
+)
 </script>
 
 <template>
@@ -322,7 +331,7 @@ const mapData = (data: any) => {
               <FormTest v-model:form="formTest" />
             </div>
 
-            <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled">
+            <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled || !isReady">
               {{ info?.label_btn || t('common.start') }}
             </Button>
           </div>

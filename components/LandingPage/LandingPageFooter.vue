@@ -2,80 +2,50 @@
 const { t } = useI18n()
 </script>
 <template>
-  <footer class="py-10 px-4 bg-[#F9F9F9] border-t border-t-solid border-black-30 lg:py-20">
-    <div class="container mx-auto">
-      <div class="mb-10 grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <div>
-          <p class="mt-0 mb-6 text-base font-bold c-black-90"> Company </p>
-
-          <ul class="p-0 flex flex-col gap-4 list-none">
-            <li>
-              <a class="text-base font-normal c-black-90" href="https://mightyid.ca/about"> About </a>
-            </li>
-            <!-- <li>
-              <a class="text-base font-normal c-black-90" href=""> Blog </a>
-            </li>
-            <li>
-              <a class="text-base font-normal c-black-90" href=""> Contact </a>
-            </li>
-            <li>
-              <a class="text-base font-normal c-black-90" href=""> Terms of Service </a>
-            </li>
-            <li>
-              <a class="text-base font-normal c-black-90" href=""> Privacy Policy </a>
-            </li> -->
-          </ul>
+  <footer class="py-[48px] px-4 lg:px-0 bg-[#F9F9F9]">
+    <div class="container m-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-4">
+          <nuxt-link to="/sign-in">
+            <img class="" src="~/assets/images/logo.svg" alt="" />
+          </nuxt-link>
         </div>
 
-        <div>
-          <p class="mt-0 mb-6 text-base font-bold c-black-90"> Canada Office </p>
-
-          <ul class="p-0 flex flex-col gap-4 list-none">
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Phone </p>
-              <a class="text-base font-normal c-black-90" href="tel:+17789278513"> (+1) 778 927 8513 </a>
-            </li>
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Email </p>
-              <a class="text-base font-normal c-black-90" href="mailto:info@mightyid.ca"> info@mightyid.ca </a>
-            </li>
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Address </p>
-              <p class="mt-0 text-base font-normal c-black-90">
-                1250 Homer Street, Unit 501, Vancouver, BC V6B 1C6, Canada
-              </p>
-            </li>
-          </ul>
+        <div class="flex flex-col gap-4">
+          <p class="m-0 pb-2 text-base font-bold c-black-90"> Chính sách </p>
+          <nuxt-link href="/terms-of-conditions" target="_blank" class="text-base font-normal c-black-90 block">
+            Điều khoản sử dụng
+          </nuxt-link>
+          <nuxt-link href="/privacy" target="_blank" class="text-base font-normal c-black-90 block">
+            Chính sách bảo mật
+          </nuxt-link>
         </div>
 
-        <div>
-          <p class="mt-0 mb-6 text-base font-bold c-black-90"> Vietnam Office </p>
+        <div class="flex flex-col gap-4">
+          <p class="m-0 pb-2 text-base font-bold c-black-90"> Liên hệ </p>
+          <p class="m-0 text-base font-normal c-black-90">
+            <span class="text-base font-normal c-black-60 block"> Điện thoại</span>
+            <span class="text-base font-normal c-black-90 block">(+84) 78 555 2875</span>
+          </p>
 
-          <ul class="p-0 flex flex-col gap-4 list-none">
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Phone </p>
-              <a class="text-base font-normal c-black-90" href="tel:+84785552875"> (+84) 785 552 875 </a>
-            </li>
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Email </p>
-              <a class="text-base font-normal c-black-90" href="mailto:info@mightyid.ca"> info@mightyid.ca </a>
-            </li>
-            <li>
-              <p class="m-0 text-base font-normal c-black-60"> Address </p>
-              <p class="mt-0 text-base font-normal c-black-90">
-                64 Truong Dinh st, Vo Thi Sau ward, district 3, HCMC, Vietnam
-              </p>
-            </li>
-          </ul>
+          <p class="m-0 text-base font-normal c-black-90">
+            <span class="text-base font-normal c-black-60 block">Email</span>
+            <span class="text-base font-normal c-black-90 block">admin@mightyid.ca</span>
+          </p>
+
+          <p class="m-0 text-base font-normal c-black-90">
+            <span class="text-base font-normal c-black-60 block"> Địa chỉ</span>
+            <span class="mb-4 text-base font-normal c-black-90 block">
+              Tầng 2, Tòa nhà Vinafor Sài Gòn, Đường Trương Định, Quận 3, Thành phố Hồ Chí Minh, Việt Nam
+            </span>
+          </p>
         </div>
       </div>
 
-      <div class="pt-10 border-t border-t-solid border-t-[#C2C2C2]">
-        <nuxt-link to="/">
-          <img class="h-[48px]" src="~/assets/images/logo.svg" alt="" />
-        </nuxt-link>
+      <div class="mb-6 mt-[64px] h-[1px] w-full bg-[#313131]"></div>
 
-        <p class="mt-2 mb-0 text base font-normal c-[#8A8A8A]"> © MightyID Chatbot 2025 </p>
+      <div class="flex justify-center gap-10">
+        <span class="text-base font-normal text-[#676767]"> ©2024 MightyID Vietnam </span>
       </div>
     </div>
   </footer>

@@ -42,8 +42,8 @@ const form = defineModel('form', { default: {} }) as any
         />
         <BaseCheckbox
           v-model="form['Nhóm Kĩ thuật']['Tôi thích làm việc có sử dụng tay chân (làm vườn, sửa chữa nhà cửa)']"
-          label="Tôi thích làm việc có sử dụng tay chân (làm vườn, sửa chữa nhà cửa)']"
-          name="Tôi thích làm việc có sử dụng tay chân (làm vườn, sửa chữa nhà cửa)']"
+          label="Tôi thích làm việc có sử dụng tay chân (làm vườn, sửa chữa nhà cửa)"
+          name="Tôi thích làm việc có sử dụng tay chân (làm vườn, sửa chữa nhà cửa)"
         />
         <BaseCheckbox
           v-model="form['Nhóm Kĩ thuật']['Tôi thích tập thể dục']"
