@@ -610,7 +610,8 @@
     "confirmation": "Confirmation",
     "signup" : "Signup",
     "zalo": "Zalo",
-    "mail" :"Mail"
+    "mail" :"Mail",
+    "recommended": "Recommended"
 
   },
   "button": {
@@ -639,7 +640,7 @@
     "export_pdf": "Export pdf",
     "only_view": "Only view",
     "invite": "Invite",
-    "clear" : "Xóa"
+    "clear" : "Clear"
   },
   "notifications": {
     "admin": {
@@ -870,5 +871,66 @@
     "Kết nối Webhook để nhận thông báo tức thì từ các nền tảng bên ngoài" :"Connect Webhooks to Receive Instant Notifications from External Platforms – No More Manual Checking.",
     "Company": "Company"
 
+  },
+  "pricing": {
+    "title": "MULTI-CHANNEL ENROLLMENT SOLUTION",
+    "subtitle": "Choose the right package - Increase enrollment efficiency - Optimize processes",
+    "plans": {
+      "basic": {
+        "name": "Basic",
+        "subtitle": "Solid Foundation"
+      },
+      "eco": {
+        "name": "Eco",
+        "subtitle": "Comprehensive Solution"
+      },
+      "pro": {
+        "name": "Pro",
+        "subtitle": "Complete Optimization"
+      }
+    },
+    "sections": {
+      "chatbot": "Smart Chatbot - 24/7 Support",
+      "crm": "CRM - Professional Enrollment Management",
+      "smartapply": "SmartApply - Optimize Profiles & Admission Process"
+    },
+    "features": {
+      "chatbot": {
+        "integration": "Integration with websites, fanpages and other enrollment channels",
+        "customization": "Can be customized according to specific requirements of each center and school",
+        "instant_response": "Receive hundreds of questions and answer instantly",
+        "registration_support": "Support registration information of students enrolling at centers and schools"
+      },
+      "crm": {
+        "lead_management": "Create leads - manage workflow",
+        "role_permissions": "Role-based staff permissions",
+        "professional_process": "Professional enrollment process management",
+        "detailed_reports": "Provide detailed reports on enrollment status over time",
+        "auto_sync": "Automatically sync chatbot student information",
+        "notification_channels": "Register to receive notifications through channels"
+      },
+      "smartapply": {
+        "profile_management": "Create, update student profiles and track online profile progress"
+      },
+      "advanced": {
+        "third_party_api": "Third-party partners, APIs - Academic system integration",
+        "system_integration": "Connect with school academic systems, helping to synchronize student data",
+        "webhook_connection": "Webhook - API connection with system",
+        "webhook_creation": "Create webhooks for APIs during chatbot operation",
+        "webhook_setup": "Webhook setup"
+      }
+    },
+    "limitations": {
+      "title": "Package limitations:",
+      "applications": "Number of free profiles:",
+      "setup_fee": "Fee per profile if exceeding quantity:",
+      "support_fee": "Annual maintenance fee:"
+    },
+    "notes": {
+      "title": "Important notes:",
+      "basic": "Suitable for small-scale learning centers and schools that need basic solutions to automate enrollment processes.",
+      "eco": "For medium-scale centers that need effective enrollment management. Integration with existing academic systems. Automate processes from counseling to enrollment.",
+      "pro": "For large schools and educational corporations. Comprehensive integration with existing systems. Multi-channel support and complete automation of A-Z enrollment processes with detailed reporting."
+    }
   }
 }

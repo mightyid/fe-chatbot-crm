@@ -610,7 +610,9 @@
     "confirmation" : "Xác nhận",
     "signup" : "Đã đăng ký",
     "zalo": "Zalo",
-    "mail" :"Mail"
+    "mail" :"Mail",
+    "recommended": "Khuyến nghị"
+
   },
   "button": {
     "detail": "Chi tiết",
@@ -870,5 +872,66 @@
     "Kết nối Webhook để nhận thông báo tức thì từ các nền tảng bên ngoài" : "Kết nối Webhook để nhận thông báo tức thì từ các nền tảng bên ngoài. Không còn phải kiểm tra thủ công.",
     "Company" : "Công ty"
 
+  },
+  "pricing": {
+    "title": "GIẢI PHÁP TUYỂN SINH ĐA KÊNH",
+    "subtitle": "Lựa chọn gói phù hợp - Tăng hiệu quả tuyển sinh - Tối ưu hóa quy trình",
+    "plans": {
+      "basic": {
+        "name": "Basic",
+        "subtitle": "Khởi đầu vững chắc"
+      },
+      "eco": {
+        "name": "Eco",
+        "subtitle": "Giải pháp toàn diện"
+      },
+      "pro": {
+        "name": "Pro",
+        "subtitle": "Tối ưu toàn phần"
+      }
+    },
+    "sections": {
+      "chatbot": "Chatbot thông minh - Tư vấn 24/7",
+      "crm": "CRM - Quản lý tuyển sinh chuyên nghiệp",
+      "smartapply": "SmartApply - Tối ưu hồ sơ & quy trình nhập học"
+    },
+    "features": {
+      "chatbot": {
+        "integration": "Tích hợp với các website, fanpage và các kênh tuyển sinh khác",
+        "customization": "Có thể tùy chỉnh theo yêu cầu riêng của từng trung tâm, trường học",
+        "instant_response": "Nhận được đến hàng trăm câu hỏi và trả lời ngay tức thì",
+        "registration_support": "Hỗ trợ đăng ký thông tin của học sinh, học viên đăng ký học tại trung tâm, trường học"
+      },
+      "crm": {
+        "lead_management": "Tạo lead - quản lý workflow",
+        "role_permissions": "Phân quyền theo vai trò nhân viên",
+        "professional_process": "Quản lý quy trình tuyển sinh chuyên nghiệp",
+        "detailed_reports": "Cung cấp báo cáo chi tiết về tình hình tuyển sinh theo thời gian",
+        "auto_sync": "Tự động đồng bộ thông tin học viên chatbot",
+        "notification_channels": "Đăng ký nhận thông báo thông qua các kênh"
+      },
+      "smartapply": {
+        "profile_management": "Tạo, cập nhật hồ sơ của học sinh theo dõi tiến độ hồ sơ trực tuyến"
+      },
+      "advanced": {
+        "third_party_api": "Đối tác, API của bên thứ 3 - Tích hợp hệ thống học vụ",
+        "system_integration": "Kết nối với các hệ thống học vụ của trường học, giúp đồng bộ dữ liệu học sinh",
+        "webhook_connection": "Webhook - Kết nối API với hệ thống",
+        "webhook_creation": "Tạo webhook của các API trong quá trình chatbot hoạt động",
+        "webhook_setup": "Cài đặt webhook"
+      }
+    },
+    "limitations": {
+      "title": "Giới hạn gói:",
+      "applications": "Số lượng hồ sơ miễn phí:",
+      "setup_fee": "Phí mỗi hồ sơ nếu vượt quá số lượng:",
+      "support_fee": "Phí duy trì hằng năm:"
+    },
+    "notes": {
+      "title": "Ghi chú quan trọng:",
+      "basic": "Phù hợp với các trung tâm học tập và trường học có quy mô nhỏ, cần giải pháp cơ bản để tự động hóa quy trình tuyển sinh.",
+      "eco": "Dành cho các trung tâm có quy mô vừa, cần quản lý tuyển sinh hiệu quả. Tích hợp với hệ thống học vụ hiện có. Tự động hóa quy trình từ tư vấn đến nhập học.",
+      "pro": "Dành cho các trường học lớn và các tập đoàn giáo dục. Tích hợp toàn diện với hệ thống hiện có. Hỗ trợ đa kênh và tự động hóa hoàn toàn quy trình tuyển sinh từ A-Z với báo cáo chi tiết."
+    }
   }
 }
