@@ -331,7 +331,7 @@ watch(
               <FormTest v-model:form="formTest" />
             </div>
 
-            <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled || !isReady">
+            <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled">
               {{ info?.label_btn || t('common.start') }}
             </Button>
           </div>

@@ -140,7 +140,7 @@ watch(
         class="flex-1"
         name="phone"
         :label="t('common.phone')"
-        :rules="{ required: false }"
+        :rules="{ required: true }"
         v-model="form.phone"
       />
 
