@@ -611,7 +611,11 @@
     "signup" : "Signup",
     "zalo": "Zalo",
     "mail" :"Mail",
-    "recommended": "Recommended"
+    "recommended": "Recommended",
+    "terms": "Terms of use",
+    "privacy" :"Privacy",
+    "contact" : "Contact",
+    "location_company" : "123 Truong Dinh Street, Xuan Hoa Ward, Ho Chi Minh City"
 
   },
   "button": {
@@ -922,7 +926,7 @@
     },
     "limitations": {
       "title": "Package limitations:",
-      "applications": "Number of free profiles:",
+      "applications": "Number of free applications:",
       "setup_fee": "Fee per profile if exceeding quantity:",
       "support_fee": "Annual maintenance fee:"
     },

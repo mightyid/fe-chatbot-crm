@@ -611,7 +611,11 @@
     "signup" : "Đã đăng ký",
     "zalo": "Zalo",
     "mail" :"Mail",
-    "recommended": "Khuyến nghị"
+    "recommended": "Khuyến nghị",
+    "terms": "Điều khoản sử dụng",
+    "privacy" :"Chính sách bảo mật",
+    "contact" : "Liên hệ",
+    "location_company" : "123 Trương Định, phường Xuân Hòa, Hồ Chí Minh"
 
   },
   "button": {

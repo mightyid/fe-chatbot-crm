@@ -36,11 +36,8 @@ const pricingPlansConfig = [
       ],
       smartapply: [{ key: 'profile_management', available: false }],
       advanced: [
-        { key: 'third_party_api', available: false },
-        { key: 'system_integration', available: false },
         { key: 'webhook_connection', available: false },
-        { key: 'webhook_creation', available: false },
-        { key: 'webhook_setup', available: false },
+        { key: 'system_integration', available: false },
       ],
     },
     limitations: {
@@ -89,11 +86,8 @@ const pricingPlansConfig = [
       ],
       smartapply: [{ key: 'profile_management', available: true }],
       advanced: [
-        { key: 'third_party_api', available: true },
-        { key: 'system_integration', available: true },
         { key: 'webhook_connection', available: true },
-        { key: 'webhook_creation', available: true },
-        { key: 'webhook_setup', available: true },
+        { key: 'system_integration', available: false },
       ],
     },
     limitations: {
@@ -142,11 +136,8 @@ const pricingPlansConfig = [
       ],
       smartapply: [{ key: 'profile_management', available: true }],
       advanced: [
-        { key: 'third_party_api', available: true },
-        { key: 'system_integration', available: true },
         { key: 'webhook_connection', available: true },
-        { key: 'webhook_creation', available: true },
-        { key: 'webhook_setup', available: true },
+        { key: 'system_integration', available: true },
       ],
     },
     limitations: {
@@ -365,18 +356,6 @@ const pricingPlans = computed(() => {
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Note Section -->
-      <div class="mt-12 bg-yellow-50 border border-yellow-200 p-6 rounded-lg">
-        <h4 class="font-bold mb-3 text-yellow-800">{{ t('pricing.notes.title') }}</h4>
-        <ul class="space-y-2 text-sm text-yellow-700">
-          <li>• <strong>Basic:</strong> {{ t('pricing.notes.basic') }}</li>
-          <li
-            >• <strong>Eco ({{ recommendedText }}):</strong> {{ t('pricing.notes.eco') }}</li
-          >
-          <li>• <strong>Pro:</strong> {{ t('pricing.notes.pro') }}</li>
-        </ul>
       </div>
     </div>
   </section>

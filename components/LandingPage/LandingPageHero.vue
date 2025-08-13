@@ -15,7 +15,7 @@ const { t } = useI18n()
             {{ t('home.Chọn giải pháp phù hợp với mọi quy mô trung tâm và trường học') }}
           </p>
 
-          <Button class="block mx-auto lg:mx-unset" :label="t('home.Bắt đầu ngay')" severity="primary" type="button" />
+          <Button class="block mx-auto" :label="t('home.Bắt đầu ngay')" severity="primary" type="button" />
         </div>
 
         <div class="flex-1" data-aos="fade-left">

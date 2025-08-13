@@ -10,54 +10,57 @@
         <img src="/assets/images/huong-nghiep/orientation-1.svg" class="w-full" alt="" />
         <div class="text-base font-bold mt-4 text-center"> Ứng dụng công nghệ A.I - Phân tích tức thì </div>
         <ul class="list-disc w-full !p-4 !m-0">
-          <li class="text-base c-black-80"> Sử dụng trí tuệ nhân tạo để phân tích điểm mạnh - điểm yếu cá nhân </li>
-          <li class="text-base c-black-80"> Kết quả hiển thị ngay sau khi hoàn thành, không cần chờ đợi </li>
-          <li class="text-base c-black-80"> Giao diện thân thiện, dễ dùng với mọi đối tượng </li>
+          <li class="text-base c-black-80"> Sử dụng trí tuệ nhân tạo để phân tích điểm mạnh và điểm yếu cá nhân. </li>
+          <li class="text-base c-black-80"> Kết quả hiển thị ngay sau khi hoàn thành, không cần chờ đợi. </li>
+          <li class="text-base c-black-80">
+            Giao diện hướng nghiệp thân thiện theo cách "trò truyện" hơn là "làm bài kiểm tra".
+          </li>
         </ul>
       </div>
       <div class="row-span-1 bg-#E3F0FF p-4 rounded h-full fc ai-c">
         <img src="/assets/images/huong-nghiep/orientation-2.svg" class="h-160px mx-a" alt="" />
-        <div class="text-base font-bold mt-4 text-center">
-          Phù Hợp Thông Tư 22/2023/TT-BGDĐT <br />
-          (Về công tác hướng nghiệp)
-        </div>
+        <div class="text-base font-bold mt-4 text-center"> Hướng nghiệp sớm </div>
         <ul class="list-disc w-full !p-4 !m-0">
-          <li class="text-base c-black-80"> Đáp ứng theo chuẩn hướng nghiệp của Bộ GD&ĐT</li>
-          <li class="text-base c-black-80"> Dễ dàng tích hợp vào chương trình giáo dục phổ thông </li>
+          <li class="text-base c-black-80">
+            Hướng nghiệp từ giai đoạn THCS, theo sát chương trình của Bộ, giúp học sinh có định hướng từ sớm.
+          </li>
+          <li class="text-base c-black-80"> Có thể tích hợp vào chương trình học phổ thông dễ dàng. </li>
         </ul>
       </div>
       <div class="row-span-1 bg-#E8FAFA p-4 rounded h-full fc ai-c">
         <img src="/assets/images/huong-nghiep/orientation-3.svg" class="h-160px mx-a" alt="" />
         <div class="text-base font-bold mt-4 text-center">
-          Dựa theo tiêu chuẩn quốc tế <br />
-          Holland Career System
+          Dựa trên hệ thống phân loại nghề nghiệp <br />
+          Holland theo tiêu chuẩn quốc tế
         </div>
         <ul class="list-disc w-full !p-4 !m-0">
-          <li class="text-base c-black-80"> Đánh giá năng lực, sở thích, xu hướng nghề nghiệp theo mô hình quốc tế </li>
           <li class="text-base c-black-80">
-            Phân tích khoa học dựa trên các học thuyết Holland, Gardner và Big Five
+            Đánh giá năng lực, sở thích, xu hướng nghề nghiệp theo mô hình quốc tế.
           </li>
+          <li class="text-base c-black-80"> Phân tích khoa học dựa trên các học thuyết Holland. </li>
         </ul>
       </div>
       <div class="row-span-1 bg-#F3EEFF p-4 rounded h-full fc ai-c">
         <img src="/assets/images/huong-nghiep/orientation-4.svg" class="h-160px mx-a" alt="" />
-        <div class="text-base font-bold mt-4 text-center"> Báo cáo thống kê dành cho nhà trường </div>
+        <div class="text-base font-bold mt-4 text-center"> Hướng nghiệp toàn diện </div>
         <ul class="list-disc w-full !p-4 !m-0">
           <li class="text-base c-black-80">
-            Nhà trường có thể theo dõi kết quả học sinh theo lớp, khối, hỗ trợ quản trị giáo dục và định hướng đào tạo
-            phù hợp
+            Kết nối thị trường lao động: Cập nhật xu hướng tuyển dụng, nhân lực, mức lương.
           </li>
           <li class="text-base c-black-80">
-            Dữ liệu dễ dàng xuất báo cáo phục vụ hội đồng, phụ huynh và lập kế hoạch tuyển sinh
+            Tích hợp thông tin đào tạo: Liên kết dữ liệu, chương trình đào tạo để xây lộ trình học.
+          </li>
+          <li class="text-base c-black-80">
+            Đánh giá tài chính: Phân tích khả năng chi trả, tối ưu và bền vững lựa chọn nghề.
           </li>
         </ul>
       </div>
       <div class="row-span-1 bg-#FAECE8 p-4 rounded h-full fc ai-c">
         <img src="/assets/images/huong-nghiep/orientation-5.svg" class="h-160px mx-a" alt="" />
-        <div class="text-base font-bold mt-4 text-center"> Không cần cài đặt - Dùng ngay </div>
+        <div class="text-base font-bold mt-4 text-center">Không cần cài đặt - Dùng ngay </div>
         <ul class="list-disc w-full !p-4 !m-0">
-          <li class="text-base c-black-80"> Bắt đầu dễ dàng trên trình duyệt, không cần app hay đăng nhập </li>
-          <li class="text-base c-black-80"> Sử dụng thuận tiện trên điện thoại </li>
+          <li class="text-base c-black-80"> Bắt đầu dễ dàng trên trình duyệt, không cần app hay đăng nhập. </li>
+          <li class="text-base c-black-80"> Sử dụng thuận tiện trên điện thoại. </li>
         </ul>
       </div>
     </div>

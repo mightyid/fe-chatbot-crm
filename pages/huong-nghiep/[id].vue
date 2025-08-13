@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 import BotHuongNghiep from '~/components/huong-nghiep/BotHuongNghiep.vue'
+import ComAbout from '~/components/huong-nghiep/ComAbout.vue'
 import ComAdvisor from '~/components/huong-nghiep/ComAdvisor.vue'
 import ComHero from '~/components/huong-nghiep/ComHero.vue'
+import ComHolland from '~/components/huong-nghiep/ComHolland.vue'
+import ComHowItWork from '~/components/huong-nghiep/ComHowItWork.vue'
 import ComOrientation from '~/components/huong-nghiep/ComOrientation.vue'
+import ComPricing from '~/components/huong-nghiep/ComPricing.vue'
 import ComTarget from '~/components/huong-nghiep/ComTarget.vue'
+import ComVisor from '~/components/huong-nghiep/ComVisor.vue'
 import LandingPageFooter from '~/components/LandingPage/LandingPageFooter.vue'
 definePageMeta({
   auth: false,
@@ -24,9 +29,25 @@ useHead({
 <template>
   <div class="fc">
     <ComHero />
-    <ComOrientation />
+    <ComAbout />
+    <div class="mt-134px">
+      <ComVisor />
+    </div>
+    <div class="mt-134px">
+      <ComHolland />
+    </div>
+    <div class="mt-134px">
+      <ComHowItWork />
+    </div>
+    <div class="mt-134px">
+      <ComOrientation />
+    </div>
+
     <div class="mt-134px">
       <ComTarget />
+    </div>
+    <div class="mt-134px">
+      <ComPricing />
     </div>
     <!-- <div class="mt-134px">
       <ComAdvisor />

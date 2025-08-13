@@ -12,19 +12,19 @@ const { t } = useI18n()
         </div>
 
         <div class="flex flex-col gap-4">
-          <p class="m-0 pb-2 text-base font-bold c-black-90"> Chính sách </p>
+          <p class="m-0 pb-2 text-base font-bold c-black-90"> {{ t('common.company') }} </p>
           <nuxt-link href="/terms-of-conditions" target="_blank" class="text-base font-normal c-black-90 block">
-            Điều khoản sử dụng
+            {{ t('common.terms') }}
           </nuxt-link>
           <nuxt-link href="/privacy" target="_blank" class="text-base font-normal c-black-90 block">
-            Chính sách bảo mật
+            {{ t('common.privacy') }}
           </nuxt-link>
         </div>
 
         <div class="flex flex-col gap-4">
-          <p class="m-0 pb-2 text-base font-bold c-black-90"> Liên hệ </p>
+          <p class="m-0 pb-2 text-base font-bold c-black-90"> {{ t('common.contact') }} </p>
           <p class="m-0 text-base font-normal c-black-90">
-            <span class="text-base font-normal c-black-60 block"> Điện thoại</span>
+            <span class="text-base font-normal c-black-60 block"> {{ t('common.phone') }} </span>
             <span class="text-base font-normal c-black-90 block">(+84) 78 555 2875</span>
           </p>
 
@@ -34,9 +34,9 @@ const { t } = useI18n()
           </p>
 
           <p class="m-0 text-base font-normal c-black-90">
-            <span class="text-base font-normal c-black-60 block"> Địa chỉ</span>
+            <span class="text-base font-normal c-black-60 block"> {{ t('common.address') }} </span>
             <span class="mb-4 text-base font-normal c-black-90 block">
-              Tầng 2, Tòa nhà Vinafor Sài Gòn, Đường Trương Định, Quận 3, Thành phố Hồ Chí Minh, Việt Nam
+              {{ t('common.location_company') }}
             </span>
           </p>
         </div>
