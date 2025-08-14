@@ -14,6 +14,8 @@ const appStore = useAppStore()
 const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
+// const botID = ref(route.params.id)
+const botID = ref(route.params.id)
 
 if (route.query?.token) {
   appStore.tokenBot = route.query.token as string
@@ -44,7 +46,7 @@ const boxStyle = ref({
   overflow: 'hidden',
 })
 const getData = async () => {
-  const { result }: any = await $api(`incognito/${route.params.id}`)
+  const { result }: any = await $api(`incognito/${botID.value}`)
   info.value = result
   if (token.value) {
     getInfoGroup()
@@ -59,7 +61,7 @@ const getData = async () => {
 }
 const getInfoGroup = async () => {
   try {
-    const { result }: any = await $api(`incognito/${route.params.id}/lead`, {
+    const { result }: any = await $api(`incognito/${botID.value}/lead`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -92,7 +94,7 @@ const startChat = async () => {
     //@ts-ignore
     newForm.zalo = true
   }
-  const { result }: any = await $api(`incognito/${route.params.id}/start`, {
+  const { result }: any = await $api(`incognito/${botID.value}/start`, {
     method: 'POST',
     body: {
       form: newForm,
@@ -115,7 +117,7 @@ const startChat = async () => {
 
 const getMessage = async () => {
   if (isLoadMore.value) {
-    const { result }: any = await $api(`incognito/${route.params.id}/message`, {
+    const { result }: any = await $api(`incognito/${botID.value}/message`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -137,7 +139,7 @@ const getMessage = async () => {
 const sendMessage = async () => {
   isLoading.value = true
 
-  const { result }: any = await $api(`incognito/${route.params.id}/send`, {
+  const { result }: any = await $api(`incognito/${botID.value}/send`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token.value}`,
