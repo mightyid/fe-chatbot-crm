@@ -65,7 +65,7 @@ const changeStatus = (val: any) => {
   $api(`admin/company/change-status`, {
     method: 'PUT',
     body: {
-      bot_id: val._id,
+      company_id: val._id,
       is_active: val.is_active,
     },
   })
