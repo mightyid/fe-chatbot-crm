@@ -3,7 +3,7 @@ import FormPassword from '~/components/user/FormPassword.vue'
 const { $api } = useNuxtApp()
 const toast = useToast()
 const changePassword = async (form: any) => {
-  const { result, statusCode }: any = await $api('admin/change-password', {
+  const { result, statusCode }: any = await $api('admin/auth/change-password', {
     method: 'PUT',
     body: form,
   })
