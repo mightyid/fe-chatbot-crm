@@ -51,7 +51,7 @@
             Tích hợp thông tin đào tạo: Liên kết dữ liệu, chương trình đào tạo để xây lộ trình học.
           </li>
           <li class="text-base c-black-80">
-            Đánh giá tài chính: Phân tích khả năng chi trả, tối ưu và bền vững lựa chọn nghề.
+            Đánh giá tài chính: Phân tích khả năng chi trả để chọn nghề tối ưu và bền vững.
           </li>
         </ul>
       </div>

@@ -327,9 +327,9 @@ watch(
                 placeholder="Enter "
               />
             </div>
-            <div class="overflow-auto flex-1">
+            <!-- <div class="overflow-auto flex-1">
               <FormTest v-model:form="formTest" />
-            </div>
+            </div> -->
 
             <Button class="w-full !bg-primary sticky bottom-0" @click="startChat" :disabled="checkDisabled">
               {{ info?.label_btn || t('common.start') }}

@@ -24,7 +24,7 @@
         </span>
       </div>
       <div class="w-full fc ai-c jc-c">
-        <img src="~/assets/images/huong-nghiep/holland.svg" alt="" />
+        <img src="~/assets/images/huong-nghiep/holland.svg" class="max-w-full" alt="" />
       </div>
     </div>
   </div>

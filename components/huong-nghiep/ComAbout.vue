@@ -39,7 +39,7 @@
         </span>
       </div>
       <div class="w-full fc ai-c jc-c">
-        <img src="~/assets/images/huong-nghiep/about-company.png" alt="" />
+        <img src="~/assets/images/huong-nghiep/about-company.png" class="max-w-full" alt="" />
       </div>
     </div>
   </div>
