@@ -27,7 +27,8 @@ const getDataTop = async () => {
   const { result }: any = await $api('/dashboard/top', {
     method: 'GET',
     params: {
-      ...query.value,
+      from: dayjs(query.value.from).format('YYYY-MM-DD'),
+      to: dayjs(query.value.to).format('YYYY-MM-DD'),
     },
   })
   console.log(result, 'result')
@@ -37,7 +38,8 @@ const getDataChart = async () => {
   const { result }: any = await $api('/dashboard/chart', {
     method: 'GET',
     params: {
-      ...query.value,
+      from: dayjs(query.value.from).format('YYYY-MM-DD'),
+      to: dayjs(query.value.to).format('YYYY-MM-DD'),
     },
   })
   console.log(result, 'result')

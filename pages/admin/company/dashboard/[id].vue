@@ -29,7 +29,8 @@ const getDataTop = async () => {
     method: 'GET',
     params: {
       company_id: route.params.id,
-      ...query.value,
+      from: dayjs(query.value.from).format('YYYY-MM-DD'),
+      to: dayjs(query.value.to).format('YYYY-MM-DD'),
     },
   })
   console.log(result, 'result')
@@ -40,7 +41,8 @@ const getDataChart = async () => {
     method: 'GET',
     params: {
       company_id: route.params.id,
-      ...query.value,
+      from: dayjs(query.value.from).format('YYYY-MM-DD'),
+      to: dayjs(query.value.to).format('YYYY-MM-DD'),
     },
   })
   console.log(result, 'result')
