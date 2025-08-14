@@ -149,6 +149,9 @@ watchDebounced(
                 <nuxt-link :to="`/admin/company/edit/${slotProps.data._id}`">
                   <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
                 </nuxt-link>
+                <nuxt-link :to="`/admin/company/dashboard/${slotProps.data._id}`">
+                  <img class="icon-lg" src="~/assets/icons/i-dashboard-circle.svg" alt="" v-tooltip.top="'Dashboard'" />
+                </nuxt-link>
                 <button @click="confirmDelete(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />
                 </button>

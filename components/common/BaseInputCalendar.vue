@@ -77,7 +77,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'dateSelect', 'updateModelValue'])
 
 const { t } = useI18n()
-const { $moment } = useNuxtApp()
+const { $dayjs } = useNuxtApp()
 
 const rules = computed(() => props.rules)
 
@@ -87,7 +87,7 @@ const formatDate = () => {
       const array = [] as any[]
 
       for (let item of props.modelValue as any[]) {
-        const element = $moment(item).isValid() ? new Date(item) : ''
+        const element = $dayjs(item).isValid() ? new Date(item) : ''
         if (element) {
           array.push(element)
         }
@@ -95,7 +95,7 @@ const formatDate = () => {
 
       return array
     } else {
-      return props.modelValue && $moment(props.modelValue).isValid() ? new Date(props.modelValue) : null
+      return props.modelValue && $dayjs(props.modelValue).isValid() ? new Date(props.modelValue) : null
     }
   }
 }

@@ -615,7 +615,8 @@
     "terms": "Terms of use",
     "privacy" :"Privacy",
     "contact" : "Contact",
-    "location_company" : "123 Truong Dinh Street, Xuan Hoa Ward, Ho Chi Minh City"
+    "location_company" : "123 Truong Dinh Street, Xuan Hoa Ward, Ho Chi Minh City",
+    "dashboard" : "Dashboard"
 
   },
   "button": {

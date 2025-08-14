@@ -6,6 +6,8 @@ import {
   iChatbotActive,
   iCrm,
   iCrmActive,
+  iDashboard,
+  iDashboardActive,
   iEmployee,
   iEmployeeActive,
   iMessage,
@@ -63,6 +65,13 @@ const DEFAULT_NAV = [
     name: 'common.menu',
     menuKey: 'menu',
     menus: [
+      {
+        title: 'common.dashboard',
+        key: 'dashboard',
+        icon: iDashboard,
+        iconActive: iDashboardActive,
+        to: '/dashboard',
+      },
       {
         title: 'common.crm',
         key: 'crm',
