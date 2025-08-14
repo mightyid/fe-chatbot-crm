@@ -13,7 +13,7 @@ onMounted(() => {
 })
 
 const setChartData = () => {
-  const arr = props.data?.incognito?.map((item: any) => item._id)
+  const arr = props.data?.incognito?.map((item: any) => item.date)
   const dataIncognito = props.data?.incognito?.map((item: any) => item.total)
   const dataQualified = props.data?.quality?.map((item: any) => item.total)
   return {
