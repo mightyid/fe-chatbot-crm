@@ -16,6 +16,9 @@ const form = ref<any>({
     referral_template_id: '',
     verify: false,
     is_active: true,
+    bot: null,
+    iframe: null,
+    webhook_secret: '',
   },
 })
 const { handleSubmit, resetForm } = useForm()
@@ -30,6 +33,23 @@ const getData = async () => {
   }
   isLoading.value = false
 }
+const listChatbot = ref<any>([])
+const listIframe = ref<any>([])
+
+const getListBot = async () => {
+  const { loading, result, total_pages, total }: any = await $api('chat-bot', {
+    method: 'GET',
+  })
+  listChatbot.value = result || []
+}
+const getListIframe = async () => {
+  const { result }: any = await $api(`iframe`, {
+    method: 'GET',
+  })
+  listIframe.value = result || []
+}
+getListBot()
+getListIframe()
 
 getData()
 
@@ -156,13 +176,11 @@ if (route.query?.code?.length && route.query?.state) {
           v-model="form.zalo.crm_template_id"
           name="crm_template_id"
           label="Crm Template ID"
-          :rules="{ required: true }"
         />
         <BaseInputText
           v-model="form.zalo.referral_template_id"
           name="referral_template_id"
           label="Referral Template ID"
-          :rules="{ required: true }"
         />
         <BaseInputText
           v-model="form.zalo.phone_test"
@@ -170,7 +188,30 @@ if (route.query?.code?.length && route.query?.state) {
           label="Phone test"
           :rules="{ required: true }"
         />
-        <div class="flex-1"></div>
+        <BaseInputText
+          label="Webhook Secret (OA Secret Key)"
+          name="webhook_secret"
+          v-model="form.zalo.webhook_secret"
+        />
+        <BaseInputSelect
+          label="Bot"
+          :options="listChatbot"
+          name="bot_id"
+          :filter="true"
+          option-label="name"
+          option-value="_id"
+          v-model="form.zalo.bot"
+        />
+        <BaseInputSelect
+          :label="t('common.campaign')"
+          :options="listIframe"
+          name="iframe_id"
+          :filter="true"
+          option-label="name"
+          option-value="_id"
+          v-model="form.zalo.iframe"
+        />
+        <!-- <div class="flex-1"></div> -->
         <BaseInputTextArea
           v-if="form.zalo.access_token"
           v-model="form.zalo.access_token"
@@ -201,8 +242,7 @@ if (route.query?.code?.length && route.query?.state) {
               form.zalo.phone_test &&
               form.zalo.app_id &&
               form.zalo.secret_key &&
-              form.zalo.crm_template_id &&
-              form.zalo.referral_template_id
+              form.zalo.access_token
             "
             :loading="isLoading"
             severity="primary"
@@ -211,7 +251,7 @@ if (route.query?.code?.length && route.query?.state) {
           />
           <Button
             label="Get Access Token"
-            v-if="!form.zalo.verify"
+            v-if="!form.zalo.access_token || !form.zalo.phone_test"
             severity="primary"
             @click="getUrlLoginZalo"
             :disabled="isLoading"
