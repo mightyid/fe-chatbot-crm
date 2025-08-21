@@ -23,6 +23,7 @@ const form = ref<any>({
   logo: '',
   is_active: true,
   bot_quantity: 1,
+  referral_quantity: 1,
 })
 
 const onSubmit = handleSubmit(() => {
@@ -93,6 +94,13 @@ watch(
         label="Bot Quantity"
         :rules="{ required: isEdit ? false : true }"
         v-model="form.bot_quantity"
+      />
+      <BaseInputNumber
+        class="flex-1"
+        name="referral_quantity"
+        label="Referral Quantity"
+        :rules="{ required: isEdit ? false : true }"
+        v-model="form.referral_quantity"
       />
       <BaseInputPassword
         class="flex-1"

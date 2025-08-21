@@ -108,11 +108,17 @@ watchDebounced(
     <div class="mb-4 flex items-center justify-between gap-[16px]">
       <h1 class="flex-1 m-0 page-heading"> {{ t('common.management') }} </h1>
 
-      <nuxt-link
+      <!-- <nuxt-link
         class="text-base font-normal text-left c-black-90 no-underline bg-transparent transition-all hover:bg-gray-10"
         to="/referral/create"
       >
         <Button> {{ t('button.invite') }} </Button>
+      </nuxt-link> -->
+      <nuxt-link
+        class="text-base font-normal text-left c-black-90 no-underline bg-transparent transition-all hover:bg-gray-10"
+        to="/referral/management/create"
+      >
+        <Button> {{ t('button.create') }} </Button>
       </nuxt-link>
     </div>
 
