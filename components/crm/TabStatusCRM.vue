@@ -29,9 +29,9 @@ const changeStatus = (val: any) => {
 
 <template>
   <div class="fr jc-sb ai-c rounded-tl-lg rounded-tr-lg bg-white border-b-[1px] border-b-solid border-b-#E9E9E9">
-    <div class="flex items-center gap-0 overflow-x-auto flex-1">
+    <div class="flex items-center gap-0 w-full overflow-x-auto flex-1">
       <div
-        class="fr ai-c gap-2 px-[24px] py-[12px] text-base capitalize relative rounded-tl-lg rounded-tr-lg cursor-pointer"
+        class="fr flex-nowrap ai-c gap-2 px-[24px] py-[12px] text-base capitalize relative rounded-tl-lg rounded-tr-lg cursor-pointer"
         @click="changeStatus('')"
         :class="{ 'border-b-2px border-b-solid font-bold': route.query?.label_id == '' || !route.query?.label_id }"
         :style="{
@@ -55,7 +55,7 @@ const changeStatus = (val: any) => {
       </div>
 
       <div
-        class="fr ai-c gap-2 px-[24px] py-[12px] text-base capitalize relative rounded-tl-lg rounded-tr-lg cursor-pointer"
+        class="fr ai-c gap-2 px-[24px] py-[12px] text-base capitalize relative rounded-tl-lg rounded-tr-lg cursor-pointer whitespace-nowrap"
         @click="changeStatus(item._id)"
         v-for="(item, index) in labels"
         :class="{ 'border-b-2px border-b-solid font-bold': route.query?.label_id == item._id }"
@@ -65,7 +65,7 @@ const changeStatus = (val: any) => {
         }"
         :key="item.key"
       >
-        <TagIcon :color="item.color" />
+        <TagIcon :color="item.color" class="min-w-24px" />
         {{ item.name }}
         <div
           severity="danger"
