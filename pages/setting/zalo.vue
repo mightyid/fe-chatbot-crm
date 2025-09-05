@@ -27,7 +27,7 @@ const getData = async () => {
   const { result }: any = await $api(`noti-config`, {
     method: 'GET',
   })
-  if (result) {
+  if (result?.zalo) {
     form.value = result
     // getData()
   }
@@ -158,7 +158,7 @@ if (route.query?.code?.length && route.query?.state) {
       <div class="page-heading">
         Zalo config
         <span
-          v-if="form.zalo.verify"
+          v-if="form.zalo?.verify"
           class="c-green text-sm ml-4 px-2 py-1 rounded-lg border-solid border-[1px] border-green"
           >Verified</span
         >
@@ -172,11 +172,7 @@ if (route.query?.code?.length && route.query?.state) {
           :rules="{ required: true }"
         />
 
-        <BaseInputText
-          v-model="form.zalo.crm_template_id"
-          name="crm_template_id"
-          label="Crm Template ID"
-        />
+        <BaseInputText v-model="form.zalo.crm_template_id" name="crm_template_id" label="Crm Template ID" />
         <BaseInputText
           v-model="form.zalo.referral_template_id"
           name="referral_template_id"

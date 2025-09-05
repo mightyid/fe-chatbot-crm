@@ -28,7 +28,7 @@ const getData = async () => {
   const { result }: any = await $api(`noti-config`, {
     method: 'GET',
   })
-  if (result) {
+  if (result?.mail) {
     form.value = result
     // getData()
   }
@@ -91,7 +91,7 @@ const verifyMail = async () => {
       <div class="page-heading">
         Mail config
         <span
-          v-if="form.mail.verify"
+          v-if="form.mail?.verify"
           class="c-green text-sm ml-4 px-2 py-1 rounded-lg border-solid border-[1px] border-green"
           >Verified</span
         >

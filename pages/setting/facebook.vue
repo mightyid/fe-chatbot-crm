@@ -27,7 +27,7 @@ const getData = async () => {
   const { result }: any = await $api(`noti-config`, {
     method: 'GET',
   })
-  if (result) {
+  if (result?.facebook) {
     form.value = result
     // getData()
   }
@@ -80,7 +80,7 @@ getListIframe()
       <div class="page-heading">
         Facebook config
         <span
-          v-if="form.facebook.verify"
+          v-if="form.facebook?.verify"
           class="c-green text-sm ml-4 px-2 py-1 rounded-lg border-solid border-[1px] border-green"
           >Verified
         </span>
