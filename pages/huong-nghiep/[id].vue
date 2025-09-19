@@ -5,6 +5,7 @@ import ComAdvisor from '~/components/huong-nghiep/ComAdvisor.vue'
 import ComHero from '~/components/huong-nghiep/ComHero.vue'
 import ComHolland from '~/components/huong-nghiep/ComHolland.vue'
 import ComHowItWork from '~/components/huong-nghiep/ComHowItWork.vue'
+import ComNghiQuyet from '~/components/huong-nghiep/ComNghiQuyet.vue'
 import ComOrientation from '~/components/huong-nghiep/ComOrientation.vue'
 import ComPricing from '~/components/huong-nghiep/ComPricing.vue'
 import ComTarget from '~/components/huong-nghiep/ComTarget.vue'
@@ -30,6 +31,9 @@ useHead({
   <div class="fc">
     <ComHero />
     <ComAbout />
+    <div class="mt-134px">
+      <ComNghiQuyet />
+    </div>
     <div class="mt-134px">
       <ComVisor />
     </div>

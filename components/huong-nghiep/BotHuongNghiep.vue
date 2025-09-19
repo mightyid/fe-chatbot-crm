@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import BoxChat from '~/components/BoxChat.vue'
 import { io } from 'socket.io-client'
-import FormTest from './FormTest.vue'
 
 definePageMeta({
   auth: false,
@@ -15,7 +14,7 @@ const isShowBoxChat = ref(true)
 const message = ref('')
 const info = ref<any>({})
 // const botID = ref(route.params.id)
-const botID = ref(route.params.id)
+const botID = ref('68998b6a743f5c2842871a49')
 
 if (route.query?.token) {
   appStore.tokenBot = route.query.token as string
