@@ -33,7 +33,7 @@ const editChatbot = async (form: any) => {
   })
 
   if (statusCode) {
-    router.push('admin/chatbot')
+    router.push('/admin/chatbot')
     toast.add({ severity: 'success', summary: 'Successfully', detail: 'Created', life: 3000 })
   }
 }

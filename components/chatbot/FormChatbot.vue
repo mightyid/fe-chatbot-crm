@@ -44,12 +44,16 @@ const form = ref<any>({
 })
 const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
-  const newForm = form.value.form.map((item: any) => {
-    return {
-      key: item.key,
-      label: formOptions.value.find((x: any) => x.key === item.key)?.label,
-    }
-  })
+  let newForm = form.value.form;
+  console.log('isAdminQuery', newForm);
+  if (!props.isAdmin) {
+    newForm = form.value.form.map((item: any) => {
+      return {
+        key: item.key,
+        label: formOptions.value.find((x: any) => x.key === item.key)?.label,
+      }
+    })
+  }
   if (!props.isEdit) {
     emit('onSubmit', { ...toRaw(form.value), form: newForm })
   } else {
@@ -226,7 +230,7 @@ watch(
         </button>
       </div>
     
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 mb-4">
         <label class="flex items-center gap-2 text-base font-normal c-black-90">
           <span>
             Temperature
@@ -239,7 +243,7 @@ watch(
         </div>
       </div>
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 mb-4">
         <label class="flex items-center gap-2 text-base font-normal c-black-90">
           <span>
             Top P
@@ -252,7 +256,7 @@ watch(
         </div>
       </div>
     </div>
-    <div class="my-4 text-lg c-primary font-bold">
+    <div class="my-4 text-lg c-primary font-bold" v-if="!isAdmin">
       Form Request
       <img
         src="~/assets/icons/i-add-primary.svg"
@@ -261,7 +265,7 @@ watch(
         @click="form.form.push({ key: '', label: '' })"
       />
     </div>
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-2 gap-6" v-if="!isAdmin">
       <div class="relative flex-1 fr" v-for="(item, index) in form.form" :key="item.key">
         <Select
           class="flex-1"
