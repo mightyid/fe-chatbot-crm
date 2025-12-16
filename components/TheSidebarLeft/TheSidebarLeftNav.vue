@@ -99,12 +99,12 @@ const DEFAULT_NAV = [
         icon: iReferral,
         iconActive: iReferralActive,
         sub: [
-          {
-            title: 'common.invitation',
-            key: 'invitation',
-            permissionKey: 'view_employee',
-            to: '/referral/invitation',
-          },
+          //{
+          //  title: 'common.invitation',
+          //  key: 'invitation',
+          //  permissionKey: 'view_employee',
+          //  to: '/referral/invitation',
+          // },
           {
             title: 'common.management',
             key: 'Management',
