@@ -10,13 +10,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  }
 })
 const { $api } = useNuxtApp()
 const { t } = useI18n()
 const emit = defineEmits(['onSubmit', 'onCancel', 'onEdit'])
 const route = useRoute()
 const { handleSubmit, resetForm } = useForm()
-const isAdmin = ref(route.query?.isAdmin === 'true' || false)
+const isAdminQuery = ref(route.query?.isAdmin === 'true' || props.isAdmin)
 const form = ref<any>({
   is_active: true,
   is_show: true,
@@ -27,11 +31,16 @@ const form = ref<any>({
   position: 'right',
   color: '#3ABFF8',
   scripts: [],
-  assistant_id: '',
   api_key: '',
   organization: '',
   webhook: '',
   label_btn: 'Start Chat',
+  vector_store_id: '',
+  instruction: '',
+  model: '',
+  top_p: 0.7,
+  temperature: 1.5,
+  functions: {},
 })
 const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
@@ -59,7 +68,31 @@ const getFormOptions = async () => {
   const { result }: any = await $api('crm-field')
   formOptions.value = result || []
 }
-getFormOptions()
+if (!props.isAdmin) {
+  getFormOptions()
+}
+
+const modelOptions = ref([])
+
+const loadModelOpenAI = async () => {
+  const { result }: any = await $api('setting/key?key=CHATGPT_MODEL', {
+    method: 'GET',
+  })
+  modelOptions.value = result.map((model: string) => ({ value: model }) ) || []
+}
+
+if (isAdminQuery.value) {
+  loadModelOpenAI()
+}
+
+const heighInstruction = ref('h-36');
+const editInstruction = () => {
+  if (heighInstruction.value === 'h-36') {
+    heighInstruction.value = 'h-[500px]';
+  } else {
+    heighInstruction.value = 'h-36';
+  }
+}
 
 watch(
   () => props.data,
@@ -125,15 +158,8 @@ watch(
       <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
       <BaseSwitch class="flex-1" name="is_show" label="Show Popup" v-model="form.is_show" />
     </div>
-    <div class="my-4 text-lg c-primary font-bold" v-if="isAdmin">Config ChatGPT</div>
-    <div class="grid grid-cols-2 gap-6" v-if="isAdmin">
-      <BaseInputText
-        class="flex-1"
-        name="assistant_id"
-        label="Assistant ID"
-        :rules="{ required: false }"
-        v-model="form.assistant_id"
-      />
+    <div class="my-4 text-lg c-primary font-bold" v-if="isAdminQuery">Config ChatGPT</div>
+    <div class="grid grid-cols-2 gap-6" v-if="isAdminQuery">
       <BaseInputText
         class="flex-1"
         name="api_key"
@@ -150,11 +176,81 @@ watch(
       />
       <BaseInputText
         class="flex-1"
+        name="vector_store_id"
+        label="Vector Store ID"
+        :rules="{ required: false }"
+        v-model="form.vector_store_id"
+      />
+      <BaseInputSelect
+        class="flex-1"
+        label="Model"
+        :rules="{ required: false }"
+        :options="modelOptions"
+        name="model"
+        option-label="value"
+        option-value="value"
+        v-model="form.model"
+        :filterDefault="true"
+      />
+      <BaseInputText
+        class="flex-1"
         name="webhook"
         label="Webhook"
         :rules="{ required: false }"
         v-model="form.webhook"
       />
+
+      <div className="col-span-2 relative">
+        <BaseInputTextArea
+          class="flex-1"
+          name="instruction"
+          label="System Instruction"
+          :rules="{ required: false }"
+          v-model="form.instruction"
+          :classInput="heighInstruction"
+          :autoResize="false"
+        />
+        <button
+          className="absolute bottom-2 right-5"
+          type="button"
+          @click="editInstruction"
+        >
+          <img v-if="heighInstruction === 'h-36'"
+            src="@/assets/icons/i-expand.svg"
+            alt="edit"
+          />
+          <img v-else
+            src="@/assets/icons/i-collapse.svg"
+            alt="edit"
+          />
+        </button>
+      </div>
+    
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 text-base font-normal c-black-90">
+          <span>
+            Temperature
+          </span>
+          <InputNumber v-model="form.temperature" inputId="temperature" :min="0" :max="2" :step="0.01"/>
+        </label>
+
+        <div class="flex flex-col">
+          <Slider v-model="form.temperature" :step="0.01" :min="0" :max="2"/>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center gap-2 text-base font-normal c-black-90">
+          <span>
+            Top P
+          </span>
+          <InputNumber v-model="form.top_p" inputId="top_p" :min="0" :max="1" :step="0.01"/>
+        </label>
+
+        <div class="flex flex-col">
+          <Slider v-model="form.top_p" :step="0.01" :min="0" :max="1"/>
+        </div>
+      </div>
     </div>
     <div class="my-4 text-lg c-primary font-bold">
       Form Request

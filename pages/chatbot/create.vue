@@ -39,7 +39,7 @@ const createLeadCRM = async (form: any) => {
       <div class="box">
         <div class="page-heading mb-4">Create</div>
 
-        <FormChatbot @onSubmit="createLeadCRM" @onCancel="router.push('/crm')" />
+        <FormChatbot @onSubmit="createLeadCRM" @onCancel="router.push('/chatbot')" />
       </div>
     </div>
   </div>

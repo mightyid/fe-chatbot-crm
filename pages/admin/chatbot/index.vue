@@ -12,14 +12,13 @@ const isLoading = ref(false)
 const perPage = ref(20)
 const totalRecords = ref(0)
 const listChatbot = ref([])
-const isAdmin = ref(route.query?.isAdmin === 'true' || false)
 const firstIndexPage = computed(() => {
   return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
 })
 const getData = async () => {
   isLoading.value = true
 
-  const { loading, result, total_pages, total }: any = await $api('chat-bot', {
+  const { loading, result, total_pages, total }: any = await $api('admin/chat-bot', {
     method: 'GET',
     params: {
       ...query.value,
@@ -47,7 +46,7 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { statusCode }: any = await $api(`chat-bot/${record._id}`, {
+      const { statusCode }: any = await $api(`admin/chat-bot/${record._id}`, {
         method: 'DELETE',
       })
       if (statusCode === 200) {
@@ -61,7 +60,7 @@ const confirmDelete = (record: any) => {
   })
 }
 const changeStatus = (id: any) => {
-  $api(`chat-bot/${id}/change-status`, {
+  $api(`admin/chat-bot/${id}/change-status`, {
     method: 'PUT',
   })
 }
@@ -123,7 +122,7 @@ watchDebounced(
       <div class="flex flex-row items-center justify-between">
         <div class="page-heading m-0">Chatbot</div>
         <div class="flex items-center justify-end gap-4">
-          <nuxt-link to="/chatbot/create" v-if="isAdmin">
+          <nuxt-link to="/admin/chatbot/create">
             <Button type="button" size="small" :label="t('button.create')">
               <template #icon>
                 <img src="~/assets/icons/i-plus-white.svg" alt="" />
@@ -152,6 +151,13 @@ watchDebounced(
           <Column header="#" :frozen="true" alignFrozen="left">
             <template #body="slotProps">
               {{ slotProps.index + firstIndexPage }}
+            </template>
+          </Column>
+          <Column :header="t('common.company')" :frozen="true" alignFrozen="left">
+            <template #body="slotProps">
+              <span class="fr ai-c gap-2">
+                {{ slotProps.data.company?.name }}
+              </span>
             </template>
           </Column>
           <Column :header="t('common.name')" :frozen="true" alignFrozen="left">
@@ -196,10 +202,10 @@ watchDebounced(
                 <button @click="copyCodeIframe(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy code iframe'" />
                 </button>
-                <nuxt-link :to="`/chatbot/edit/${slotProps.data._id}`">
+                <nuxt-link :to="`/admin/chatbot/edit/${slotProps.data._id}`">
                   <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
                 </nuxt-link>
-                <button @click="confirmDelete(slotProps.data)" v-if="isAdmin">
+                <button @click="confirmDelete(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />
                 </button>
               </div>

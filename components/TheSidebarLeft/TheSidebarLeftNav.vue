@@ -168,6 +168,13 @@ const DEFAULT_NAV_ADMIN = [
         iconActive: iCrmActive,
         to: '/admin/company',
       },
+      {
+        title: 'common.chatbot',
+        key: 'view_bot',
+        icon: iChatbot,
+        iconActive: iChatbotActive,
+        to: '/admin/chatbot',
+      },
     ],
   },
 ] as MenuType[]
@@ -250,12 +257,18 @@ const getNavAdmin = () => {
 getNavAdmin()
 
 const checkActiveRoute = (nav: NavItemType) => {
-  const currentParentPath = route.path.split('/')[1]
+  let index = 0;
+  if (isUser.value) {
+    index = 1;
+  } if (isAdmin.value) {
+    index = 2;
+  }
+  const currentParentPath = route.path.split('/')[index]
 
   if (nav?.sub && nav?.sub?.length > 0) {
     return currentParentPath === nav?.key ? true : false
   } else {
-    const navToNoSlash = nav?.to?.split('/')[1]
+    const navToNoSlash = nav?.to?.split('/')[index]
 
     return currentParentPath === navToNoSlash ? true : false
   }

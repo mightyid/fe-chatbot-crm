@@ -38,6 +38,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  autoResize: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -69,7 +73,7 @@ const { value, errorMessage, handleBlur } = useField(() => props.name, rules, {
         :style="inputStyle"
         :placeholder="placeholder ? placeholder : t('common.enter')"
         rows="5"
-        autoResize
+        :autoResize="autoResize"
         v-model="value"
         @blur="handleBlur($event, true)"
         :disabled="disabled"

@@ -14,26 +14,26 @@ const { t } = useI18n()
 const links = ref([
   {
     title: 'Chatbot',
-    to: '/chatbot',
+    to: '/admin/chatbot',
   },
   {
     title: 'Edit',
-    to: `/chatbot/edit/${route.params.id}`,
+    to: `/admin/chatbot/edit/${route.params.id}`,
   },
 ])
 const getData = async () => {
-  const { result }: any = await $api(`chat-bot/${route.params.id}`)
+  const { result }: any = await $api(`admin/chat-bot/${route.params.id}`)
   info.value = result || {}
 }
 
 const editChatbot = async (form: any) => {
-  const { statusCode }: any = await $api(`chat-bot/${route.params.id}`, {
+  const { statusCode }: any = await $api(`admin/chat-bot/${route.params.id}`, {
     method: 'PUT',
     body: form,
   })
 
   if (statusCode) {
-    router.push('/chatbot')
+    router.push('admin/chatbot')
     toast.add({ severity: 'success', summary: 'Successfully', detail: 'Created', life: 3000 })
   }
 }
@@ -51,7 +51,8 @@ getData()
         <FormChatbot
           @onEdit="editChatbot"
           :isEdit="true"
-          @onCancel="router.push('/chatbot')"
+          :isAdmin="true"
+          @onCancel="router.push('/admin/chatbot')"
           :data="{
             ...info,
             api_key: info?.config_gpt?.api_key || '',
