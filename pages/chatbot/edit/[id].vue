@@ -54,6 +54,7 @@ getData()
           @onCancel="router.push('/chatbot')"
           :data="{
             ...info,
+            ...info?.config_twilio,
             api_key: info?.config_gpt?.api_key || '',
             organization: info?.config_gpt?.organization || '',
             vector_store_id: info?.config_gpt?.vector_store_id || '',

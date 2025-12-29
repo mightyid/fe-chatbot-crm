@@ -616,6 +616,7 @@
     "privacy" :"Privacy",
     "contact" : "Contact",
     "location_company" : "123 Truong Dinh Street, Xuan Hoa Ward, Ho Chi Minh City",
+    "config_gpt_error": "The OpenAI configuration is invalid. Please try again.",
     "dashboard" : "Dashboard"
 
   },

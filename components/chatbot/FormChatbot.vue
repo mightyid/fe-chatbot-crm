@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
+import FormChatbotFunction from './FormChatbotFunction.vue'
 
 const props = defineProps({
   data: {
@@ -77,7 +78,6 @@ if (!props.isAdmin) {
 }
 
 const modelOptions = ref([])
-
 const loadModelOpenAI = async () => {
   const { result }: any = await $api('setting/key?key=CHATGPT_MODEL', {
     method: 'GET',
@@ -85,8 +85,39 @@ const loadModelOpenAI = async () => {
   modelOptions.value = result.map((model: string) => ({ value: model }) ) || []
 }
 
+const voiceOptions = ref([])
+const loadVoiceOpenAI = async () => {
+  const { result }: any = await $api('setting/key?key=CHATGPT_VOICE', {
+    method: 'GET',
+  })
+  voiceOptions.value = result.map((model: string) => ({ value: model }) ) || []
+}
+
+const voiceModelOptions = ref([]);
+const loadVoiceModelOpenAI = async () => {
+  const { result }: any = await $api('setting/key?key=CHATGPT_REALTIME_MODEL', {
+    method: 'GET',
+  })
+  voiceModelOptions.value = result.map((model: string) => ({ value: model }) ) || []
+}
+
+const phoneTwilioOptions = ref([])
+const loadPhoneSidTwilio = async () => {
+  const { result }: any = await $api('chat-bot/phone-number', {
+    method: 'POST',
+    body: {
+      account_sid: form.value.account_sid,
+      auth_token: form.value.auth_token,
+    }
+  })
+  phoneTwilioOptions.value = result || []
+}
+
 if (isAdminQuery.value) {
   loadModelOpenAI()
+  loadPhoneSidTwilio()
+  loadVoiceOpenAI()
+  loadVoiceModelOpenAI()
 }
 
 const heighInstruction = ref('h-36');
@@ -104,6 +135,28 @@ watch(
     form.value = JSON.parse(JSON.stringify(newValue))
   },
   { deep: true },
+)
+
+watch(
+  () => form.value.auth_token,
+  (newValue) => {
+    if (form.value.auth_token && form.value.account_sid) {
+      loadPhoneSidTwilio()
+    } else {
+      phoneTwilioOptions.value = []
+    }
+  },
+)
+
+watch(
+  () => form.value.account_sid,
+  (newValue) => {
+    if (form.value.auth_token && form.value.account_sid) {
+      loadPhoneSidTwilio()
+    } else {
+      phoneTwilioOptions.value = []
+    }
+  },
 )
 </script>
 
@@ -162,7 +215,63 @@ watch(
       <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
       <BaseSwitch class="flex-1" name="is_show" label="Show Popup" v-model="form.is_show" />
     </div>
-    <div class="my-4 text-lg c-primary font-bold" v-if="isAdminQuery">Config ChatGPT</div>
+    <div class="my-4 text-lg c-primary font-bold" v-if="isAdminQuery">
+      <hr>
+      Config Twilio
+      <img v-if="form.config_twilio?.success" class="icon" src="~/assets/icons/i-check-primary.svg" alt="" />
+    </div>
+    <div class="grid grid-cols-2 gap-6" v-if="isAdminQuery">
+      <BaseInputText
+        class="flex-1"
+        name="account_sid"
+        label="Account SID"
+        :rules="{ required: false }"
+        v-model="form.account_sid"
+      />
+      <BaseInputText
+        class="flex-1"
+        name="auth_token"
+        label="Auth Token"
+        :rules="{ required: false }"
+        v-model="form.auth_token"
+      />
+      <BaseInputSelect
+        class="flex-1"
+        label="Phone number"
+        :rules="{ required: false }"
+        :options="phoneTwilioOptions"
+        name="phone_sid"
+        option-label="phone"
+        option-value="sid"
+        v-model="form.phone_sid"
+      />
+      <BaseInputSelect
+        class="flex-1"
+        label="Voice"
+        :rules="{ required: false }"
+        :options="voiceOptions"
+        name="voice"
+        option-label="value"
+        option-value="value"
+        v-model="form.voice"
+      />
+
+      <BaseInputSelect
+        class="flex-1"
+        label="Realtime Model OpenAI"
+        :rules="{ required: false }"
+        :options="voiceModelOptions"
+        name="voice_model"
+        option-label="value"
+        option-value="value"
+        v-model="form.realtime_model"
+      />
+    </div>
+    <div class="my-4 text-lg c-primary font-bold" v-if="isAdminQuery">
+      <hr>
+      Config ChatGPT
+      <img v-if="form.config_gpt?.success" class="icon" src="~/assets/icons/i-check-primary.svg" alt="" />
+    </div>
     <div class="grid grid-cols-2 gap-6" v-if="isAdminQuery">
       <BaseInputText
         class="flex-1"
@@ -255,6 +364,9 @@ watch(
           <Slider v-model="form.top_p" :step="0.01" :min="0" :max="1"/>
         </div>
       </div>
+
+      <FormChatbotFunction v-model="form.functions" label="Functions"/>
+
     </div>
     <div class="my-4 text-lg c-primary font-bold" v-if="!isAdmin">
       Form Request

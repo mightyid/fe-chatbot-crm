@@ -53,9 +53,13 @@ const handleChange = async (e: Event) => {
       formData.append('file', item)
     }
     formData.append('acl', props.acl as any)
-
-    const data = await mediaServices.uploadMedia(formData)
-    emit('onUpload', data)
+    if (props.multiple) {
+      const data = await mediaServices.uploadMutipleMedia(formData)
+      emit('onUpload', data)
+    } else {
+      const data = await mediaServices.uploadMedia(formData)
+      emit('onUpload', data)
+    }
   }
 
   // Reset value file

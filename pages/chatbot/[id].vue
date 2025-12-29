@@ -7,33 +7,44 @@ const { t } = useI18n()
 const query = ref({
   page: Number(route.query?.page) || 1,
   search: (route.query?.search as string) || '',
+  limit: 20,
 })
 const isLoading = ref(false)
-const perPage = ref(20)
 const totalRecords = ref(0)
-const listChatbot = ref([])
-const isAdmin = ref(route.query?.isAdmin === 'true' || false)
+const chatbot = ref<any>({})
+const listFiles = ref([])
 const firstIndexPage = computed(() => {
-  return query.value.page > 1 ? (query.value.page - 1) * perPage.value + 1 : 1
+  return query.value.page > 1 ? (query.value.page - 1) * query.value.limit + 1 : 1
 })
+
+const getBot = async () => {
+  const { result }: any = await $api(`chat-bot/${route.params.id}`, {
+    method: 'GET',
+  })
+  chatbot.value = result
+  if (result.config_gpt?.success) {
+    getData()
+  }
+}
+getBot()
+
 const getData = async () => {
   isLoading.value = true
 
-  const { loading, result, total_pages, total }: any = await $api('chat-bot', {
+  const { result, total_pages, total }: any = await $api(`chat-bot/${route.params.id}/vector-file`, {
     method: 'GET',
     params: {
       ...query.value,
     },
   })
-  listChatbot.value = result || []
-  totalRecords.value = total_pages * perPage.value || 0
+  listFiles.value = result || []
+  totalRecords.value = total_pages * query.value.limit || 0
   useQueryURL(query.value)
   isLoading.value = false
 }
-getData()
 
 const changePage = (e: any) => {
-  perPage.value = e.rows
+  query.value.limit = e.rows
   query.value.page = e.page + 1
   getData()
 }
@@ -47,7 +58,7 @@ const confirmDelete = (record: any) => {
     acceptClass: 'p-button-danger',
     rejectClass: 'p-button-secondary',
     accept: async () => {
-      const { statusCode }: any = await $api(`chat-bot/${record._id}`, {
+      const { statusCode }: any = await $api(`chat-bot/${route.params.id}/vector-file/${record._id}`, {
         method: 'DELETE',
       })
       if (statusCode === 200) {
@@ -55,16 +66,29 @@ const confirmDelete = (record: any) => {
         toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
       }
     },
-    reject: () => {
-      // toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 })
-    },
   })
 }
-const changeStatus = (id: any) => {
-  $api(`chat-bot/${id}/change-status`, {
-    method: 'PUT',
-  })
+
+const addFileVector = async (files: any[]) => {
+  if (!files.length) return
+
+  try {
+    isLoading.value = true
+    for(let i = 0; i < files.length; i++) {
+      await $api(`chat-bot/${route.params.id}/vector-file`, {
+        method: 'POST',
+        body: {
+          file_id: files[i]._id,
+        },
+      })
+    }
+    toast.add({ severity: 'success', summary: 'Notifications', detail: 'Successfully', life: 3000 })
+    getData()
+  } catch (error) {
+    isLoading.value = false
+  }
 }
+
 const copyCodeIframe = (val: any) => {
   const url = `${window.location.origin}/bot/${val._id}`
   const position = `${val.position}: 0px`
@@ -122,20 +146,49 @@ watchDebounced(
     <div class="page-content">
       <div class="flex flex-row items-center justify-between">
         <div class="page-heading m-0">Chatbot</div>
-        <div class="flex items-center justify-end gap-4">
-          <nuxt-link to="/chatbot/create" v-if="isAdmin">
-            <Button type="button" size="small" :label="t('button.create')">
-              <template #icon>
-                <img src="~/assets/icons/i-plus-white.svg" alt="" />
-              </template>
-            </Button>
-          </nuxt-link>
-        </div>
       </div>
       <div class="bg-white fc p-4 mt-4 rounded gap-4">
-        <BaseSearch v-model="query.search" />
+        <div class="mb-3 flex items-center gap-4 justify-between min-h-42px">
+          <div class="flex gap-4 mt-4">
+            <BaseAvatar :size="64" :url="chatbot.avatar" />
+            <div class="flex flex-col c-black-90 capitalize">
+              <span class="text-lg font-semibold">
+                {{ chatbot?.name }}
+                <img v-if="chatbot?.is_active" class="icon" src="~/assets/icons/i-check-primary.svg" alt="" />
+              </span>
+              <span>
+                <img class="icon" src="~/assets/icons/i-message.svg" alt="" />
+                {{ chatbot?.message }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <button @click="copyBot(chatbot?._id)">
+              <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy bot'" />
+            </button>
+            <button @click="copyCodeIframe(chatbot)">
+              <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy code iframe'" />
+            </button>
+            <nuxt-link :to="`/chatbot/edit/${chatbot?._id}`">
+              <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
+            </nuxt-link>
+          </div>
+        </div>
+        <div className="mb-4 flex items-center justify-end gap-4">
+          <BaseSearch v-model="query.search" />
+
+          <BaseButtonUpload acceptFile="txt, .pdf, .docx, text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            @onUpload="addFileVector" :acl="false" :multiple="true"
+          >
+            <div class="p-2 h-[42px] flex justify-center items-center bg-primary rounded">
+              <img src="~/assets/icons/i-upload-white.svg" />
+              <span class="text-base font-normal text-center text-white">{{ t('button.upload') }}</span>
+            </div>
+          </BaseButtonUpload>
+        </div>
         <DataTable
-          :value="listChatbot"
+          v-if="chatbot.config_gpt?.success"
+          :value="listFiles"
           dataKey="_id"
           rowHover
           lazy
@@ -143,7 +196,7 @@ watchDebounced(
           paginator
           :first="firstIndexPage"
           :totalRecords="totalRecords"
-          :rows="perPage"
+          :rows="query.limit"
           :loading="isLoading"
           RowsPerPageDropdown
           :rowsPerPageOptions="[20, 50, 100]"
@@ -156,34 +209,18 @@ watchDebounced(
           </Column>
           <Column :header="t('common.name')" :frozen="true" alignFrozen="left">
             <template #body="slotProps">
-              <nuxt-link :to="`/chatbot/${slotProps.data._id}`">
-                <span class="fr ai-c gap-2">
-                {{ slotProps.data.name }}
+              <span class="fr ai-c gap-2">
+                {{ slotProps.data?.file?.name }}
               </span>
-              </nuxt-link>
             </template>
           </Column>
 
-          <Column style="min-width: 200px" field="config_gpt" :header="t('common.config')">
-            <template #body="slotProps">
-              <img
-                src="~/assets/icons/i-tick-primary.svg"
-                alt=""
-                v-if="slotProps.data.config_gpt && slotProps.data.config_gpt.success"
-              />
-            </template>
-          </Column>
           <Column style="min-width: 200px" field="created_at" :header="t('common.created_at')">
             <template #body="slotProps">
               {{ useMoment(slotProps.data.created_at) }}
             </template>
           </Column>
-          <Column field="status" :header="t('common.status')">
-            <template #body="slotProps">
-              <BaseSwitch v-model="slotProps.data.is_active" @update:model-value="changeStatus(slotProps.data._id)" />
-            </template>
-          </Column>
-
+         
           <Column
             :header="t('common.actions')"
             :frozen="true"
@@ -192,16 +229,10 @@ watchDebounced(
           >
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
-                <button @click="copyBot(slotProps.data._id)">
-                  <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy bot'" />
-                </button>
-                <button @click="copyCodeIframe(slotProps.data)">
-                  <img class="icon-lg" src="~/assets/icons/i-copy.svg" alt="" v-tooltip.top="'Copy code iframe'" />
-                </button>
-                <nuxt-link :to="`/chatbot/edit/${slotProps.data._id}`">
-                  <img class="icon-lg" src="~/assets/icons/i-pen-circle.svg" alt="" v-tooltip.top="'Edit'" />
+                <nuxt-link target="_blank" :to="slotProps.data.file?.url">
+                  <img class="icon-lg" src="~/assets/icons/i-download-primary-circle.svg" alt="" v-tooltip.top="'Edit'" />
                 </nuxt-link>
-                <button @click="confirmDelete(slotProps.data)" v-if="isAdmin">
+                <button @click="confirmDelete(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />
                 </button>
               </div>
@@ -212,6 +243,11 @@ watchDebounced(
             <NoData />
           </template>
         </DataTable>
+        <div v-else>
+          <h3 class="mb-3 text-base font-normal c-danger">
+            {{ t('common.config_gpt_error') }}
+          </h3>
+        </div>
       </div>
     </div>
   </div>

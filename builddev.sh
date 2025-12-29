@@ -9,4 +9,4 @@ scp dist.zip root@146.190.104.173:/home/domains/chatbot-dev
 rm -rf dist.zip
 clear
 echo "=============***============="
-echo "Build Prod Successfuly"
+echo "Build Dev Successfuly"

@@ -616,6 +616,7 @@
     "privacy" :"Chính sách bảo mật",
     "contact" : "Liên hệ",
     "location_company" : "123 Trương Định, phường Xuân Hòa, Hồ Chí Minh",
+    "config_gpt_error": "Cấu hình OpenAI không chính xác, vui lòng thử lại.",
     "dashboard" : "Thống kê"
 
   },
