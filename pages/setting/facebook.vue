@@ -1,17 +1,25 @@
 <script lang="ts" setup>
-const route = useRoute()
-const router = useRouter()
 const toast = useToast()
 const { $api } = useNuxtApp()
-const { user } = useAuth()
 const isLoading = ref(false)
-const mailType = ['smtp', 'ses']
 const { t } = useI18n()
 const listChatbot = ref<any>([])
 const listIframe = ref<any>([])
 
+const modeOptions = [
+  {
+    name: 'Default',
+    value: 'default',
+  },
+  {
+    name: 'Manual',
+    value: 'manual',
+  },
+]
+
 const form = ref<any>({
   facebook: {
+    mode: 'manual', // manual | default
     page_access_token: '',
     verify_token: '',
     app_id: '',
@@ -36,7 +44,7 @@ const getData = async () => {
 
 getData()
 
-const onSubmitMail = handleSubmit(async (values) => {
+const onSubmitFacebookConfig = handleSubmit(async (values) => {
   console.log(form.value, 'values')
   isLoading.value = true
   const { result, statusCode }: any = await $api(`noti-config/facebook`, {
@@ -54,8 +62,29 @@ const onSubmitMail = handleSubmit(async (values) => {
   }
   isLoading.value = false
 
-  //   toast.success('Cập nhật thành công')
+  if (form.value.facebook.mode == 'default' && result.facebook?.is_active) {
+    connectFacebook(result.facebook.app_id)
+  }
 })
+
+const connectFacebook = (app_id: string) => {
+  const redirectUri = encodeURIComponent('https://bot.maplestc.com/facebook/callback')
+  const scope = [
+    'pages_show_list',
+    'pages_read_engagement',
+    'pages_manage_metadata',
+    'pages_messaging' // nếu làm chatbot
+  ].join(',')
+
+  const fbUrl =
+    `https://www.facebook.com/v23.0/dialog/oauth` +
+    `?client_id=${app_id}` +
+    `&redirect_uri=${redirectUri}` +
+    `&scope=${scope}` +
+    `&response_type=code`
+
+  window.location.href = fbUrl
+}
 
 const getListBot = async () => {
   const { loading, result, total_pages, total }: any = await $api('chat-bot', {
@@ -85,21 +114,42 @@ getListIframe()
           >Verified
         </span>
       </div>
-      <form class="grid grid-cols-2 gap-4 mt-4" @submit.prevent="onSubmitMail">
+      <div class="text-sm mt-2" v-if="form.facebook.mode == 'manual'">
+        Webhook: https://api-bot.mightyid.ca/api/facebook/webhook/{{ form.company }}
+      </div>
+      <form class="grid grid-cols-2 gap-4 mt-4" @submit.prevent="onSubmitFacebookConfig">
+        <BaseInputSelect
+          label="Mode"
+          :options="modeOptions"
+          name="mode"
+          option-label="name"
+          option-value="value"
+          v-model="form.facebook.mode"
+          :rules="{ required: true }"
+        />
         <BaseInputText
+          v-if="form.facebook.mode == 'manual'"
           v-model="form.facebook.page_access_token"
           name="page_access_token"
           label="Page Access Token"
           :rules="{ required: true }"
         />
         <BaseInputText
+          v-if="form.facebook.mode == 'manual'"
           v-model="form.facebook.verify_token"
           name="verify_token"
           label="Verify Token"
           :rules="{ required: true }"
         />
-        <BaseInputText v-model="form.facebook.app_id" name="app_id" label="App ID" :rules="{ required: true }" />
         <BaseInputText
+          v-if="form.facebook.mode == 'manual'"
+          v-model="form.facebook.app_id"
+          name="app_id"
+          label="App ID"
+          :rules="{ required: true }"
+        />
+        <BaseInputText
+          v-if="form.facebook.mode == 'manual'"
           v-model="form.facebook.app_secret"
           name="app_secret"
           label="App Secret"
