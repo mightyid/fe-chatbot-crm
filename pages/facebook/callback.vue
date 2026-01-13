@@ -2,6 +2,7 @@
 const route = useRoute()
 const router = useRouter()
 const { $api } = useNuxtApp()
+definePageMeta({ auth: false, layout: 'blank' })
 const connectFacebook = async () => {
   await $api(`noti-config/facebook/code`, {
     method: 'POST',
@@ -34,7 +35,7 @@ connectFacebook()
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 67px);
+  min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 24px;
 }
