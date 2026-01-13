@@ -113,26 +113,32 @@ const DEFAULT_NAV = [
           },
         ],
       },
-      // {
-      //   title: 'common.setting',
-      //   key: 'menu-setting',
-      //   icon: iSetting,
-      //   iconActive: iSettingActive,
-      //   sub: [
-      //     {
-      //       title: 'common.zalo',
-      //       key: 'setting-zalo',
-      //       permissionKey: 'setting-zalo',
-      //       to: '/setting/zalo',
-      //     },
-      //     {
-      //       title: 'common.mail',
-      //       key: 'setting-mail',
-      //       permissionKey: 'setting-mail',
-      //       to: '/setting/mail',
-      //     },
-      //   ],
-      // },
+      {
+        title: 'common.setting',
+        key: 'menu-setting',
+        icon: iSetting,
+        iconActive: iSettingActive,
+        sub: [
+          {
+            title: 'Zalo',
+            key: 'setting-zalo',
+            permissionKey: 'setting-zalo',
+            to: '/setting/zalo',
+          },
+          {
+            title: 'Facebook',
+            key: 'setting-facebook',
+            permissionKey: 'setting-facebook',
+            to: '/setting/facebook',
+          },
+          // {
+          //   title: 'common.mail',
+          //   key: 'setting-mail',
+          //   permissionKey: 'setting-mail',
+          //   to: '/setting/mail',
+          // },
+        ],
+      },
       // {
       //   title: 'common.employee',
       //   key: 'menu-employees',
@@ -257,11 +263,12 @@ const getNavAdmin = () => {
 getNavAdmin()
 
 const checkActiveRoute = (nav: NavItemType) => {
-  let index = 0;
+  let index = 0
   if (isUser.value) {
-    index = 1;
-  } if (isAdmin.value) {
-    index = 2;
+    index = 1
+  }
+  if (isAdmin.value) {
+    index = 2
   }
   const currentParentPath = route.path.split('/')[index]
 
