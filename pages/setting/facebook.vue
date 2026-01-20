@@ -40,7 +40,6 @@ const getData = async () => {
   })
   if (result?.facebook) {
     form.value = result
-    // getData()
   }
   isLoading.value = false
 }
@@ -53,8 +52,7 @@ const verifyCodeFacebook = async () => {
     },
   })
   
-  router.push('/setting/facebook')
-  getData()
+  window.location.href = '/setting/facebook'
 }
 if (route.query?.code) {
   verifyCodeFacebook()
@@ -241,7 +239,7 @@ const connectionPageFacebook = async (pageId: string) => {
               <div class="text-sm text-gray-600">ID: {{ page.page_id }}</div>
             </div>
             <div>
-              <Button class="!text-red" severity="secondary" v-if="page.is_connection" @click="disconnectionPageFacebook(page._id)">Disconnected</Button>
+              <Button class="!text-red" severity="secondary" v-if="page.is_connection" @click="disconnectionPageFacebook(page._id)">Disconnect</Button>
               <Button severity="primary" v-else @click="connectionPageFacebook(page._id)">Connect</Button>
             </div>
           </div>
