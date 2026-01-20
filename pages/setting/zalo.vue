@@ -6,8 +6,21 @@ const { $api } = useNuxtApp()
 const { user } = useAuth()
 const isLoading = ref(false)
 const { t } = useI18n()
+
+const modeOptions = [
+  {
+    name: 'Default',
+    value: 'default',
+  },
+  {
+    name: 'Manual',
+    value: 'manual',
+  },
+]
+
 const form = ref<any>({
   zalo: {
+    mode: 'manual', // manual | default
     access_token: '',
     refresh_token: '',
     app_id: '',
@@ -19,6 +32,7 @@ const form = ref<any>({
     bot: null,
     iframe: null,
     webhook_secret: '',
+    phone_test: '',
   },
 })
 const { handleSubmit, resetForm } = useForm()
@@ -70,8 +84,7 @@ const onSubmitZalo = handleSubmit(async (values) => {
     toast.add({ severity: 'error', summary: 'Notification', detail: 'Error', life: 3000 })
   }
   isLoading.value = false
-
-  //   toast.success('Cập nhật thành công')
+  getData()
 })
 const getUrlLoginZalo = handleSubmit(async (values) => {
   try {
@@ -123,6 +136,7 @@ const verifyZalo = async () => {
     isLoading.value = false
     toast.add({ severity: 'error', summary: 'Notification', detail: 'Error', life: 3000 })
   }
+  window.location.reload()
 }
 const testVerifyZalo = async () => {
   try {
@@ -153,38 +167,64 @@ if (route.query?.code?.length && route.query?.state) {
 
 <template>
   <div class="page p-4 fc gap-4">
-    <div class="page-heading">Config Notification </div>
+    <div class="page-heading">
+      Zalo config
+      <span
+        v-if="form.zalo?.verify"
+        class="c-green text-sm ml-4 px-2 py-1 rounded-lg border-solid border-[1px] border-green"
+        >Verified</span
+      >
+    </div>
     <div class="bg-white rounded p-4">
-      <div class="page-heading">
-        Zalo config
-        <span
-          v-if="form.zalo?.verify"
-          class="c-green text-sm ml-4 px-2 py-1 rounded-lg border-solid border-[1px] border-green"
-          >Verified</span
-        >
+      <div class="text-sm mt-2" v-if="form.zalo.mode == 'manual'">
+        Webhook: https://api-bot.mightyid.ca/api/zalo/webhook/{{ form.company }}
       </div>
       <form class="grid grid-cols-2 gap-4 mt-4" @submit.prevent="onSubmitZalo">
-        <BaseInputText v-model="form.zalo.app_id" name="app_id" label="App ID" :rules="{ required: true }" />
+        <BaseInputSelect
+          label="Mode"
+          :options="modeOptions"
+          name="mode"
+          option-label="name"
+          option-value="value"
+          v-model="form.zalo.mode"
+          :rules="{ required: true }"
+        />
         <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
+          v-model="form.zalo.app_id"
+          name="app_id"
+          label="App ID"
+          :rules="{ required: true }"
+        />
+        <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
           v-model="form.zalo.secret_key"
           name="secret_key"
           label="Secret Key"
           :rules="{ required: true }"
         />
 
-        <BaseInputText v-model="form.zalo.crm_template_id" name="crm_template_id" label="Crm Template ID" />
         <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
+          v-model="form.zalo.crm_template_id" 
+          name="crm_template_id" 
+          label="Crm Template ID" 
+        />
+        <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
           v-model="form.zalo.referral_template_id"
           name="referral_template_id"
           label="Referral Template ID"
         />
         <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
           v-model="form.zalo.phone_test"
           name="phone_test"
           label="Phone test"
-          :rules="{ required: true }"
+          :rules="{ required: form.zalo.crm_template_id || form.zalo.referral_template_id ? true : false }"
         />
         <BaseInputText
+          v-if="form.zalo.mode == 'manual'"
           label="Webhook Secret (OA Secret Key)"
           name="webhook_secret"
           v-model="form.zalo.webhook_secret"
@@ -197,6 +237,7 @@ if (route.query?.code?.length && route.query?.state) {
           option-label="name"
           option-value="_id"
           v-model="form.zalo.bot"
+          :rules="{ required: true }"
         />
         <BaseInputSelect
           :label="t('common.campaign')"
@@ -207,7 +248,6 @@ if (route.query?.code?.length && route.query?.state) {
           option-value="_id"
           v-model="form.zalo.iframe"
         />
-        <!-- <div class="flex-1"></div> -->
         <BaseInputTextArea
           v-if="form.zalo.access_token"
           v-model="form.zalo.access_token"
@@ -216,6 +256,7 @@ if (route.query?.code?.length && route.query?.state) {
           :disabled="true"
           :rules="{ required: false }"
         />
+        <div class="flex-1"></div>
         <BaseInputTextArea
           v-if="form.zalo.refresh_token"
           v-model="form.zalo.refresh_token"
@@ -228,16 +269,14 @@ if (route.query?.code?.length && route.query?.state) {
           <BaseSwitch class="flex-1" name="active" :label="t('common.active')" v-model="form.zalo.is_active" />
         </div>
         <div class="col-span-2 c-red" v-if="!form.zalo.verify && form.zalo.phone_test">
-          Please verify zalo config to get access token
+          Please verify zalo config to use config
         </div>
         <div class="col-span-2 fr ai-c jc-fe gap-4">
           <Button
             label="Test Verify"
             v-if="
               !form.zalo.verify &&
-              form.zalo.phone_test &&
               form.zalo.app_id &&
-              form.zalo.secret_key &&
               form.zalo.access_token
             "
             :loading="isLoading"
@@ -247,7 +286,7 @@ if (route.query?.code?.length && route.query?.state) {
           />
           <Button
             label="Get Access Token"
-            v-if="!form.zalo.access_token || !form.zalo.phone_test"
+            v-if="!form.zalo.access_token && form.zalo.app_id"
             severity="primary"
             @click="getUrlLoginZalo"
             :disabled="isLoading"
