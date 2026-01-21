@@ -42,6 +42,12 @@ const form = ref<any>({
   top_p: 0.7,
   temperature: 1.5,
   functions: {},
+  account_sid: '',
+  auth_token: '',
+  phone_sid: '',
+  voice: '',
+  realtime_model: '', 
+  phone_number: '',
 })
 const formOptions = ref<any>([])
 const onSubmit = handleSubmit(() => {
@@ -155,6 +161,21 @@ watch(
       loadPhoneSidTwilio()
     } else {
       phoneTwilioOptions.value = []
+    }
+  },
+)
+watch(
+  () => form.value.phone_sid,
+  (newValue) => {
+    if (newValue) {
+      const find = phoneTwilioOptions.value.find((x: any) => x.sid === newValue);
+      if (find) {
+        form.value.phone_number = find['phone'];
+      } else {
+        form.value.phone_number = '';
+      }
+    } else {
+      form.value.phone_number = '';
     }
   },
 )
