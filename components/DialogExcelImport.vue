@@ -207,20 +207,9 @@ watch(
         })
       })
 
-      // Filter row not missing one of fields required
+      // Filter rows that are completely empty
       const resultNotRowEmpty = result?.filter((item: any) => {
-        // const isEmpty = Object.values(item)?.every((x) => x === null || x === '')
-
-        const isMissingRequired = props.requiredFieldImportExcel?.some((x: any) => {
-          const key = fileName.value?.includes('template-employee') ? t(x?.name, 1, { locale: 'en' }) : t(x?.name) // File language english to translate en
-
-          // console.log(item, key, !item.hasOwnProperty(key))
-          return !item.hasOwnProperty(key) || item[key] === null || item[key] === ''
-        })
-
-        // console.log(item, isMissingRequired)
-
-        return !isMissingRequired
+        return Object.values(item).some((val) => val !== null && val !== '' && val !== undefined)
       })
 
       dataBySheet.value = resultNotRowEmpty
