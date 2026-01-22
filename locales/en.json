@@ -633,7 +633,11 @@
     "confirm_make_call": "Confirm Make Call",
     "confirm_make_call_msg": "Are you sure you want to initiate these calls?",
     "recording": "Recording",
-    "phone_format_hint": "Note: Phone numbers will be automatically formatted to 84 prefix..."
+    "phone_format_hint": "Note: Phone numbers will be automatically formatted to 84 prefix...",
+    "no-answer": "No Answer",
+    "busy": "Busy",
+    "ringing": "Ringing",
+    "completed": "Completed"
   },
   "button": {
     "detail": "Detail",

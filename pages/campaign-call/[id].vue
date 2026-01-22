@@ -430,6 +430,23 @@ watchDebounced(
                 }}
               </template>
             </Column>
+            <Column field="status" :header="t('common.status')" align="center" style="min-width: 120px">
+              <template #body="slotProps">
+                <span
+                  v-if="slotProps.data.status"
+                  class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                  :class="{
+                    'bg-green-50 text-green-600': slotProps.data.status === 'completed',
+                    'bg-red-50 text-red-600': slotProps.data.status === 'no-answer',
+                    'bg-orange-50 text-orange-600': slotProps.data.status === 'busy',
+                    'bg-blue-50 text-blue-600': slotProps.data.status === 'ringing',
+                  }"
+                >
+                  {{ t(`common.${slotProps.data.status}`) }}
+                </span>
+                <span v-else>---</span>
+              </template>
+            </Column>
             <Column field="duration" :header="t('common.total_duration')" align="center">
               <template #body="slotProps">
                 <span class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full text-xs font-bold">

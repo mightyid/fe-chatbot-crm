@@ -633,7 +633,11 @@
     "confirm_make_call": "Xác nhận thực hiện cuộc gọi",
     "confirm_make_call_msg": "Bạn có chắc chắn muốn thực hiện các cuộc gọi này không?",
     "recording": "Ghi âm",
-    "phone_format_hint": "Lưu ý: Số điện thoại sẽ được tự động định dạng về đầu số 84..."
+    "phone_format_hint": "Lưu ý: Số điện thoại sẽ được tự động định dạng về đầu số 84...",
+    "no-answer": "Không trả lời",
+    "busy": "Máy bận",
+    "ringing": "Đang đổ chuông",
+    "completed": "Hoàn thành"
   },
   "button": {
     "detail": "Chi tiết",
