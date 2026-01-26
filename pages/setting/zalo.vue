@@ -136,7 +136,8 @@ const verifyZalo = async () => {
     isLoading.value = false
     toast.add({ severity: 'error', summary: 'Notification', detail: 'Error', life: 3000 })
   }
-  window.location.reload()
+  window.location.href = '/setting/zalo'
+  // window.location.reload()
 }
 const testVerifyZalo = async () => {
   try {
@@ -206,9 +207,9 @@ if (route.query?.code?.length && route.query?.state) {
 
         <BaseInputText
           v-if="form.zalo.mode == 'manual'"
-          v-model="form.zalo.crm_template_id" 
-          name="crm_template_id" 
-          label="Crm Template ID" 
+          v-model="form.zalo.crm_template_id"
+          name="crm_template_id"
+          label="Crm Template ID"
         />
         <BaseInputText
           v-if="form.zalo.mode == 'manual'"
@@ -274,11 +275,7 @@ if (route.query?.code?.length && route.query?.state) {
         <div class="col-span-2 fr ai-c jc-fe gap-4">
           <Button
             label="Test Verify"
-            v-if="
-              !form.zalo.verify &&
-              form.zalo.app_id &&
-              form.zalo.access_token
-            "
+            v-if="!form.zalo.verify && form.zalo.app_id && form.zalo.access_token"
             :loading="isLoading"
             severity="primary"
             :disabled="isLoading"
