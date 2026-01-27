@@ -14,6 +14,20 @@ definePageMeta({
 
       <div class="p-8 sm:p-12 text-gray-700 leading-relaxed">
         <section class="mb-10">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">About This Privacy Policy</h2>
+          <p>
+            This Privacy Policy applies to the Chatbot CRM application and services provided by
+            <strong>MapleSTC</strong>. MapleSTC is the owner and operator of this application. We are committed to
+            protecting your privacy and ensuring the security of your personal information.
+          </p>
+          <p class="mt-4">
+            <strong>Company Name:</strong> MapleSTC<br />
+            <strong>Application:</strong> Chatbot CRM<br />
+            <strong>Last Updated:</strong> January 2026
+          </p>
+        </section>
+
+        <section class="mb-10">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Information Collection</h2>
           <p
             >We collect information when you register an account, use our services, or contact support. Information
@@ -77,7 +91,12 @@ definePageMeta({
 
         <section class="mb-10">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Contact</h2>
-          <p>If you have any questions about this Privacy Policy, please contact: privacy@mightyid.ca</p>
+          <p> If you have any questions about this Privacy Policy, please contact <strong>MapleSTC</strong>: </p>
+          <p class="mt-2">
+            <strong>Email:</strong> privacy@maplestc.com<br />
+            <strong>Company:</strong> MapleSTC<br />
+            <strong>Application:</strong> Chatbot CRM
+          </p>
         </section>
 
         <section class="mb-10">
