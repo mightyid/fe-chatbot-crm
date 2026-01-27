@@ -4,7 +4,7 @@ const { t } = useI18n()
 <template>
   <section class="hero py-10 px-4 bg-cover bg-no-repeat lg:py-40">
     <div class="container mx-auto">
-      <div class="flex flex-col gap-4 lg:flex-row lg:gap-10" data-aos="fade-right">
+      <div class="flex flex-col gap-4 lg:flex-row lg:gap-10">
         <div class="flex-1">
           <h3 class="text-label text-center lt-lg:mx-a mt-0 !mb-5">
             {{ t('home.MỘT NỀN TẢNG - ĐA KÊNH - TỐI ĐA HIỆU QUẢ TUYỂN SINH') }}
@@ -18,7 +18,7 @@ const { t } = useI18n()
           <Button class="block mx-auto" :label="t('home.Bắt đầu ngay')" severity="primary" type="button" />
         </div>
 
-        <div class="flex-1" data-aos="fade-left">
+        <div class="flex-1">
           <img class="block max-w-full mx-auto" src="~/assets/images/landing-page/hero-image.svg" alt="" />
         </div>
       </div>

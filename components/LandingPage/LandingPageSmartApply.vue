@@ -35,7 +35,7 @@ const features = computed(() => [
 </script>
 
 <template>
-  <section class="hero py-10 px-4 bg-cover bg-no-repeat lg:py-20" data-aos="fade-up">
+  <section class="hero py-10 px-4 bg-cover bg-no-repeat lg:py-20">
     <div class="container mx-auto">
       <h3 class="mt-0 mb-4 mx-auto text-label"> SMARTAPPLY </h3>
       <h2 class="mt-0 mb-4 text-heading text-center">

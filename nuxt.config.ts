@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ssr: false,
   app: {
     head: {
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+      link: [{ rel: 'icon', href: '/favicon.svg' }],
       title: 'MightyChatbot',
       meta: [
         { charset: 'utf-8' },
@@ -53,7 +53,6 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     '@pinia/nuxt',
     '@nuxtjs/i18n',
-    'nuxt-aos',
   ],
   primevue: {
     importTheme: { from: '~/assets/themes/mytheme.js' },
@@ -104,11 +103,5 @@ export default defineNuxtConfig({
     optimizeDeps: {
       exclude: ['primevue'], // Chặn PrimeVue khỏi quá trình tối ưu hóa để không bị reload trang khi dev
     },
-  },
-
-  aos: {
-    disable: 'mobile', // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-    once: true, // whether animation should happen only once - while scrolling down
-    offset: 100,
   },
 })

@@ -138,6 +138,16 @@ const DEFAULT_NAV = [
             permissionKey: 'setting-facebook',
             to: '/setting/facebook',
           },
+          {
+            title: t('common.terms'),
+            key: 'terms',
+            to: '/terms',
+          },
+          {
+            title: t('common.privacy'),
+            key: 'privacy-policy',
+            to: '/privacy',
+          },
           // {
           //   title: 'common.mail',
           //   key: 'setting-mail',

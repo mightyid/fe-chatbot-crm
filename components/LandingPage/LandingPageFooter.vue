@@ -13,10 +13,10 @@ const { t } = useI18n()
 
         <div class="flex flex-col gap-4">
           <p class="m-0 pb-2 text-base font-bold c-black-90"> {{ t('common.company') }} </p>
-          <nuxt-link href="/terms-of-conditions" target="_blank" class="text-base font-normal c-black-90 block">
+          <nuxt-link to="/terms" class="text-base font-normal c-black-90 block">
             {{ t('common.terms') }}
           </nuxt-link>
-          <nuxt-link href="/privacy" target="_blank" class="text-base font-normal c-black-90 block">
+          <nuxt-link to="/privacy" class="text-base font-normal c-black-90 block">
             {{ t('common.privacy') }}
           </nuxt-link>
         </div>
