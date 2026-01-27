@@ -79,13 +79,13 @@ const DEFAULT_NAV = [
         iconActive: iCrmActive,
         to: '/crm',
       },
-      {
-        title: 'common.campaign_call',
-        key: 'campaign-call',
-        icon: iCrm,
-        iconActive: iCrmActive,
-        to: '/campaign-call',
-      },
+      // {
+      //   title: 'common.campaign_call',
+      //   key: 'campaign-call',
+      //   icon: iCrm,
+      //   iconActive: iCrmActive,
+      //   to: '/campaign-call',
+      // },
       {
         title: 'common.message',
         key: 'message',
