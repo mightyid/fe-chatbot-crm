@@ -87,6 +87,20 @@ const DEFAULT_NAV = [
         to: '/campaign-call',
       },
       {
+        title: 'common.email_campaign',
+        key: 'email-campaign',
+        icon: iMessage,
+        iconActive: iMessageActive,
+        to: '/email-campaign',
+      },
+      {
+        title: 'common.email_template',
+        key: 'email-campaign-template',
+        icon: iSetting,
+        iconActive: iSettingActive,
+        to: '/email-campaign-template',
+      },
+      {
         title: 'common.message',
         key: 'message',
         icon: iMessage,

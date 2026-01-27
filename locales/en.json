@@ -599,6 +599,8 @@
     "crm": "CRM",
     "user_referral": "User referral",
     "campaign_call": "Calling campaign",
+    "email_campaign": "Email campaign",
+    "email_template": "Email template",
     "stop_bot": "Stop bot",
     "config": "Config",
     "created_at": "Created at",

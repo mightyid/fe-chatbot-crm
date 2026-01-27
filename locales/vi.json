@@ -599,6 +599,8 @@
     "crm": "CRM",
     "user_referral": "Người giới thiệu",
     "campaign_call": "Chiến dịch gọi điện",
+    "email_campaign": "Chiến dịch Email",
+    "email_template": "Mẫu Email",
     "stop_bot": "Dừng chatbot",
     "config": "Cấu hình",
     "created_at": "Ngày tạo",

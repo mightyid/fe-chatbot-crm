@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash'
-import { useField } from 'vee-validate'
+import * as VeeValidate from 'vee-validate'
 
 const props = defineProps({
   name: {
@@ -157,9 +157,9 @@ watch(
         :inputStyle="inputStyle"
         :placeholder="placeholder ? placeholder : t('common.select')"
         :options="optionsCustom"
-        :optionLabel="(optionLabel as any)"
-        :optionValue="(optionValue as any)"
-        :optionDisabled="(optionDisabled as any)"
+        :optionLabel="optionLabel as any"
+        :optionValue="optionValue as any"
+        :optionDisabled="optionDisabled as any"
         :filter="filterDefault"
         :showClear="showClearDefault && value ? true : false"
         :virtualScrollerOptions="virtualScrollerOptions ? virtualScrollerOptions : undefined"
