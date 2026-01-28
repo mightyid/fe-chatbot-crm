@@ -37,8 +37,18 @@ onMounted(() => {
 })
 
 async function onUpdate() {
-  if (!form.value.name) {
+  if (!form.value.name.trim()) {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Template name is required', life: 3000 })
+    return
+  }
+
+  if (!form.value.html.trim()) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Template content (HTML) is required',
+      life: 3000,
+    })
     return
   }
 
@@ -83,8 +93,8 @@ async function onUpdate() {
 
     <div v-else class="content-wrapper">
       <div class="name-input-bar">
-        <label>Template Name</label>
-        <InputText v-model="form.name" placeholder="Enter template name" class="flex-1" />
+        <label>Template Name <span class="text-red-500">*</span></label>
+        <BaseInputText name="name" v-model="form.name" placeholder="Enter template name" class="flex-1" />
       </div>
 
       <div class="editor-container">

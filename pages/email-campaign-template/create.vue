@@ -14,8 +14,18 @@ const isLoading = ref(false)
 const editorRef = ref<any>(null)
 
 async function onSave() {
-  if (!form.value.name) {
+  if (!form.value.name.trim()) {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Template name is required', life: 3000 })
+    return
+  }
+
+  if (!form.value.html.trim()) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Template content (HTML) is required',
+      life: 3000,
+    })
     return
   }
 
@@ -46,7 +56,9 @@ async function onSave() {
       <div class="flex items-center gap-4">
         <div class="h-6 w-px bg-gray-200"></div>
         <div class="flex items-center gap-3">
-          <label class="text-xs font-bold text-gray-400 uppercase">Template Name</label>
+          <label class="text-xs font-bold text-gray-400 uppercase">
+            Template Name <span class="text-red-500">*</span>
+          </label>
           <BaseInputText name="name" v-model="form.name" placeholder="Untitled Template" class="w-80" />
         </div>
       </div>

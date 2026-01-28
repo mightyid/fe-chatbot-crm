@@ -31,8 +31,18 @@ const fetchTemplates = async () => {
 }
 
 const onSave = async () => {
-  if (!form.value.name) {
+  if (!form.value.name.trim()) {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Campaign name is required', life: 3000 })
+    return
+  }
+
+  if (!form.value.subject.trim()) {
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Email subject is required', life: 3000 })
+    return
+  }
+
+  if (!form.value.template_id) {
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Please select an email template', life: 3000 })
     return
   }
 
@@ -85,12 +95,12 @@ onMounted(() => {
         </div>
 
         <div class="fc gap-2">
-          <label class="font-medium">Email Subject</label>
+          <label class="font-medium">Email Subject <span class="text-red-500">*</span></label>
           <InputText v-model="form.subject" placeholder="Enter email subject" />
         </div>
 
         <div class="fc gap-2">
-          <label class="font-medium">Select Template</label>
+          <label class="font-medium">Select Template <span class="text-red-500">*</span></label>
           <Dropdown
             v-model="form.template_id"
             :options="templates"

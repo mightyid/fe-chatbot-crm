@@ -40,11 +40,19 @@ export default function useEmailTemplateService() {
     })
   }
 
+  async function generateEmailAi(prompt: string) {
+    return $api<ResponseType<string>>(`${URL}/create-template-ai`, {
+      method: 'POST',
+      body: { content: prompt },
+    })
+  }
+
   return {
     getTemplates,
     getTemplateDetail,
     createTemplate,
     updateTemplate,
     deleteTemplate,
+    generateEmailAi,
   }
 }
