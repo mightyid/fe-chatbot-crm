@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
   <nuxt-link :to="`/chat/${info?._id}`" class="fc flex px-2 bg-white py-2 hover:bg-b-1">
     <div class="fr ai-c gap-4">
-      <BaseAvatar :size="32" :url="info?.bot?.avatar" />
+      <BaseAvatar :size="32" :url="info?.avatar || info?.bot?.avatar" />
       <div class="fc">
         <div class="text-base font-semibold c-black-90 capitalize">{{ info?.name }}</div>
         <div class="text-xs font-normal c-black-60">

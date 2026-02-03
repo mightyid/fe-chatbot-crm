@@ -24,7 +24,7 @@ const updateStopBot = async () => {
 <template>
   <div class="flex-1 fc p-4">
     <div class="fc jc-c ai-c gap-4 mt-4">
-      <BaseAvatar :size="64" :url="info?.bot?.avatar" />
+      <BaseAvatar :size="64" :url="info?.avatar || info?.bot?.avatar" />
       <div class="text-lg font-semibold c-black-90 capitalize">
         {{ info?.name }}
         <nuxt-link :to="`/crm/edit/${info?._id}`">
