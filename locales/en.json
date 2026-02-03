@@ -639,7 +639,11 @@
     "no-answer": "No Answer",
     "busy": "Busy",
     "ringing": "Ringing",
-    "completed": "Completed"
+    "completed": "Completed",
+    "in-progress": "In Progress",
+    "transcript": "Transcript",
+    "summary": "Summary",
+    "status_statistics": "Status Statistics"
   },
   "button": {
     "detail": "Detail",

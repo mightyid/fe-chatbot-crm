@@ -13,6 +13,8 @@ const overview = ref({
   total_price: 0,
 })
 
+const statusStats = ref<any[]>([])
+
 const query = ref({
   page: 1,
   limit: 20,
@@ -35,7 +37,11 @@ const formMakeCall = ref({
 const campaignInfo = ref<any>({})
 const isShowImportExcel = ref(false)
 const isShowPlayer = ref(false)
+const isShowTranscript = ref(false)
+const isShowSummary = ref(false)
 const currentRecording = ref<any>(null)
+const currentTranscript = ref<string>('')
+const currentSummary = ref<string>('')
 
 const optionsImportExcel = [
   { name: 'common.name', key: 'name' },
@@ -71,6 +77,17 @@ const getOverview = async () => {
   overview.value = result || { total_call: 0, total_duration: 0, total_price: 0 }
 }
 
+const getStatusStats = async () => {
+  const { result }: any = await $api(`campaign-call/${id}/status`, {
+    method: 'GET',
+    params: {
+      from: dayjs(query.value.from).format('YYYY-MM-DD'),
+      to: dayjs(query.value.to).format('YYYY-MM-DD'),
+    },
+  })
+  statusStats.value = result || []
+}
+
 const getCalls = async () => {
   isLoading.value = true
   const { result, total }: any = await $api(`campaign-call/${id}/call`, {
@@ -94,13 +111,14 @@ const getListBot = async () => {
 }
 
 const init = async () => {
-  await Promise.all([getDetail(), getOverview(), getCalls(), getListBot()])
+  await Promise.all([getDetail(), getOverview(), getStatusStats(), getCalls(), getListBot()])
 }
 init()
 
 const onFilter = () => {
   query.value.page = 1
   getOverview()
+  getStatusStats()
   getCalls()
 }
 
@@ -202,6 +220,46 @@ const openPlayer = (data: any) => {
   isShowPlayer.value = true
 }
 
+const openTranscript = (data: any) => {
+  currentTranscript.value = data.transcripts || ''
+  isShowTranscript.value = true
+}
+
+const openSummary = (data: any) => {
+  currentSummary.value = data.summary || ''
+  isShowSummary.value = true
+}
+
+const formatTranscript = (text: string) => {
+  if (!text) return []
+  const result: any[] = []
+  let currentMsg: any = null
+
+  const lines = text.replace(/^"|"$/g, '').split('\n')
+
+  for (const line of lines) {
+    const trimmedLine = line.trim()
+    if (!trimmedLine && !currentMsg) continue
+
+    const match = line.match(/^\[(.*)\s+(AI|User)\]:\s*(.*)$/i)
+    if (match) {
+      if (currentMsg) result.push(currentMsg)
+      currentMsg = {
+        time: match[1],
+        sender: match[2].toUpperCase() === 'AI' ? 'AI' : 'User',
+        message: match[3],
+      }
+    } else if (currentMsg) {
+      currentMsg.message += (currentMsg.message ? '\n' : '') + line
+    } else if (trimmedLine) {
+      result.push({ time: '', sender: '', message: line })
+    }
+  }
+
+  if (currentMsg) result.push(currentMsg)
+  return result
+}
+
 watchDebounced(
   () => query.value.search,
   () => {
@@ -217,45 +275,91 @@ watchDebounced(
     <div class="page-content">
       <BreadCrumbLinks :links="links" />
 
-      <!-- Header & Stats -->
+      <!-- Header -->
       <div class="bg-white p-6 rounded-lg shadow-sm mb-6 border border-gray-100">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div class="flex items-center gap-4">
-            <div class="bg-primary-50 p-3 rounded-xl">
-              <img src="~/assets/icons/i-loudspeaker.svg" class="w-8 h-8" alt="" />
+        <div class="flex items-center gap-4">
+          <div class="bg-primary-50 p-3 rounded-xl">
+            <img src="~/assets/icons/i-loudspeaker.svg" class="w-8 h-8" alt="" />
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold c-black-90 m-0 leading-tight">{{ campaignInfo.name }}</h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview & Status Statistics -->
+      <div class="bg-white p-6 rounded-lg shadow-sm mb-6 border border-gray-100">
+        <div class="flex items-center gap-2 mb-4">
+          <img src="~/assets/icons/i-chart.svg" class="icon" alt="" />
+          <h3 class="text-lg font-bold c-black-90 m-0">{{ t('common.status_statistics') }}</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <!-- Overview Stats -->
+          <div class="status-card p-4 rounded-lg border-2 border-gray-200 bg-gray-50 transition-all hover:shadow-md">
+            <div class="text-xs font-bold uppercase tracking-wider mb-2 text-gray-600">
+              {{ t('common.total_call') }}
             </div>
-            <div>
-              <h1 class="text-2xl font-bold c-black-90 m-0 leading-tight">{{ campaignInfo.name }}</h1>
-              <!-- <p class="text-gray-500 text-sm mt-1 m-0">{{ campaignInfo.instruction || t('common.no_instruction') }}</p> -->
+            <div class="text-3xl font-bold text-gray-700">{{ overview.total_call }}</div>
+          </div>
+          <div class="status-card p-4 rounded-lg border-2 border-blue-200 bg-blue-50 transition-all hover:shadow-md">
+            <div class="text-xs font-bold uppercase tracking-wider mb-2 text-blue-600">
+              {{ t('common.total_duration') }}
+            </div>
+            <div class="text-3xl font-bold text-blue-700">{{ overview.total_duration }}s</div>
+          </div>
+          <div class="status-card p-4 rounded-lg border-2 border-green-200 bg-green-50 transition-all hover:shadow-md">
+            <div class="text-xs font-bold uppercase tracking-wider mb-2 text-green-600">
+              {{ t('common.total_price') }}
+            </div>
+            <div class="text-3xl font-bold text-green-700">
+              {{ formatCurrency(Math.abs(overview.total_price), 'it-IT', 'USD') }}
             </div>
           </div>
 
-          <div class="flex items-center gap-4 no-wrap">
-            <div class="stats-item px-4 border-r border-gray-100 last:border-0">
-              <span class="text-xs text-gray-500 uppercase font-bold tracking-wider">{{ t('common.total_call') }}</span>
-              <div class="text-2xl font-bold c-primary">{{ overview.total_call }}</div>
+          <!-- Status Stats -->
+          <div
+            v-for="stat in statusStats"
+            :key="stat.status"
+            class="status-card p-4 rounded-lg border-2 transition-all hover:shadow-md"
+            :class="{
+              'border-green-200 bg-green-50': stat.status === 'completed',
+              'border-red-200 bg-red-50': stat.status === 'no-answer',
+              'border-orange-200 bg-orange-50': stat.status === 'busy',
+              'border-blue-200 bg-blue-50': stat.status === 'ringing',
+              'border-gray-200 bg-gray-50': !['completed', 'no-answer', 'busy', 'ringing'].includes(stat.status),
+            }"
+          >
+            <div
+              class="text-xs font-bold uppercase tracking-wider mb-2"
+              :class="{
+                'text-green-600': stat.status === 'completed',
+                'text-red-600': stat.status === 'no-answer',
+                'text-orange-600': stat.status === 'busy',
+                'text-blue-600': stat.status === 'ringing',
+                'text-gray-600': !['completed', 'no-answer', 'busy', 'ringing'].includes(stat.status),
+              }"
+            >
+              {{ t(`common.${stat.status}`) }}
             </div>
-            <div class="stats-item px-4 border-r border-gray-100 last:border-0">
-              <span class="text-xs text-gray-500 uppercase font-bold tracking-wider">{{
-                t('common.total_duration')
-              }}</span>
-              <div class="text-2xl font-bold c-blue-600">{{ overview.total_duration }}s</div>
-            </div>
-            <div class="stats-item px-4">
-              <span class="text-xs text-gray-500 uppercase font-bold tracking-wider"
-                >{{ t('common.total_price') }}
-              </span>
-              <div class="text-2xl font-bold c-green-600">
-                {{ formatCurrency(Math.abs(overview.total_price), 'it-IT', 'USD') }}
-              </div>
+            <div
+              class="text-3xl font-bold"
+              :class="{
+                'text-green-700': stat.status === 'completed',
+                'text-red-700': stat.status === 'no-answer',
+                'text-orange-700': stat.status === 'busy',
+                'text-blue-700': stat.status === 'ringing',
+                'text-gray-700': !['completed', 'no-answer', 'busy', 'ringing'].includes(stat.status),
+              }"
+            >
+              {{ stat.total }}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-        <!-- Make Call Management (Inline) -->
-        <div class="xl:col-span-5 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+      <div class="fc gap-6">
+        <!-- Make Call Management -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
           <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
             <div class="flex items-center gap-2">
               <div class="fc">
@@ -352,16 +456,13 @@ watchDebounced(
             </div>
 
             <Button severity="primary" :loading="isMakingCall" @click="handleMakeCall">
-              <!-- <template #icon>
-                <img src="~/assets/icons/i-send-white.svg" class="w-5 h-5 mr-2" alt="" />
-              </template> -->
               {{ t('common.make_call') }}
             </Button>
           </div>
         </div>
 
-        <!-- Activity History -->
-        <div class="xl:col-span-7 bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+        <!-- Call History -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
           <div
             class="p-4 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gray-50/50"
           >
@@ -389,9 +490,6 @@ watchDebounced(
                   @update:modelValue="onFilter"
                 />
               </div>
-              <!-- <div class="border-l border-gray-200 pl-3">
-                <InputSearch v-model="query.search" class="w-[180px] h-[32px]" />
-              </div> -->
             </div>
           </div>
 
@@ -469,8 +567,40 @@ watchDebounced(
                   class="flex jc-c w-full h-full items-center justify-center"
                 >
                   <img
-                    src="~/assets/icons/i-eye-secondary-circle.svg"
-                    class="icon-lg"
+                    src="~/assets/icons/i-audio-play.svg"
+                    class="icon-lg opacity-70 hover:opacity-100 transition-opacity"
+                    alt=""
+                    v-tooltip.top="t('common.view')"
+                  />
+                </button>
+              </template>
+            </Column>
+            <Column :header="t('common.transcript')" align="center" style="width: 60px">
+              <template #body="{ data }">
+                <button
+                  v-if="data.transcripts"
+                  @click="openTranscript(data)"
+                  class="flex jc-c w-full h-full items-center justify-center"
+                >
+                  <img
+                    src="~/assets/icons/i-transcript.svg"
+                    class="icon-lg opacity-70 hover:opacity-100 transition-opacity"
+                    alt=""
+                    v-tooltip.top="t('common.view')"
+                  />
+                </button>
+              </template>
+            </Column>
+            <Column :header="t('common.summary')" align="center" style="width: 60px">
+              <template #body="{ data }">
+                <button
+                  v-if="data.summary"
+                  @click="openSummary(data)"
+                  class="flex jc-c w-full h-full items-center justify-center"
+                >
+                  <img
+                    src="~/assets/icons/i-summary.svg"
+                    class="icon-lg opacity-70 hover:opacity-100 transition-opacity"
                     alt=""
                     v-tooltip.top="t('common.view')"
                   />
@@ -517,6 +647,68 @@ watchDebounced(
         </audio>
         <div v-else class="text-center py-4 text-gray-500">
           {{ t('common.no_data') }}
+        </div>
+      </div>
+    </Dialog>
+
+    <!-- Transcript Dialog -->
+    <Dialog
+      v-model:visible="isShowTranscript"
+      modal
+      :header="t('common.transcript')"
+      :style="{ width: '600px' }"
+      class="rounded-xl overflow-hidden"
+    >
+      <div class="fc gap-4 py-2 max-h-[70vh] overflow-y-auto px-2">
+        <div v-if="currentTranscript">
+          <div v-for="(item, index) in formatTranscript(currentTranscript)" :key="index" class="mb-4">
+            <div :class="['flex flex-col', item.sender === 'AI' ? 'items-start' : 'items-end']">
+              <div class="flex items-center gap-2 mb-1">
+                <span
+                  v-if="item.sender"
+                  class="text-[10px] font-bold uppercase text-gray-400"
+                  :class="item.sender === 'AI' ? 'order-1' : 'order-2'"
+                >
+                  {{ item.sender }}
+                </span>
+                <span
+                  v-if="item.time"
+                  class="text-[10px] text-gray-300"
+                  :class="item.sender === 'AI' ? 'order-2' : 'order-1'"
+                >
+                  {{ item.time }}
+                </span>
+              </div>
+              <div
+                class="px-4 py-2 rounded-2xl text-sm max-w-[90%]"
+                :class="
+                  item.sender === 'AI'
+                    ? 'bg-gray-100 text-gray-800 rounded-tl-none'
+                    : 'bg-primary text-white rounded-tr-none text-right'
+                "
+              >
+                {{ item.message }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else class="text-center py-8 text-gray-500">
+          <NoData />
+        </div>
+      </div>
+    </Dialog>
+
+    <!-- Summary Dialog -->
+    <Dialog
+      v-model:visible="isShowSummary"
+      modal
+      :header="t('common.summary')"
+      :style="{ width: '500px' }"
+      class="rounded-xl overflow-hidden"
+    >
+      <div class="p-4 bg-gray-50/50 rounded-lg border border-gray-100">
+        <div class="whitespace-pre-wrap text-sm leading-relaxed text-gray-700">
+          {{ currentSummary }}
         </div>
       </div>
     </Dialog>

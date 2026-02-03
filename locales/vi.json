@@ -639,7 +639,11 @@
     "no-answer": "Không trả lời",
     "busy": "Máy bận",
     "ringing": "Đang đổ chuông",
-    "completed": "Hoàn thành"
+    "completed": "Hoàn thành",
+    "in-progress": "Đang thực hiện",
+    "transcript": "Nội dung cuộc gọi",
+    "summary": "Tóm tắt cuộc gọi",
+    "status_statistics": "Thống kê trạng thái"
   },
   "button": {
     "detail": "Chi tiết",
