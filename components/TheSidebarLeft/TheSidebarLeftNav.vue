@@ -28,6 +28,7 @@ type MenuType = {
   name: string
   menuKey: string
   menus: NavItemType[]
+  isShow: boolean
 }
 
 type NavItemType = {
@@ -39,6 +40,7 @@ type NavItemType = {
   isCollapse?: boolean
   sub?: SubItemType[]
   to?: string
+  isShow: boolean
 }
 
 type SubItemType = {
@@ -46,6 +48,7 @@ type SubItemType = {
   key: string
   permissionKey?: string
   to: string
+  isShow: boolean
 }
 
 const props = defineProps({
@@ -64,34 +67,40 @@ const DEFAULT_NAV = [
   {
     name: 'common.menu',
     menuKey: 'menu',
+    isShow: true,
+
     menus: [
-      // {
-      //   title: 'common.dashboard',
-      //   key: 'dashboard',
-      //   icon: iDashboard,
-      //   iconActive: iDashboardActive,
-      //   to: '/dashboard',
-      // },
+      {
+        title: 'common.dashboard',
+        key: 'dashboard',
+        icon: iDashboard,
+        iconActive: iDashboardActive,
+        to: '/dashboard',
+        isShow: true,
+      },
       {
         title: 'common.crm',
         key: 'crm',
         icon: iCrm,
         iconActive: iCrmActive,
         to: '/crm',
+        isShow: true,
       },
-      // {
-      //   title: 'common.campaign_call',
-      //   key: 'campaign-call',
-      //   icon: iCrm,
-      //   iconActive: iCrmActive,
-      //   to: '/campaign-call',
-      // },
+      {
+        title: 'common.campaign_call',
+        key: 'campaign-call',
+        icon: iCrm,
+        iconActive: iCrmActive,
+        to: '/campaign-call',
+        isShow: user?.company?.ui_display?.campaign_call,
+      },
       {
         title: 'common.email_campaign',
         key: 'email-campaign',
         icon: iMessage,
         iconActive: iMessageActive,
         to: '/email-campaign',
+        isShow: user?.company?.ui_display?.campaign_mail,
       },
       {
         title: 'common.email_template',
@@ -99,6 +108,7 @@ const DEFAULT_NAV = [
         icon: iSetting,
         iconActive: iSettingActive,
         to: '/email-campaign-template',
+        isShow: user?.company?.ui_display?.campaign_mail,
       },
       {
         title: 'common.message',
@@ -106,6 +116,7 @@ const DEFAULT_NAV = [
         icon: iMessage,
         iconActive: iMessageActive,
         to: '/chat',
+        isShow: true,
       },
       {
         title: 'common.chatbot',
@@ -113,12 +124,15 @@ const DEFAULT_NAV = [
         icon: iChatbot,
         iconActive: iChatbotActive,
         to: '/chatbot',
+        isShow: true,
       },
       {
         title: 'common.referral',
         key: 'referral',
         icon: iReferral,
         iconActive: iReferralActive,
+        isShow: true,
+
         sub: [
           //{
           //  title: 'common.invitation',
@@ -131,6 +145,7 @@ const DEFAULT_NAV = [
             key: 'Management',
             permissionKey: 'view_roles',
             to: '/referral/management',
+            isShow: true,
           },
         ],
       },
@@ -139,28 +154,33 @@ const DEFAULT_NAV = [
         key: 'menu-setting',
         icon: iSetting,
         iconActive: iSettingActive,
+        isShow: true,
         sub: [
           {
             title: 'Zalo',
             key: 'setting-zalo',
             permissionKey: 'setting-zalo',
             to: '/setting/zalo',
+            isShow: user?.company?.ui_display?.setting_zalo,
           },
           {
             title: 'Facebook',
             key: 'setting-facebook',
             permissionKey: 'setting-facebook',
             to: '/setting/facebook',
+            isShow: user?.company?.ui_display?.setting_facebook,
           },
           {
             title: t('common.terms'),
             key: 'terms',
             to: '/terms',
+            isShow: true,
           },
           {
             title: t('common.privacy'),
             key: 'privacy-policy',
             to: '/privacy',
+            isShow: true,
           },
           // {
           //   title: 'common.mail',
@@ -197,6 +217,7 @@ const DEFAULT_NAV_ADMIN = [
   {
     name: 'common.menu',
     menuKey: 'menu',
+    isShow: true,
     menus: [
       {
         title: 'common.company',
@@ -204,6 +225,7 @@ const DEFAULT_NAV_ADMIN = [
         icon: iCrm,
         iconActive: iCrmActive,
         to: '/admin/company',
+        isShow: true,
       },
       {
         title: 'common.chatbot',
@@ -211,6 +233,7 @@ const DEFAULT_NAV_ADMIN = [
         icon: iChatbot,
         iconActive: iChatbotActive,
         to: '/admin/chatbot',
+        isShow: true,
       },
     ],
   },
@@ -219,6 +242,7 @@ const DEFAULT_NAV_REFERRAL = [
   {
     name: 'common.menu',
     menuKey: 'menu',
+    isShow: true,
     menus: [
       {
         title: 'CRM',
@@ -226,6 +250,7 @@ const DEFAULT_NAV_REFERRAL = [
         icon: iCrm,
         iconActive: iCrmActive,
         to: '/user-referral/crm',
+        isShow: true,
       },
     ],
   },
@@ -353,85 +378,91 @@ onMounted(() => {
 
 <template>
   <nav class="pb-1 overflow-y-auto" style="transition: all linear 0.3s">
-    <div class="[&:not(:last-child)]:mb-[8px]" v-for="item in navByPermissions" :key="item?.menuKey">
-      <p
-        class="mt-0 mb-[8px] px-[16px] text-base font-normal c-black-60"
-        :class="isSidebarCollapse ? ['text-center'] : ['']"
-        v-if="item?.name"
-      >
-        {{ t(item?.name) }}
-      </p>
+    <template v-for="item in navByPermissions" :key="item?.menuKey">
+      <div class="[&:not(:last-child)]:mb-[8px]" v-if="item?.isShow">
+        <p
+          class="mt-0 mb-[8px] px-[16px] text-base font-normal c-black-60"
+          :class="isSidebarCollapse ? ['text-center'] : ['']"
+          v-if="item?.name"
+        >
+          {{ t(item?.name) }}
+        </p>
 
-      <ul class="pl-0 my-0 list-none">
-        <li v-for="nav in item?.menus" :key="nav.title">
-          <nuxt-link
-            class="py-[12px] px-[16px] flex items-center gap-[12px] no-underline cursor-pointer"
-            :class="[
-              checkActiveRoute(nav) ? ['bg-primary'] : ['bg-white hover:bg-gray-10'],
-              isSidebarCollapse ? ['justify-center'] : '',
-            ]"
-            style="transition: all linear 0.3s"
-            :to="nav?.to"
-            @click="toggleNavItemByKey(nav?.key)"
-          >
-            <img class="icon" :src="nav?.iconActive" alt="" v-if="checkActiveRoute(nav)" />
-            <img class="icon" :src="nav?.icon" alt="" v-else />
-            <Transition name="fade">
-              <div class="flex-1 overflow-hidden" v-show="!isSidebarCollapse">
-                <span
-                  class="block w-max text-base font-normal"
-                  :class="checkActiveRoute(nav) ? ['c-white'] : ['c-black-80']"
-                  style="transition: all linear 0.3s"
-                >
-                  {{ t(nav?.title) }}
-                </span>
-              </div>
-            </Transition>
+        <ul class="pl-0 my-0 list-none">
+          <template v-for="nav in item?.menus" :key="nav.title">
+            <li v-if="nav?.isShow">
+              <nuxt-link
+                class="py-[12px] px-[16px] flex items-center gap-[12px] no-underline cursor-pointer"
+                :class="[
+                  checkActiveRoute(nav) ? ['bg-primary'] : ['bg-white hover:bg-gray-10'],
+                  isSidebarCollapse ? ['justify-center'] : '',
+                ]"
+                style="transition: all linear 0.3s"
+                :to="nav?.to"
+                @click="toggleNavItemByKey(nav?.key)"
+              >
+                <img class="icon" :src="nav?.iconActive" alt="" v-if="checkActiveRoute(nav)" />
+                <img class="icon" :src="nav?.icon" alt="" v-else />
+                <Transition name="fade">
+                  <div class="flex-1 overflow-hidden" v-show="!isSidebarCollapse">
+                    <span
+                      class="block w-max text-base font-normal"
+                      :class="checkActiveRoute(nav) ? ['c-white'] : ['c-black-80']"
+                      style="transition: all linear 0.3s"
+                    >
+                      {{ t(nav?.title) }}
+                    </span>
+                  </div>
+                </Transition>
 
-            <!-- <img
+                <!-- <img
               class="icon transition-all"
               :class="[nav?.isCollapse && 'rotate-180', checkActiveRoute(nav) && 'brightness-0 invert']"
               src="~/assets/icons/i-angle-down-black.svg"
               alt=""
               v-if="nav?.sub && nav?.sub?.length > 0"
             /> -->
-          </nuxt-link>
+              </nuxt-link>
 
-          <!-- Sub -->
-          <template v-if="nav?.sub && nav?.sub?.length > 0">
-            <ul class="sub-menu pl-0 my-0 list-none" v-show="nav?.isCollapse">
-              <li v-for="children in nav?.sub" :key="children.key">
-                <nuxt-link
-                  class="py-[12px] px-[16px] flex items-center gap-[12px] no-underline bg-white cursor-pointer hover:bg-gray-10"
-                  :class="[isSidebarCollapse ? ['justify-center'] : '']"
-                  style="transition: all linear 0.3s"
-                  :to="children?.to"
-                >
-                  <img
-                    class="icon"
-                    src="~/assets/icons/i-sub-menu-active.svg"
-                    alt=""
-                    v-if="route.path === children?.to"
-                  />
-                  <img class="icon" src="~/assets/icons/i-sub-menu.svg" alt="" v-else />
-                  <Transition name="fade">
-                    <div class="flex-1 overflow-hidden" v-show="!isSidebarCollapse">
-                      <span
-                        class="block w-max text-base font-normal"
-                        :class="route.path === children?.to ? ['c-primary'] : ['c-black-80']"
+              <!-- Sub -->
+              <template v-if="nav?.sub && nav?.sub?.length > 0">
+                <ul class="sub-menu pl-0 my-0 list-none" v-show="nav?.isCollapse">
+                  <template v-for="children in nav?.sub" :key="children.key">
+                    <li v-if="children?.isShow">
+                      <nuxt-link
+                        class="py-[12px] px-[16px] flex items-center gap-[12px] no-underline bg-white cursor-pointer hover:bg-gray-10"
+                        :class="[isSidebarCollapse ? ['justify-center'] : '']"
                         style="transition: all linear 0.3s"
+                        :to="children?.to"
                       >
-                        {{ t(children?.title) }}
-                      </span>
-                    </div>
-                  </Transition>
-                </nuxt-link>
-              </li>
-            </ul>
+                        <img
+                          class="icon"
+                          src="~/assets/icons/i-sub-menu-active.svg"
+                          alt=""
+                          v-if="route.path === children?.to"
+                        />
+                        <img class="icon" src="~/assets/icons/i-sub-menu.svg" alt="" v-else />
+                        <Transition name="fade">
+                          <div class="flex-1 overflow-hidden" v-show="!isSidebarCollapse">
+                            <span
+                              class="block w-max text-base font-normal"
+                              :class="route.path === children?.to ? ['c-primary'] : ['c-black-80']"
+                              style="transition: all linear 0.3s"
+                            >
+                              {{ t(children?.title) }}
+                            </span>
+                          </div>
+                        </Transition>
+                      </nuxt-link>
+                    </li>
+                  </template>
+                </ul>
+              </template>
+            </li>
           </template>
-        </li>
-      </ul>
-    </div>
+        </ul>
+      </div>
+    </template>
 
     <p class="m-0 ml-4 text-small c-black-60"> Version: {{ VERSION }} </p>
   </nav>

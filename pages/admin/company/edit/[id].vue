@@ -53,6 +53,10 @@ getData()
           :isEdit="true"
           @onCancel="router.push('/admin/company')"
           :data="{
+            campaign_call: info?.ui_display?.campaign_call || false,
+            campaign_mail: info?.ui_display?.campaign_mail || false,
+            setting_facebook: info?.ui_display?.setting_facebook || false,
+            setting_zalo: info?.ui_display?.setting_zalo || false,
             ...info,
           }"
         />

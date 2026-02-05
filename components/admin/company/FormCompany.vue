@@ -24,6 +24,10 @@ const form = ref<any>({
   is_active: true,
   bot_quantity: 1,
   referral_quantity: 1,
+  campaign_call: false,
+  campaign_mail: true,
+  setting_facebook: true,
+  setting_zalo: true,
 })
 
 const onSubmit = handleSubmit(() => {
@@ -110,6 +114,10 @@ watch(
         v-model="form.password"
       />
       <BaseSwitch class="flex-1" name="is_active" :label="t('common.active')" v-model="form.is_active" />
+      <BaseSwitch class="flex-1" name="campaign_call" label="Campaign call" v-model="form.campaign_call" />
+      <BaseSwitch class="flex-1" name="campaign_mail" label="Campaign mail" v-model="form.campaign_mail" />
+      <BaseSwitch class="flex-1" name="setting_facebook" label="Setting facebook" v-model="form.setting_facebook" />
+      <BaseSwitch class="flex-1" name="setting_zalo" label="Setting zalo" v-model="form.setting_zalo" />
     </div>
     <div class="flex justify-end gap-4 mt-4">
       <Button
