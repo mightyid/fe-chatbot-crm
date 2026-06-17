@@ -92,7 +92,7 @@ const DEFAULT_NAV = [
         icon: iCrm,
         iconActive: iCrmActive,
         to: '/campaign-call',
-        isShow: user?.company?.ui_display?.campaign_call,
+        isShow: user?.value?.company?.ui_display?.campaign_call,
       },
       {
         title: 'common.email_campaign',
@@ -100,7 +100,7 @@ const DEFAULT_NAV = [
         icon: iMessage,
         iconActive: iMessageActive,
         to: '/email-campaign',
-        isShow: user?.company?.ui_display?.campaign_mail,
+        isShow: user?.value?.company?.ui_display?.campaign_mail,
       },
       {
         title: 'common.email_template',
@@ -108,7 +108,7 @@ const DEFAULT_NAV = [
         icon: iSetting,
         iconActive: iSettingActive,
         to: '/email-campaign-template',
-        isShow: user?.company?.ui_display?.campaign_mail,
+        isShow: user?.value?.company?.ui_display?.campaign_mail,
       },
       {
         title: 'common.message',
@@ -161,14 +161,14 @@ const DEFAULT_NAV = [
             key: 'setting-zalo',
             permissionKey: 'setting-zalo',
             to: '/setting/zalo',
-            isShow: user?.company?.ui_display?.setting_zalo,
+            isShow: user?.value?.company?.ui_display?.setting_zalo,
           },
           {
             title: 'Facebook',
             key: 'setting-facebook',
             permissionKey: 'setting-facebook',
             to: '/setting/facebook',
-            isShow: user?.company?.ui_display?.setting_facebook,
+            isShow: user?.value?.company?.ui_display?.setting_facebook,
           },
           {
             title: t('common.terms'),
