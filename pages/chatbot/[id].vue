@@ -74,7 +74,7 @@ const addFileVector = async (files: any[]) => {
 
   try {
     isLoading.value = true
-    for(let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       await $api(`chat-bot/${route.params.id}/vector-file`, {
         method: 'POST',
         body: {
@@ -177,8 +177,11 @@ watchDebounced(
         <div className="mb-4 flex items-center justify-end gap-4">
           <BaseSearch v-model="query.search" />
 
-          <BaseButtonUpload acceptFile="txt, .pdf, .docx, text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            @onUpload="addFileVector" :acl="false" :multiple="true"
+          <BaseButtonUpload
+            acceptFile="txt, .pdf, .docx, text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            @onUpload="addFileVector"
+            :acl="false"
+            :multiple="true"
           >
             <div class="p-2 h-[42px] flex justify-center items-center bg-primary rounded">
               <img src="~/assets/icons/i-upload-white.svg" />
@@ -220,7 +223,7 @@ watchDebounced(
               {{ useMoment(slotProps.data.created_at) }}
             </template>
           </Column>
-         
+
           <Column
             :header="t('common.actions')"
             :frozen="true"
@@ -230,7 +233,12 @@ watchDebounced(
             <template #body="slotProps">
               <div class="flex gap-2 jc-fe">
                 <nuxt-link target="_blank" :to="slotProps.data.file?.url">
-                  <img class="icon-lg" src="~/assets/icons/i-download-primary-circle.svg" alt="" v-tooltip.top="'Edit'" />
+                  <img
+                    class="icon-lg"
+                    src="~/assets/icons/i-download-primary-circle.svg"
+                    alt=""
+                    v-tooltip.top="'Edit'"
+                  />
                 </nuxt-link>
                 <button @click="confirmDelete(slotProps.data)">
                   <img class="icon-lg" src="~/assets/icons/i-trash-circle.svg" alt="" v-tooltip.top="'Delete'" />

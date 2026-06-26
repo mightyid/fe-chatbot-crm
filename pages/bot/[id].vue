@@ -356,7 +356,7 @@ watch(
         @click="clickAvatar"
         v-if="!isShowBoxChat"
       >
-        {{ info?.message || t('common.start') }}
+        {{ info?.name || t('common.start') }}
       </div>
       <div class="relative fr justify-end cursor-pointer" :class="{ 'call-animation': !isShowBoxChat }">
         <img
